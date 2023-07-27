@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_192424) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_27_171835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_192424) do
     t.integer "bred_year"
     t.integer "introduced_year"
     t.integer "cultivar_group_id", null: false
+    t.text "image_url", default: ""
   end
 
   create_table "plant_failures", force: :cascade do |t|
