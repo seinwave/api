@@ -5,7 +5,7 @@ class CultivarImageUpdater
   def self.update_images_by_photographer(photographer_name)
     Cultivar.find_each do |cultivar|
       url = "https://commons.wikimedia.org/w/api.php?action=query&format=json&list=search&srsearch=#{cultivar.name}+#{photographer_name}&srlimit=1"
-      response = URI.open(url).read
+      response = URI.open(url)
       data = JSON.parse(response)
       image_url = data.dig('query', 'search', 0, 'title')
 
