@@ -2,91 +2,33 @@ require 'open-uri'
 require 'json'
 require 'httparty'
 
-# cultivars = Cultivar.first(40)
 
-# def filter_out_invalid_links(item)
-#   link = item.link
-#   return false if check_is_shopify(link)
-#   return false if check_is_webp(link)
-#   return false if check_is_not_https(link)
-#   return true
-# end
+def get_public_domain_image_url(cultivar)
+    name = cultivar.name
+    google_url = "https://www.googleapis.com/customsearch/v1?"
 
-# def check_is_webp(link)
-#   return link.split('.')[-1] == 'webp'
-# end
+    parameters = {
+        key: ENV['GOOGLE_API_KEY'],
+        cx: ENV['GOOGLE_CX'],
+        q: "#{name} rose",
+        searchType: "image",
+        imgSize: "medium",
+        imgType: "photo",
+        rights: "cc_publicdomain",
+     }
 
-# # shopify links don't work (gatekeeping)
-# def check_is_shopify(link)
-#     uri = URI(link)
-#     puts uri
-#     host = uri.host
-#     return host == 'cdn.shopify.com' || host == 'shopify.com'
-# end
+    response = HTTParty.get(google_url, query: parameters)
 
-# def check_is_not_https(link)
-#   return link.split(':')[0] != 'https'
-# end
+    if response.code == 200
+        data = JSON.parse(response.body)
 
-# def hsl_to_string(hsl)
-#   return "" if hsl.nil?
-#   return "hsl(#{hsl.join(",")})"
-# end
+        image_url = data["items"][0]["link"]
 
-# cultivars.each do |cultivar|
-
-#     puts 'CULTIVAR, ID:', cultivar.name, cultivar.id
-#     #skip if there is already a CultivarColor entry for this cultivar
-#     # next if !CultivarColor.where(cultivar: cultivar).empty?
-
-#     results = GoogleCustomSearchApi.search("rose #{cultivar.name}", {searchType: "image"})
-#     if results["items"].nil? || results["items"].empty?
-#       puts "NO RESULTS"
-#       next
-#     end
-
-#     safe_link = results["items"].detect{|item| filter_out_invalid_links(item) }.link
-
-#     next if safe_link.nil?
-#     next if safe_link == ""
-
-#     begin
-#       colors = RailsDominantColors.url(safe_link, 5)
-
-
-#     rescue => exception
-#       puts "EXCEPTION:", exception
-#       next
-#     end
-
-#     colors = colors.to_hsl.delete_if { |color| color[0] > 60 && color[0] < 180 }
-
-
-
-#     primary_color = hsl_to_string(colors[0])
-#     accent_color = hsl_to_string(colors[1])
-
-#     puts primary_color, accent_color
-
-#     # CultivarColor.create(cultivar: cultivar, primary_color: primary_color, accent_color: accent_color)
-
-
-# end
-
-
-def fetch_image_data(query)
-  url = "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=#{query}&gsrlimit=1&prop=imageinfo&iiprop=url|extmetadata"
-  response = HTTParty.get(url)
-  data = JSON.parse(response.body)
-  return nil unless data['query'] && data['query']['pages']
-
-  page_id = data['query']['pages'].keys.first
-  image_data = data['query']['pages'][page_id]['imageinfo'][0]
-  {
-    image_url: image_data['url'],
-    license: image_data['extmetadata']['LicenseShortName']['value'],
-    attribution: image_data['extmetadata']['Attribution']['value']
-  }
+        return image_url
+    else 
+        puts 'ERROR: unable to fetch'
+        return nil
+    end
 end
 
 
@@ -101,3 +43,4 @@ class CultivarImageUpdater
     end
   end
 end
+
