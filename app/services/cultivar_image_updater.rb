@@ -9,7 +9,6 @@ class CultivarImageUpdater
       data = JSON.parse(response)
       image_url = data.dig('query', 'search', 0, 'title')
 
-      # Save the image URL if found
       if image_url.present?
         image_url.sub!('File:', 'https://commons.wikimedia.org/wiki/File:')
         cultivar.update(image_url: "#{image_url}&width=200&height=500")
