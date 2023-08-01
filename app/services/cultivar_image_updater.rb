@@ -19,6 +19,8 @@ def get_public_domain_image_url(cultivar)
 
     response = HTTParty.get(google_url, query: parameters)
 
+    puts response
+
     if response.code == 200
         data = JSON.parse(response.body)
 
@@ -35,11 +37,10 @@ end
 class CultivarImageUpdater
   def self.update_images_by_photographer(photographer_name)
     Cultivar.find_each do |cultivar|
-        puts cultivar.name
-        query = "#{cultivar.name} #{photographer_name}"
-        image_data = fetch_image_data(query)
-        next unless image_data
-        puts image_data
+        puts 'FETCHING IMAGE_URL FOR', cultivar.name
+        image_url = get_public_domain_image_url(cultivar)
+        next unless image_url
+        puts 'IMAGE URL SUCCESSFULLY FETCHED:', image_url
     end
   end
 end
