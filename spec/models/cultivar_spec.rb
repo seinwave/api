@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Cultivar, type: :model do
-  describe '.search_and_save_image_urls_by_photographer' do
+  describe '.save_image_url' do
     it 'saves the image URLs for cultivars found by the photographer' do
       cultivar1 = create(:cultivar, name: 'Cultivar1')
       cultivar2 = create(:cultivar, name: 'Cultivar2')
@@ -16,7 +16,7 @@ RSpec.describe Cultivar, type: :model do
       }
       allow(URI).to receive(:open).and_return(api_response.to_json)
 
-      Cultivar.search_and_save_image_urls_by_photographer('Salicyna')
+      Cultivar.save_image_url('Salicyna')
 
       cultivar1.reload
       cultivar2.reload
