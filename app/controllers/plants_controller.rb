@@ -5,5 +5,7 @@ class PlantsController < ApplicationController
     @plants = Plant.all
     @cultivars = Cultivar.all
     @cultivargroups = CultivarGroup.all
+
+    render json: { plants: @plants, cultivars: @cultivars, cultivargroups: @cultivargroups }
   end
 end
