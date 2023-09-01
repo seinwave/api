@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+  const accessToken = appConfig.mapbox_access_token;
+  mapboxgl.accessToken = accessToken;
+
+  console.log({ accessToken });
 
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [40.66911, -73.96527],
-    zoom: 9,
+    style: 'mapbox://styles/mapbox/light-v11',
+    center: [-73.96527, 40.66911],
+    zoom: 23,
   });
 });
