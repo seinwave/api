@@ -9,4 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     zoom: 19,
     bearing: 14,
   });
+
+  fetch('/plants')
+    .then((response) => response.json())
+    .then((data) => {
+      data.plants.forEach((plant) => {
+        new mapboxgl.Marker()
+          .setLngLat([plant.longitude, plant.latitude])
+          .addTo(map);
+      });
+    })
+    .catch((error) => console.error('Error fetching rose data:', error));
 });
