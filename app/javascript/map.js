@@ -1,3 +1,6 @@
+const roseIcon = new Image();
+roseIcon.src = roseIconPath;
+
 document.addEventListener('DOMContentLoaded', () => {
   const accessToken = appConfig.mapboxToken;
   mapboxgl.accessToken = accessToken;
@@ -10,14 +13,50 @@ document.addEventListener('DOMContentLoaded', () => {
     bearing: 14,
   });
 
-  fetch('/plants')
-    .then((response) => response.json())
-    .then((data) => {
-      data.plants.forEach((plant) => {
-        new mapboxgl.Marker()
-          .setLngLat([plant.longitude, plant.latitude])
-          .addTo(map);
-      });
-    })
-    .catch((error) => console.error('Error fetching rose data:', error));
+  map.on('load', () => {
+    map.addImage('rose-icon', roseIcon);
+
+    fetch('/plants')
+      .then((response) => response.json())
+      .then((data) => {
+        const geoJsonFeatures = data.plants.map((plant) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [plant.longitude, plant.latitude],
+          },
+          properties: {},
+        }));
+
+        const geoJsonFeatureCollection = {
+          type: 'FeatureCollection',
+          features: geoJsonFeatures,
+        };
+
+        map.addSource('plants-source', {
+          type: 'geojson',
+          data: geoJsonFeatureCollection,
+        });
+
+        map.addLayer({
+          id: 'custom-marker-layer',
+          type: 'symbol',
+          source: 'plants-source',
+          layout: {
+            'icon-image': 'rose-icon',
+            'icon-size': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              0,
+              0.005,
+              22,
+              0.05,
+            ],
+            'icon-allow-overlap': false,
+          },
+        });
+      })
+      .catch((error) => console.error('Error fetching rose data:', error));
+  });
 });
