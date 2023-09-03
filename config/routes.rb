@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'plants#index'
+  root 'map#index'
 
   resources :plants
   resources :plant_statuses
