@@ -5,6 +5,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
+# haml for templating
+gem "haml-rails"
+
 # rspec
 group :development, :test do
   gem 'rspec-rails', '~> 6.0.0'
