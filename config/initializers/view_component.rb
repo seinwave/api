@@ -8,4 +8,4 @@ Rails.application.configure do
 
   # Configure a component all other components inherit from
   config.view_component.component_parent_class = "ApplicationComponent"
-end”
+end
