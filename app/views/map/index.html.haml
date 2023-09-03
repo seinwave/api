@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title Roses @ BBG
+    :javascript
+      const appConfig = {
+        mapboxToken: "#{Rails.application.credentials.mapbox[:access_token]}",
+      };
+      const roseIconPath = "#{asset_path('rose-icon.svg')}";
+    = javascript_include_tag 'map'
+    
+
+  %body
+    %div{ id: "map", style: "width: 100%; height: 100%" }

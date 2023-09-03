@@ -1,0 +1,8 @@
+#map{ data: { sector: @sector, plants: @plants_in_sector } }
+  %h1{ id: "sector-head", data: { sector: @sector.to_json, plants:
+  @plants_in_sector.to_json } }= @sector.id
+  %h2{ id: "sector-plant-head" } Plants in sector
+  %ul#sector-plants
+    - @plants_in_sector.each do |plant|
+      %li{ data: { plant: plant.to_json } }= plant.id
+
