@@ -5,6 +5,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
+# viewcomponent 
+gem 'view_component', '~> 3.0.0'
+
 # haml for templating
 gem "haml-rails"
 
