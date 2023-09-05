@@ -8,7 +8,10 @@
       };
       const roseIconPath = "#{asset_path('rose-icon.svg')}";
     = javascript_include_tag 'map'
+    = stylesheet_link_tag "map", "data-turbo-track" => "reload"
+
     
 
   %body
-    %div{ id: "map", style: "width: 100%; height: 100%" }
+    = render(SearchBarComponent.new(query: ""))
+    %div{ id: "map", style: "width: 100%; height: 100%; position: relative;" }
