@@ -1,1 +1,2 @@
-%input.search-input{ type:"text", placeholder:"Search" }
+= form_tag(cultivars_path, method: :get) do
+  %input.search-input{ type: "text", placeholder: "Search", name: "search" }
