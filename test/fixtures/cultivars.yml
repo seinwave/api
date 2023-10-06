@@ -1,21 +1,21 @@
-# cultivar_001:
-#   name: 'Red Rose'
-#   breeder: 'John Doe'
-#   created_at: <%= 6.days.ago %>
-#   updated_at: <%= 6.days.ago %>
-#   description: 'A beautiful red rose'
-#   is_deleted: false
-#   bred_year: 2010
-#   introduced_year: 2011
-#   cultivar_group_id: 2
+cultivar_001:
+  name: 'Red Rose'
+  breeder: 'John Doe'
+  created_at: <%= 6.days.ago %>
+  updated_at: <%= 6.days.ago %>
+  description: 'A beautiful red rose'
+  is_deleted: false
+  bred_year: 2010
+  introduced_year: 2011
+  cultivar_group_id: 2
 
-# cultivar_002:
-#   name: 'White Lily'
-#   breeder: 'Jane Smith'
-#   created_at: <%= 4.days.ago %>
-#   updated_at: <%= 4.days.ago %>
-#   description: 'Elegant white lily'
-#   is_deleted: false
-#   bred_year: 2015
-#   introduced_year: 2016
-#   cultivar_group_id: 1
+cultivar_002:
+  name: 'White Lily'
+  breeder: 'Jane Smith'
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 4.days.ago %>
+  description: 'Elegant white lily'
+  is_deleted: false
+  bred_year: 2015
+  introduced_year: 2016
+  cultivar_group_id: 1

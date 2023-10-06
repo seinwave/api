@@ -1,2 +1,7 @@
-<h1>Cultivars#index</h1>
-<p>Find me in app/views/cultivars/index.html.erb</p>
+<h1>All Cultivars</h1>
+
+<ul class="users">
+  <% @cultivars.each do |cultivar| %>
+  <li><%= link_to cultivar.name, cultivar %></li>
+  <% end %>
+</ul>
