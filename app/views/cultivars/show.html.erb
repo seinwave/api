@@ -1,5 +1,17 @@
 <h1><%= @cultivar.name %></h1>
+<div>
+<% if @cultivar.id != 1 %>
+  <%= link_to 'Prev', cultivar_path(@cultivar.id - 1) %>
+<% end %>
+  <%= link_to 'Next', cultivar_path(@cultivar.id + 1) %>
+</div>
 
+<div> 
 <% if @cultivar.image_url.blank? %>
-<p>No Image</p>
-<% else %> <%= image_tag @cultivar.image_url %> <% end %>
+    <p>No Image</p>
+<% else %> 
+    <%= image_tag @cultivar.image_url %> 
+<% end %>
+
+<div>
+
