@@ -4,8 +4,6 @@ class CreatePlants < ActiveRecord::Migration[7.0]
       t.float "latitude"
       t.float "longitude"
       t.boolean "is_deleted"
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
       t.integer "form", default: 0, null: false
       t.bigint "cultivar_id", null: false
       t.bigint "sector_id", null: false
