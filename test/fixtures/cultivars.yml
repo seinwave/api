@@ -1,4 +1,4 @@
-cultivar_001:
+rose:
   id: 1
   name: 'Red Rose'
   breeder: 'John Doe'
@@ -9,8 +9,9 @@ cultivar_001:
   bred_year: 2010
   introduced_year: 2011
   cultivar_group_id: 2
+  image_url: ''
 
-cultivar_002:
+lily:
   id: 2
   name: 'White Lily'
   breeder: 'Jane Smith'
@@ -21,3 +22,4 @@ cultivar_002:
   bred_year: 2015
   introduced_year: 2016
   cultivar_group_id: 1
+  image_url: ''

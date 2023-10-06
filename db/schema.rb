@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_192424) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.boolean "is_deleted", default: false, null: false
+    t.string  "image_url"
     t.integer "bred_year"
     t.integer "introduced_year"
     t.integer "cultivar_group_id", null: false
