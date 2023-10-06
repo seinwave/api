@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'cultivars/index'
-  get 'cultivars/show'
   resources :cultivars
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

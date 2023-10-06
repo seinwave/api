@@ -1,2 +1,4 @@
-<h1>Cultivars#show</h1>
-<p>Find me in app/views/cultivars/show.html.erb</p>
+<h1><% @cultivar.name %></h1>
+
+<% if @cultivar.image_url.blank? %> <%= image_tag 'no_image.png' %> <% else %>
+<% image_tag @cultivar.image_url %> <% end %>
