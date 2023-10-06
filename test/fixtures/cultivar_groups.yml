@@ -1,13 +1,13 @@
-cultivar_group_001:
-  name: 'Rose Group'
-  description: 'Variety of roses'
-  created_at: <%= 7.days.ago %>
-  updated_at: <%= 7.days.ago %>
-  category_id: 1
+# cultivar_group_001:
+#   name: 'Rose Group'
+#   description: 'Variety of roses'
+#   created_at: <%= 7.days.ago %>
+#   updated_at: <%= 7.days.ago %>
+#   category_id: 1
 
-cultivar_group_002:
-  name: 'Lily Group'
-  description: 'Different types of lilies'
-  created_at: <%= 5.days.ago %>
-  updated_at: <%= 5.days.ago %>
-  category_id: 2
+# cultivar_group_002:
+#   name: 'Lily Group'
+#   description: 'Different types of lilies'
+#   created_at: <%= 5.days.ago %>
+#   updated_at: <%= 5.days.ago %>
+#   category_id: 2

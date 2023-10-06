@@ -1,13 +1,13 @@
-sector_001:
-  name: 'North Garden'
-  coordinates: { 'lat': 51.509865, 'lng': -0.118092 }
-  created_at: <%= 1.week.ago %>
-  updated_at: <%= 1.week.ago %>
-  geojson_string: '{"type":"Point","coordinates":[-0.118092,51.509865]}'
+# sector_001:
+#   name: 'North Garden'
+#   coordinates: { 'lat': 51.509865, 'lng': -0.118092 }
+#   created_at: <%= 1.week.ago %>
+#   updated_at: <%= 1.week.ago %>
+#   geojson_string: '{"type":"Point","coordinates":[-0.118092,51.509865]}'
 
-sector_002:
-  name: 'South Garden'
-  coordinates: { 'lat': 40.730610, 'lng': -73.935242 }
-  created_at: <%= 6.days.ago %>
-  updated_at: <%= 6.days.ago %>
-  geojson_string: '{"type":"Point","coordinates":[-73.935242,40.730610]}'
+# sector_002:
+#   name: 'South Garden'
+#   coordinates: { 'lat': 40.730610, 'lng': -73.935242 }
+#   created_at: <%= 6.days.ago %>
+#   updated_at: <%= 6.days.ago %>
+#   geojson_string: '{"type":"Point","coordinates":[-73.935242,40.730610]}'
