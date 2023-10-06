@@ -1,11 +1,21 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+cultivar_001:
+  name: 'Red Rose'
+  breeder: 'John Doe'
+  created_at: <%= 6.days.ago %>
+  updated_at: <%= 6.days.ago %>
+  description: 'A beautiful red rose'
+  is_deleted: false
+  bred_year: 2010
+  introduced_year: 2011
+  cultivar_group_id: 2
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+cultivar_002:
+  name: 'White Lily'
+  breeder: 'Jane Smith'
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 4.days.ago %>
+  description: 'Elegant white lily'
+  is_deleted: false
+  bred_year: 2015
+  introduced_year: 2016
+  cultivar_group_id: 1
