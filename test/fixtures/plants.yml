@@ -1,11 +1,19 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# plant_001:
+#   latitude: 51.509865
+#   longitude: -0.118092
+#   is_deleted: false
+#   created_at: <%= 3.days.ago %>
+#   updated_at: <%= 3.days.ago %>
+#   form: 0
+#   cultivar_id: 1
+#   sector_id: 1
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+# plant_002:
+#   latitude: 40.730610
+#   longitude: -73.935242
+#   is_deleted: false
+#   created_at: <%= 2.days.ago %>
+#   updated_at: <%= 2.days.ago %>
+#   form: 0
+#   cultivar_id: 2
+#   sector_id: 2
