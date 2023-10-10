@@ -18,6 +18,15 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
+  def remember
+    self.token = User.new_token
+    update_attribute(:token_digest, User.digest(token))
+  end
+
+  def authenticated?(token)
+    BCrypt::Password.new(token_digest).is_password?(token)
+  end
+
 
   private 
 
