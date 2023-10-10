@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      # handle a successful save
+      @user.send_magic_link_email
     else 
       render 'new', status: :unprocessable_entity
     end 

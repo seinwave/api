@@ -27,6 +27,10 @@ class User < ApplicationRecord
     BCrypt::Password.new(token_digest).is_password?(token)
   end
 
+  def send_magic_link_email
+      UserMailer.magic_link(self).deliver_now
+  end
+
 
   private 
 
