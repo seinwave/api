@@ -1,0 +1,13 @@
+<%= form_with(model: @user) do |f| %>
+  
+    <%= f.label :first_name %>
+    <%= f.text_field :name, class: 'form-control' %>
+
+    <%= f.label :last_name %>
+    <%= f.text_field :name, class: 'form-control' %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
+
+    <%= f.submit "Sign up", class: "btn btn-primary" %>
+<% end %>
