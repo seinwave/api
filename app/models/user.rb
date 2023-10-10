@@ -7,11 +7,22 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255}, 
   format: {with: VALID_EMAIL_REGEX}, uniqueness: true
 
+  # auth methods #
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
 
   private 
 
   def downcase_email
     email.downcase!
   end
-  
+
 end
