@@ -9,9 +9,12 @@ class SessionsController < ApplicationController
     user = GlobalID::Locator.locate_signed(sgid, for: 'login')
   
     if user && user.is_a?(User)
-      # handle successful login
+      reset_session
+      log_in(user)
+      redirect_to user
     else 
-      # handle redirection
+      flash.now[:danger] = "Invalid magic link. Please try again."
+      render 'new', status: :unprocessable_entity
     end
   end 
 end
