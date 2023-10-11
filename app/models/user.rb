@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  attr_accessor :login_token
+
   ### VALIDATIONS ###
   validates :first_name, presence: true, length: {maximum:50 }
   validates :last_name, length: {maximum:50 }
@@ -10,6 +12,7 @@ class User < ApplicationRecord
 
   ### BEFORE METHODS ###
   before_save :downcase_email
+  before_create :create_login_digest
 
 
   ### AUTHENTICATION ###
@@ -31,6 +34,11 @@ class User < ApplicationRecord
   private
   def downcase_email
     email.downcase!
+  end
+
+  def create_login_digest
+    self.login_token = User.new_token
+    self.login_token_digest = User.digest(login_token)
   end
 
 end
