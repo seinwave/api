@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.magic_link.subject
   #
   def magic_link(user)
-    @greeting = "Hi, #{user.first_name}!"
+    @user = user
 
     mail to: user.email
   end
