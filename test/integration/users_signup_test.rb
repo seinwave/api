@@ -12,4 +12,12 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/new'
     assert_select 'div.alert-danger'
   end
+
+   test "valid signup information sends a magic_link login" do
+    assert_difference 'User.count', 1 do
+      post users_path, params: { user: { first_name:  "Gramps",
+        email: "user@example.com", } }
+    end
+    assert_equal 1, ActionMailer::Base.deliveries.size
+  end
 end
