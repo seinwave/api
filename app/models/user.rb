@@ -13,9 +13,14 @@ class User < ApplicationRecord
 
 
   ### AUTHENTICATION ###
-  def send_magic_link_email
-      UserMailer.magic_link(self).deliver_now
-  end
+  class << self 
+    def send_magic_link_email
+        UserMailer.magic_link(self).deliver_now
+    end
+
+    def new_token
+        SecureRandom.urlsafe_base64
+    end
 
   private
   def downcase_email
