@@ -9,11 +9,15 @@ class User < ApplicationRecord
   format: {with: VALID_EMAIL_REGEX}, uniqueness: true
 
   ### BEFORE METHODS ###
-
   before_save :downcase_email
 
-  private
 
+  ### AUTHENTICATION ###
+  def send_magic_link_email
+      UserMailer.magic_link(self).deliver_now
+  end
+
+  private
   def downcase_email
     email.downcase!
   end

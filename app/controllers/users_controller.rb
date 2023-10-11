@@ -7,7 +7,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      ## handle successful save (mailer, magic_link, token)
+      @user.send_magic_link_email
+      flash[:info] = "Check your email for your Magic Login Link!"
     else
       render 'new', status: :unprocessable_entity
     end 
