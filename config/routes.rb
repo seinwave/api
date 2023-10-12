@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'sessions/destroy'
   get '/signup', to: "users#new"
   resources :users 
   resources :cultivars
+  resources :sessions, only: [:create, :destroy]
   # root "articles#index"
 end
