@@ -16,10 +16,6 @@ class User < ApplicationRecord
 
   ### AUTHENTICATION ###
   class << self 
-    def send_magic_link_email
-      UserMailer.magic_link(self).deliver_now
-    end
-
     def new_token
       SecureRandom.urlsafe_base64
     end
@@ -27,6 +23,11 @@ class User < ApplicationRecord
     def digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
       BCrypt::Password.create(string, cost:cost)
+    end
+  end 
+  
+    def send_magic_link_email
+      UserMailer.magic_link(self).deliver_now
     end
 
     # generates token and token digest for user model
@@ -47,8 +48,7 @@ class User < ApplicationRecord
       BCrypt::Password.new(digest).is_password?(token)
     end
 
-    
-  end   
+  
 
   private
   def downcase_email
