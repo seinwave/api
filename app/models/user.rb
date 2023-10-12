@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :login_token
+  attr_accessor :login_token, :remember_token
 
   ### VALIDATIONS ###
   validates :first_name, presence: true, length: {maximum:50 }
@@ -30,11 +30,24 @@ class User < ApplicationRecord
       BCrypt::Password.create(string, cost:cost)
     end
 
+    # generates token and token digest for user model
+    def remember
+      self.remember_token = User.new_token
+      update_attribute(:remember_digest,
+      User.digest(remember_token))
+      remember_digest
+    end
+
+    def session_token
+      remember_digest || remember
+    end
+     
     def authenticated?(attribute, token)
       digest = send("#{attribute}_digest")
       return false if digest.nil?
       BCrypt::Password.new(digest).is_password?(token)
     end
+
     
   end   
 
