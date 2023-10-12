@@ -10,7 +10,7 @@ module SessionsHelper
     !current_user.nil?
   end 
     
-  # generates tokens in the browser
+  # generates tokens in / for the browser
   def remember(user)
     user.remember
     cookies.permanent.encrypted[:user_id] = user.id
