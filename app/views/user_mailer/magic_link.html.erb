@@ -5,3 +5,5 @@
 <p>
 Welcome to BBG Roses! Here's your ✨magic link✨ to sign in to your account!
 </p>
+
+<%= link_to "Log in", edit_session_url(@user.login_token, email: @user.email) %>

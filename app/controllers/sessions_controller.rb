@@ -1,8 +1,6 @@
 class SessionsController < ApplicationController
-  def new
-  end
 
-  def create
+  def edit
     @user = User.find_by(email: params[:email])
     login_token = params[:id]
     if @user.authenticated_token?(:login_token, login_token)
@@ -16,9 +14,6 @@ class SessionsController < ApplicationController
       redirect_to root_url
       flash[:danger] = "Invalid magic link"
     end 
-
   end
 
-  def destroy
-  end
 end

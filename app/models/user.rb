@@ -61,4 +61,9 @@ class User < ApplicationRecord
     self.login_token_digest = User.digest(login_token)
   end
 
+  def create_magic_link_digest
+    self.login_token = User.new_token
+    self.login_token_digest = User.digest(login_token)
+  end
+
 end

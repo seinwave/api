@@ -2,3 +2,4 @@ i <%= @user.first_name %>,
 
 Welcome to BBG Roses! Here's your ✨magic link✨ to sign in to your account!
 
+<%= edit_session_url(@user.login_token, email: @user.email) %>
