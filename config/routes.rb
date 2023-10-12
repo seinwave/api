@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :users 
   resources :cultivars
   resources :sessions
-  # root "articles#index"
+
+  root "users#new"
 end

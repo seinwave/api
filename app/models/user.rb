@@ -33,18 +33,22 @@ class User < ApplicationRecord
     # generates token and token digest for user model
     def remember
       self.remember_token = User.new_token
-      update_attribute(:remember_digest,
+      update_attribute(:remember_token_digest,
       User.digest(remember_token))
-      remember_digest
+      remember_token_digest
     end
 
     def session_token
-      remember_digest || remember
+      remember_token_digest || remember
     end
      
     def authenticated_token?(attribute, token)
       digest = send("#{attribute}_digest")
+
+      puts "DIGEST", digest, token
       return false if digest.nil?
+      puts "BCRYPT OPERATION:", BCrypt::Password.new(digest).is_password?(token)
+
       BCrypt::Password.new(digest).is_password?(token)
     end
 
