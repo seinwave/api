@@ -18,7 +18,7 @@ class User < ApplicationRecord
   ### AUTHENTICATION ###
   class << self 
     def send_magic_link_email
-        UserMailer.magic_link(self).deliver_now
+      UserMailer.magic_link(self).deliver_now
     end
 
     def new_token
@@ -57,11 +57,6 @@ class User < ApplicationRecord
   end
 
   def create_login_digest
-    self.login_token = User.new_token
-    self.login_token_digest = User.digest(login_token)
-  end
-
-  def create_magic_link_digest
     self.login_token = User.new_token
     self.login_token_digest = User.digest(login_token)
   end

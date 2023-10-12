@@ -5,10 +5,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       @user.send_magic_link_email
       flash[:info] = "Check your email for your Magic Login Link!"
+      redirect_to root_url
     else
       render 'new', status: :unprocessable_entity
     end 

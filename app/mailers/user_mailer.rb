@@ -8,6 +8,6 @@ class UserMailer < ApplicationMailer
   def magic_link(user)
     @user = user
 
-    mail to: user.email
+    mail to: user.email, subject: "Here's your BBG Roses ✨magic link✨!"
   end
 end
