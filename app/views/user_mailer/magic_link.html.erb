@@ -3,7 +3,7 @@
 <p>Hi <%= @user.first_name %>,</p>
 
 <p>
-Welcome to BBG Roses! Here's your <%= raw "&#10024" %> magic link <%= raw "&#10024" %> to sign in to your account!
+Welcome to BBG Roses! Here's your <%= raw "&#10024" %>magic link<%= raw "&#10024" %> to sign in to your account!
 </p>
 
 <%= link_to "Log in", edit_session_url(id: @user.login_token, email: @user.email) %>
