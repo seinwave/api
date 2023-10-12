@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_132915) do
     t.string "login_token_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "session_token_digest"
+    t.string "remember_token_digest"
   end
 
   add_foreign_key "plants", "cultivars"
