@@ -67,7 +67,7 @@ class User < ApplicationRecord
 
   def update_login_digest
     self.login_token = User.new_token
-      update_attribute(:login_token_digest, User.digest(login_token))
+    update_attribute(:login_token_digest, User.digest(login_token))
   end
 
 

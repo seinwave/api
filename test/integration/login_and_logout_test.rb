@@ -8,10 +8,11 @@ class LoginAndLogout < ActionDispatch::IntegrationTest
 end
 
 class LoginTest < LoginAndLogout
-    def setup
+  def setup
     super
-    @user = users(:matt)
-    post login_path, params: { email: @user.email}
+    user = users(:matt)
+    post login_path, params: { email: user.email}
+    @user = assigns(:user)
   end
 
   test "should send a magic_link email" do 
@@ -27,16 +28,14 @@ class LoginTest < LoginAndLogout
     assert_select 'div.alert-danger'
   end
 
-  # test "should log in successfully with valid email" do
-  #   @user.login_token = User.new_token
-  #   @user.login_token_digest = User.digest(@user.login_token)
-  #   get magic_link_url(login_token: @user.login_token, email: @user.email)
-  #   follow_redirect!
-  #   assert_template 'cultivars/index'
-  #   assert is_logged_in?
-  #   assert_not flash.blank?
-  #   assert_select 'div.alert'
-  # end
+  test "should log in successfully with valid email" do
+    get magic_link_url(login_token: @user.login_token, email: @user.email)
+    follow_redirect!
+    assert_template 'cultivars/index'
+    assert is_logged_in?
+    assert_not flash.blank?
+    assert_select 'div.alert'
+  end
 
 end
 
