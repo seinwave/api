@@ -28,4 +28,8 @@ class SessionsController < ApplicationController
     end 
   end
 
+  def destroy
+    redirect_to root_url, status: :see_other
+  end 
+
 end

@@ -7,14 +7,18 @@ class LoginAndLogout < ActionDispatch::IntegrationTest
   end
 end
 
-class LoginTest < LoginAndLogout
+class ValidLogin < LoginAndLogout
   def setup
     super
     user = users(:matt)
     post login_path, params: { email: user.email}
     @user = assigns(:user)
-  end
+  end 
+end
 
+class LoginTest < ValidLogin
+
+ 
   test "should send a magic_link email" do 
     assert_equal 1, ActionMailer::Base.deliveries.size
   end 
@@ -39,20 +43,19 @@ class LoginTest < LoginAndLogout
 
 end
 
-class LogoutTest < LoginAndLogout
+class LogoutTest < ValidLogin
 
   def setup
     super 
+    get magic_link_url(login_token: @user.login_token, email: @user.email)
     delete logout_path
   end
 
   test "should log out a user" do 
-    assert_not is_logged_in?
     assert_response :see_other
     assert_redirected_to root_url
+    assert_not is_logged_in?
   end 
-
   
-
 end 
 
