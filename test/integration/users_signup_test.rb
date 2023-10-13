@@ -41,7 +41,7 @@ class LoginAfterSignupTest < UsersSignup
   end
 
   test "should not log in users with an invalid login token and email" do
-    get magic_link('no thank you', email: @user.email)
+    get magic_link_url('no thank you', email: @user.email)
     follow_redirect!
     assert_template 'cultivars/index'
     assert !is_logged_in?
@@ -51,7 +51,7 @@ class LoginAfterSignupTest < UsersSignup
   end
 
   test "should log in successfully with valid login token and email" do
-    get magic_link(login_token: @user.login_token, email: @user.email)
+    get magic_link_url(login_token: @user.login_token, email: @user.email)
     follow_redirect!
     assert_template 'cultivars/index'
     assert is_logged_in?

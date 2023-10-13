@@ -49,11 +49,7 @@ class User < ApplicationRecord
      
     def authenticated_token?(attribute, token)
       digest = send("#{attribute}_digest")
-      puts 'AUTHENTICATING WITH'
-      puts digest
-      puts login_token
       return false if digest.nil?
-      puts "BCRYPT:", BCrypt::Password.new(digest).is_password?(token)
       BCrypt::Password.new(digest).is_password?(token)
     end
 
