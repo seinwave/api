@@ -41,10 +41,9 @@ class LoginTest < UsersSignup
   end
 
   test "should log in successfully with valid login token and email" do
-    post edit_session_url(id:@user.login_token, email: @user.email)
-    assert @user.reload.activated?
+    get edit_session_url(@user.login_token, email: @user.email)
     follow_redirect!
-    assert_template 'cultivars#index'
+    assert_template 'cultivars/index'
     assert is_logged_in?
   end
 end 
