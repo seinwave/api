@@ -51,7 +51,7 @@ class LogoutTest < ValidLogin
     delete logout_path
   end
 
-  test "should log out a user" do 
+  test "should log out a user" do
     assert_response :see_other
     assert_redirected_to root_url
     assert_not is_logged_in?

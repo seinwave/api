@@ -43,6 +43,10 @@ class User < ApplicationRecord
       remember_token_digest
     end
 
+    def forget
+      update_attribute(:remember_token_digest, nil)
+    end 
+
     def session_token
       remember_token_digest || remember
     end

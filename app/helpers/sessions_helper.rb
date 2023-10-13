@@ -17,7 +17,7 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
 
-    def forget(user)
+  def forget(user)
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
@@ -27,7 +27,22 @@ module SessionsHelper
     forget(current_user)
     reset_session
     @current_user = nil
-  end 
+  end
+  
+  def current_user
+    if (user_id = session[:user_id]) # NB: NOT a comparison!
+      user ||= User.find_by(id: user_id)
+      if user && session[:login_token] == user.login_token
+        @current_user = user 
+      end 
+      elsif (user_id = cookies.encrypted[:user_id])
+        user = User.find_by(id:user_id)
+          if user && user.authenticated?(:remember, cookies[:remember_token])
+          log_in user
+          @current_user = user
+        end 
+      end 
+  end
     
 
 end
