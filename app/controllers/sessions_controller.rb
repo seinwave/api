@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email].downcase)
     if @user
-      @user.send_magic_link_email
+      @user.send_login_magic_link_email
       redirect_to root_url
       flash[:info] = "Check your email for your Magic Login Link!"
     else 
