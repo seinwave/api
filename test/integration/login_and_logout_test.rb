@@ -39,3 +39,20 @@ class LoginTest < LoginAndLogout
 
 end
 
+class LogoutTest < LoginAndLogout
+
+  def setup
+    super 
+    delete logout_path
+  end
+
+  test "should log out a user" do 
+    assert_not is_logged_in?
+    assert_response :see_other
+    assert_redirected_to root_url
+  end 
+
+  
+
+end 
+
