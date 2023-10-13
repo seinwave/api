@@ -1,8 +1,7 @@
-<%= form_with(model: @user) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  
+  <%= form_with(url: login_path) do |f| %>
+
     <%= f.label :email %>
     <%= f.email_field :email, class: 'form-control' %>
 
-    <%= f.submit "Save changes", class: "btn btn-primary" %>
-<% end %>
+    <%= f.submit "Get my magic link", class: "btn btn-primary" %>
+  <% end %>

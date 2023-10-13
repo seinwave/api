@@ -1,4 +1,20 @@
 class SessionsController < ApplicationController
+  def new
+  end
+  
+  def create
+    @user = User.find_by(email: params[:email].downcase)
+    puts "params", params[:email]
+    puts @user
+  
+    if @user
+      @user.send_magic_link_email
+      redirect_to root_url
+      flash[:info] = "Check your email for your Magic Login Link!"
+    else 
+      flash[:danger] = "No account associated with that email, bub"
+    end 
+  end 
 
   def edit
     @user = User.find_by(email: params[:email])
