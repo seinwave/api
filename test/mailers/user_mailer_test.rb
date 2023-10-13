@@ -5,7 +5,7 @@ class UserMailerTest < ActionMailer::TestCase
     @user = users(:matt)
     @user.login_token = User.new_token
     mail = UserMailer.magic_link(@user)
-    assert_equal "Magic link",           mail.subject
+    assert_equal "Here's your BBG Roses ✨magic link✨!",           mail.subject
     assert_equal [@user.email],          mail.to
     assert_equal ["rosie@bbgroses.com"], mail.from
     assert_match @user.first_name,       mail.body.encoded
