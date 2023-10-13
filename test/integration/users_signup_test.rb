@@ -40,10 +40,21 @@ class LoginTest < UsersSignup
     @user = assigns(:user)
   end
 
+  test "should not log in users with an invalid login token and email" do
+    get edit_session_url('no thank you', email: @user.email)
+    follow_redirect!
+    assert_template 'cultivars/index'
+    assert !is_logged_in?
+    assert_not flash.blank?
+    assert_select 'div.alert-danger'
+
+  end
+
   test "should log in successfully with valid login token and email" do
     get edit_session_url(@user.login_token, email: @user.email)
     follow_redirect!
     assert_template 'cultivars/index'
     assert is_logged_in?
+    assert_not flash.blank?
   end
 end 
