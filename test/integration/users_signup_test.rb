@@ -19,5 +19,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         email: "user@example.com", } }
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_not flash.blank?
   end
 end
