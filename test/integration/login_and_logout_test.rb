@@ -39,6 +39,7 @@ class LoginTest < ValidLogin
     assert is_logged_in?
     assert_not flash.blank?
     assert_select 'div.alert'
+    assert_select "a[href=?]", logout_path
   end
 
 end
@@ -55,6 +56,7 @@ class LogoutTest < ValidLogin
     assert_response :see_other
     assert_redirected_to root_url
     assert_not is_logged_in?
+    assert_select "a[href=?]", logout_path, false
   end 
   
 end 
