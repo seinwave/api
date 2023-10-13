@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  get '/signup', to: "users#new"
+  resources :users 
   resources :cultivars
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :sessions
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root "cultivars#index"
 end
