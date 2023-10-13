@@ -31,17 +31,17 @@ class UsersSignupTest < UsersSignup
 
 end
 
-class LoginTest < UsersSignup
+class LoginAfterSignupTest < UsersSignup
   def setup
     super
-    post users_path, params: { user: { first_name:  "Example User",
+    post users_path, params: { user: { first_name: "Valid User",
                                        email: "user@example.com",
                                        } }
     @user = assigns(:user)
   end
 
   test "should not log in users with an invalid login token and email" do
-    get edit_session_url('no thank you', email: @user.email)
+    get magic_signup_url('no thank you', email: @user.email)
     follow_redirect!
     assert_template 'cultivars/index'
     assert !is_logged_in?
@@ -51,7 +51,7 @@ class LoginTest < UsersSignup
   end
 
   test "should log in successfully with valid login token and email" do
-    get edit_session_url(@user.login_token, email: @user.email)
+    get magic_signup_url(login_token: @user.login_token, email: @user.email)
     follow_redirect!
     assert_template 'cultivars/index'
     assert is_logged_in?

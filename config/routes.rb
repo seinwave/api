@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   get '/signup', to: "users#new"
-  get '/login', to: "sessions#new"
-  post '/login', to: "sessions#create"
-  patch '/magic_signup', to: "session#edit"
+  get '/magic_login', to: "sessions#create", as: "magic_login"
+  get '/magic_signup', to: "sessions#edit", as: "magic_signup"
   resources :users 
   resources :cultivars
 
