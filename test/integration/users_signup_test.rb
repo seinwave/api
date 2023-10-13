@@ -56,5 +56,6 @@ class LoginTest < UsersSignup
     assert_template 'cultivars/index'
     assert is_logged_in?
     assert_not flash.blank?
+    assert_select 'div.alert'
   end
 end 
