@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  has_many :favorites
-  
+  has_many :favorites,    class_name:   "Favorite",
+                          foreign_key:  "cultivar_id",
+                          dependent:    :destroy
+
   attr_accessor :login_token, :remember_token
 
   ### VALIDATIONS ###
