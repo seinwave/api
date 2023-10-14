@@ -30,6 +30,11 @@ class User < ApplicationRecord
       UserMailer.magic_link(self).deliver_now
     end
 
+    def send_login_magic_link_email
+      update_login_digest
+      UserMailer.magic_link(self).deliver_now
+    end
+
     # generates token and token digest for user model
     def remember
       self.remember_token = User.new_token
@@ -37,6 +42,10 @@ class User < ApplicationRecord
       User.digest(remember_token))
       remember_token_digest
     end
+
+    def forget
+      update_attribute(:remember_token_digest, nil)
+    end 
 
     def session_token
       remember_token_digest || remember
@@ -59,5 +68,11 @@ class User < ApplicationRecord
     self.login_token = User.new_token
     self.login_token_digest = User.digest(login_token)
   end
+
+  def update_login_digest
+    self.login_token = User.new_token
+    update_attribute(:login_token_digest, User.digest(login_token))
+  end
+
 
 end
