@@ -62,10 +62,10 @@ end
   test "should follow and unfollow a user" do
     matt = users(:matt)
     rose  = cultivars(:rose)
-    assert_not matt.favorited_plants?(rose)
+    assert_not matt.favorited?(rose)
     matt.favorite(rose)
-    assert matt.favorite_plants?(rose)
+    assert matt.favorited?(rose)
     matt.unfavorite(rose)
-    assert_not matt.favorited_plants?(archer)
+    assert_not matt.favorited?(rose)
   end
 end

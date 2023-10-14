@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_many :favorites,    class_name:   "Favorite",
                           foreign_key:  "favoriter_id",
                           dependent:    :destroy
-  has_many :favorite_cultivars, through: :favorites, source: :favorited_cultivar
+  has_many :favorite_cultivars, through: :favorites, source: :favorite_cultivar
 
   attr_accessor :login_token, :remember_token
 
@@ -65,15 +65,15 @@ class User < ApplicationRecord
   # FAVORITING METHODS # 
 
   def favorite(cultivar)
-    favorited_cultivars << cultivar
+    favorite_cultivars << cultivar
   end
 
-  def unfavorite(other_user)
-    favorited_cultivars.delete(cultivar)
+  def unfavorite(cultivar)
+    favorite_cultivars.delete(cultivar)
   end
 
   def favorited?(cultivar)
-    favorited_cultivars.include?(cultivar)
+    favorite_cultivars.include?(cultivar)
   end
 
 
