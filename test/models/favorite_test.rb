@@ -4,7 +4,7 @@ class FavoriteTest < ActiveSupport::TestCase
   
   def setup
     @favorite = Favorite.new(user_id: users(:matt).id,
-                                     cultivar_id: cultivars(:lily).id)
+                            cultivar_id: cultivars(:lily).id)
   end
 
   test "should be valid" do
