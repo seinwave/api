@@ -43,13 +43,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_143946) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "cultivar_id"
+    t.integer "favoriter_id"
+    t.integer "favorite_cultivar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cultivar_id"], name: "index_favorites_on_cultivar_id"
-    t.index ["user_id", "cultivar_id"], name: "index_favorites_on_user_id_and_cultivar_id", unique: true
-    t.index ["user_id"], name: "index_favorites_on_user_id"
+    t.index ["favorite_cultivar_id"], name: "index_favorites_on_favorite_cultivar_id"
+    t.index ["favoriter_id", "favorite_cultivar_id"], name: "index_favorites_on_favoriter_id_and_favorite_cultivar_id", unique: true
+    t.index ["favoriter_id"], name: "index_favorites_on_favoriter_id"
   end
 
   create_table "plants", force: :cascade do |t|
