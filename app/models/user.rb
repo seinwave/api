@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :favorites
+  
   attr_accessor :login_token, :remember_token
 
   ### VALIDATIONS ###
