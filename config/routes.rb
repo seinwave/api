@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :api do
+    get 'mapbox/proxy'
+  end
   get     'plants/index'
   get     'plants/show'
   get     'map/show'

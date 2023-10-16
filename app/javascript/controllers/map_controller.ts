@@ -3,6 +3,10 @@ import mapboxgl from 'mapbox-gl';
 export default class extends Controller<Element> {
   connect() {
     document.addEventListener('DOMContentLoaded', () => {
+      const accessToken =
+        'pk.eyJ1IjoibXNlaWRob2x6IiwiYSI6ImNsbTB1ZjNnbTF2dzMzanA0a2hsbnN3cTMifQ.ES49C0NZwqENe95i8d8TSQ';
+      mapboxgl.accessToken = accessToken;
+
       const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v11',
@@ -10,10 +14,11 @@ export default class extends Controller<Element> {
         zoom: 19,
         bearing: 14,
       });
+
       map.on('load', () => {
         fetch('/plants/show')
           .then((response) => {
-            console.log({ response });
+            console.log(response);
             response.json();
           })
           .then((data) => {
