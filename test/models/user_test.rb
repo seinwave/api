@@ -57,4 +57,15 @@ end
     @user.save 
     assert_equal mixed_case_email.downcase, @user.reload.email
   end
+
+  # TESTS FOR FAVORITES # 
+  test "should follow and unfollow a user" do
+    matt = users(:matt)
+    rose  = cultivars(:rose)
+    assert_not matt.favorited?(rose)
+    matt.favorite(rose)
+    assert matt.favorited?(rose)
+    matt.unfavorite(rose)
+    assert_not matt.favorited?(rose)
+  end
 end

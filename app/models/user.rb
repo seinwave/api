@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  has_many :favorites,    class_name:   "Favorite",
+                          foreign_key:  "favoriter_id",
+                          dependent:    :destroy
+  has_many :favorite_cultivars, through: :favorites, source: :favorite_cultivar
+
   attr_accessor :login_token, :remember_token
 
   ### VALIDATIONS ###
@@ -25,39 +30,52 @@ class User < ApplicationRecord
       BCrypt::Password.create(string, cost:cost)
     end
   end 
-  
-    def send_magic_link_email
-      UserMailer.magic_link(self).deliver_now
-    end
 
-    def send_login_magic_link_email
-      update_login_digest
-      UserMailer.magic_link(self).deliver_now
-    end
+  def send_magic_link_email
+    UserMailer.magic_link(self).deliver_now
+  end
 
-    # generates token and token digest for user model
-    def remember
-      self.remember_token = User.new_token
-      update_attribute(:remember_token_digest,
-      User.digest(remember_token))
-      remember_token_digest
-    end
+  def send_login_magic_link_email
+    update_login_digest
+    UserMailer.magic_link(self).deliver_now
+  end
 
-    def forget
-      update_attribute(:remember_token_digest, nil)
-    end 
+  # generates token and token digest for user model
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_token_digest,
+    User.digest(remember_token))
+    remember_token_digest
+  end
 
-    def session_token
-      remember_token_digest || remember
-    end
-     
-    def authenticated_token?(attribute, token)
-      digest = send("#{attribute}_digest")
-      return false if digest.nil?
-      BCrypt::Password.new(digest).is_password?(token)
-    end
+  def forget
+    update_attribute(:remember_token_digest, nil)
+  end 
 
-  
+  def session_token
+    remember_token_digest || remember
+  end
+    
+  def authenticated_token?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  # FAVORITING METHODS # 
+
+  def favorite(cultivar)
+    favorite_cultivars << cultivar
+  end
+
+  def unfavorite(cultivar)
+    favorite_cultivars.delete(cultivar)
+  end
+
+  def favorited?(cultivar)
+    favorite_cultivars.include?(cultivar)
+  end
+
 
   private
   def downcase_email
