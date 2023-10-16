@@ -10,7 +10,7 @@ export default class extends Controller<Element> {
 
     roseIcon.src = roseIconPath || '';
     const accessToken =
-      'pk.eyJ1IjoibXNlaWRob2x6IiwiYSI6ImNsbTB1ZjNnbTF2dzMzanA0a2hsbnN3cTMifQ.ES49C0NZwqENe95i8d8TSQ';
+      'pk.eyJ1IjoibXNlaWRob2x6IiwiYSI6ImNsbnRkcmU1bDAyZmsycW8wdm94dmlsazEifQ.73QWWjTn7i9A0xsesKLqeQ';
     mapboxgl.accessToken = accessToken;
     const map = new mapboxgl.Map({
       container: 'map-container',
