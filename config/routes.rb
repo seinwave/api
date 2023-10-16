@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   delete  '/logout',        to: "sessions#destroy"
   post    '/login',         to: "sessions#create"
   get     '/magic_link',    to: "sessions#edit", as: "magic_link"
+  get     '/map',           to: "map#show"
   resources :users 
   resources :cultivars
 
