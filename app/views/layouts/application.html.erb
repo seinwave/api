@@ -10,9 +10,7 @@
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <script> 
-     const appConfig = {
-        mapboxToken: "#{Rails.application.credentials.mapbox[:access_token]}",
-      };
+     const roseIconPath = "#{asset_path('rose-icon.svg')}";
     </script>
   </head>
 
