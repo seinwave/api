@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get 'map/show'
+  get     'plants/index'
+  get     'plants/show'
+  get     'map/show'
   get     '/signup',        to: "users#new"
   get     '/login',         to: "sessions#new"
   delete  '/logout',        to: "sessions#destroy"

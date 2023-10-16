@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl';
 export default class extends Controller<Element> {
   connect() {
     document.addEventListener('DOMContentLoaded', () => {
-      console.log('MAPPING!!');
       mapboxgl.accessToken = accessToken;
 
       const map = new mapboxgl.Map({
@@ -15,9 +14,13 @@ export default class extends Controller<Element> {
       });
 
       map.on('load', () => {
-        fetch('/plants')
-          .then((response) => response.json())
+        fetch('/plants/show')
+          .then((response) => {
+            console.log(response);
+            response.json();
+          })
           .then((data) => {
+            console.log({ data });
             const geoJsonFeatures = data.plants.map((plant) => ({
               type: 'Feature',
               geometry: {
