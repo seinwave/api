@@ -1,5 +1,5 @@
 
-<div data-controller="map">
+<div data-controller="map" data-mapbox-api-key="<%= Rails.application.credentials.mapbox[:access_token] %>">
     shoulb have a map here
     <div id="map"></div>
 </div>
