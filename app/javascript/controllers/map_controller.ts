@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
-
+import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="map"
-export default class extends Controller {
+export default class extends Controller<Element> {
   connect() {
     const accessToken = appConfig.mapboxToken;
     mapboxgl.accessToken = accessToken;
@@ -15,8 +15,6 @@ export default class extends Controller {
     });
 
     map.on('load', () => {
-      map.addImage('rose-icon', roseIcon);
-
       fetch('/plants')
         .then((response) => response.json())
         .then((data) => {
