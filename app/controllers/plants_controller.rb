@@ -1,9 +1,13 @@
 class PlantsController < ApplicationController
   def index
-    @plants = Plant.all
-    render json:{ plants: @plants}
   end
 
   def show
+  end
+
+  def mapped_plants
+    @plants = Plant.all
+    puts "MAKIN PLANTS", @plants
+    render json: @plants
   end
 end

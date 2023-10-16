@@ -16,14 +16,13 @@ export default class extends Controller<Element> {
       });
 
       map.on('load', () => {
-        fetch('/plants/show')
+        fetch('/map_data/plants')
           .then((response) => {
-            console.log(response);
-            response.json();
+            return response.json();
           })
           .then((data) => {
             console.log({ data });
-            const geoJsonFeatures = data.plants.map((plant) => ({
+            const geoJsonFeatures = data.map((plant) => ({
               type: 'Feature',
               geometry: {
                 type: 'Point',
