@@ -1,9 +1,5 @@
 <h1>All Cultivars</h1>
 
-<div data-controller="hello">
-  <button data-action="click->hello#greet">Greet</button>
-</div>
-
 <ul class="users">
   <% @cultivars.each do |cultivar| %>
   <li><%= link_to cultivar.name, cultivar %></li>
