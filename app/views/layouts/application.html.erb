@@ -9,18 +9,15 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <script> 
-     const roseIconPath = "#{asset_path('rose-icon.svg')}";
-    </script>
   </head>
 
   <body>
     <div class="container">
-      <!-- <%= render 'layouts/header' %>
+      <%= render 'layouts/header' %>
       <% flash.each do | message_type, message| %>
         <%= content_tag(:div, message, class: "alert alert-#{message_type}") %> 
         </div>
-      <% end %>      -->
+      <% end %>     
     </div>
     <%= yield %>
   </body>
