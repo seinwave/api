@@ -64,4 +64,24 @@ export function generateMap() {
       })
       .catch((error) => console.error('Error fetching rose data:', error));
   });
+
+  map.on('click', (e) => {
+    const bbox = [
+      [e.point.x - 5, e.point.y - 5],
+      [e.point.x + 5, e.point.y + 5],
+    ];
+
+    const features = map.queryRenderedFeatures(bbox, {
+      layers: ['custom-marker-layer'],
+    });
+
+    if (features.length) {
+      const coordinates = features[0].geometry.coordinates.slice();
+
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML('<h3>Rose</h3><p>Clicked on a rose icon!</p>')
+        .addTo(map);
+    }
+  });
 }
