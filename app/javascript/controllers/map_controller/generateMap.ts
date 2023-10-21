@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import { fetchPlants } from './api';
 
 const roseIcon = new Image();
 
@@ -18,54 +19,43 @@ export function generateMap() {
     bearing: 14,
   });
 
-  map.on('load', () => {
+  map.on('load', async () => {
     map.addImage('rose-icon', roseIcon);
 
-    fetch('/map_data/plants')
-      .then((response) => response.json())
-      .then((data) => {
-        const geoJsonFeatures = data.map((plant) => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [plant.longitude, plant.latitude],
-          },
-          properties: {
-            id: plant.id,
-            cultivar_id: plant.cultivar_id,
-          },
-        }));
+    const plantData = await fetchPlants();
 
-        const geoJsonFeatureCollection = {
-          type: 'FeatureCollection',
-          features: geoJsonFeatures,
-        };
+    const geoJsonFeatures = plantData.map((plant) => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [plant.longitude, plant.latitude],
+      },
+      properties: {
+        id: plant.id,
+        cultivar_id: plant.cultivar_id,
+      },
+    }));
 
-        map.addSource('plants-source', {
-          type: 'geojson',
-          data: geoJsonFeatureCollection,
-        });
+    const geoJsonFeatureCollection = {
+      type: 'FeatureCollection',
+      features: geoJsonFeatures,
+    };
 
-        map.addLayer({
-          id: 'custom-marker-layer',
-          type: 'symbol',
-          source: 'plants-source',
-          layout: {
-            'icon-image': 'rose-icon',
-            'icon-size': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              0,
-              0.005,
-              22,
-              0.05,
-            ],
-            'icon-allow-overlap': false,
-          },
-        });
-      })
-      .catch((error) => console.error('Error fetching rose data:', error));
+    map.addSource('plants-source', {
+      type: 'geojson',
+      data: geoJsonFeatureCollection,
+    });
+
+    map.addLayer({
+      id: 'custom-marker-layer',
+      type: 'symbol',
+      source: 'plants-source',
+      layout: {
+        'icon-image': 'rose-icon',
+        'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.005, 22, 0.05],
+        'icon-allow-overlap': false,
+      },
+    });
   });
 
   map.on('click', (e) => {
