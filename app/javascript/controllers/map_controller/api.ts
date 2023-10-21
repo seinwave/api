@@ -13,3 +13,8 @@ export async function fetchPlants(): Promise<Plant[]> {
     throw error;
   }
 }
+
+export function routeToInfoPanel(cultivarId: number) {
+  const url = `/map/info_panel/${cultivarId}`;
+  window.location.href = url;
+}

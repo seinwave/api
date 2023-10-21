@@ -1,6 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import type { Map } from 'mapbox-gl';
-import { fetchPlants } from './api';
+import { fetchPlants, routeToInfoPanel } from './api';
 
 function fetchMap() {
   const accessToken =
@@ -74,8 +74,7 @@ function addClickHandlers(map: Map) {
       return;
     }
     const cultivarId = e.features[0].properties.cultivar_id;
-    const url = `/map/info_panel/${cultivarId}`;
-    window.location.href = url;
+    routeToInfoPanel(cultivarId);
   });
 }
 
