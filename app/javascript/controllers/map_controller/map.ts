@@ -1,13 +1,8 @@
 import mapboxgl from 'mapbox-gl';
+import type { Map } from 'mapbox-gl';
 import { fetchPlants } from './api';
 
-const roseIcon = new Image();
-
-export function generateMap() {
-  const mapContainer = document.getElementById('map-container');
-  const roseIconPath = mapContainer && mapContainer.dataset.roseIconPath;
-
-  roseIcon.src = roseIconPath || '';
+function fetchMap() {
   const accessToken =
     'pk.eyJ1IjoibXNlaWRob2x6IiwiYSI6ImNsbnRkcmU1bDAyZmsycW8wdm94dmlsazEifQ.73QWWjTn7i9A0xsesKLqeQ';
   mapboxgl.accessToken = accessToken;
@@ -19,6 +14,15 @@ export function generateMap() {
     bearing: 14,
   });
 
+  return map;
+}
+
+function generateMarkers(map: Map) {
+  const roseIcon = new Image();
+  const mapContainer = document.getElementById('map-container');
+  const roseIconPath = mapContainer && mapContainer.dataset.roseIconPath;
+
+  roseIcon.src = roseIconPath || '';
   map.on('load', async () => {
     map.addImage('rose-icon', roseIcon);
 
@@ -57,27 +61,21 @@ export function generateMap() {
       },
     });
   });
+}
 
-  map.on('click', (e) => {
-    const bbox = [
-      [e.point.x - 5, e.point.y - 5],
-      [e.point.x + 5, e.point.y + 5],
-    ];
-
-    const features = map.queryRenderedFeatures(bbox, {
-      layers: ['custom-marker-layer'],
-    });
-
-    if (features.length) {
-      const coordinates = features[0].geometry.coordinates.slice();
-      const cultivarId = features[0].properties.cultivar_id;
-
-      console.log({ cultivarId });
-
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML('<h3>Rose</h3><p>Clicked on a rose icon!</p>')
-        .addTo(map);
+function addClickHandlers(map: Map) {
+  map.on('click', 'custom-marker-layer', function (e) {
+    if (!e.features || !e.features[0] || !e.features[0].properties) {
+      return;
     }
+    const cultivarId = e.features[0].properties.cultivar_id;
+    const url = `/map/info_panel/${cultivarId}`;
+    window.location.href = url;
   });
+}
+
+export function generateMap() {
+  const map = fetchMap();
+  generateMarkers(map);
+  addClickHandlers(map);
 }
