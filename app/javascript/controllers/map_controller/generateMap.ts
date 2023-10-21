@@ -30,7 +30,10 @@ export function generateMap() {
             type: 'Point',
             coordinates: [plant.longitude, plant.latitude],
           },
-          properties: {},
+          properties: {
+            id: plant.id,
+            cultivar_id: plant.cultivar_id,
+          },
         }));
 
         const geoJsonFeatureCollection = {
@@ -77,6 +80,9 @@ export function generateMap() {
 
     if (features.length) {
       const coordinates = features[0].geometry.coordinates.slice();
+      const cultivarId = features[0].properties.cultivar_id;
+
+      console.log({ cultivarId });
 
       new mapboxgl.Popup()
         .setLngLat(coordinates)
