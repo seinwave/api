@@ -28,7 +28,9 @@ function generateMarkers(map: Map) {
 
     const plantData = await fetchPlants();
 
-    const geoJsonFeatures = plantData.map((plant) => ({
+    const geoJsonFeatures: Array<
+      GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>
+    > = plantData.map((plant) => ({
       type: 'Feature',
       geometry: {
         type: 'Point',
@@ -40,14 +42,17 @@ function generateMarkers(map: Map) {
       },
     }));
 
-    const geoJsonFeatureCollection = {
+    const featureCollection: GeoJSON.FeatureCollection<
+      GeoJSON.Point,
+      GeoJSON.GeoJsonProperties
+    > = {
       type: 'FeatureCollection',
       features: geoJsonFeatures,
     };
 
     map.addSource('plants-source', {
       type: 'geojson',
-      data: geoJsonFeatureCollection,
+      data: featureCollection,
     });
 
     map.addLayer({
