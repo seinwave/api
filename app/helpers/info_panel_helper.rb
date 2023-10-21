@@ -1,0 +1,2 @@
+module InfoPanelHelper
+end

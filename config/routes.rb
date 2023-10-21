@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'info_panel/show'
+  get 'info_panel/hide'
   get     'map_data/plants',        to: "plants#mapped_plants"
   get     '/signup',                to: "users#new"
   get     '/login',                 to: "sessions#new"
