@@ -14,7 +14,22 @@ export async function fetchPlants(): Promise<Plant[]> {
   }
 }
 
-export function routeToInfoPanel(cultivarId: number) {
-  const url = `/map/info_panel/${cultivarId}`;
-  window.location.href = url;
+export async function routeToInfoPanel(cultivarId: number) {
+  console.log('firing request');
+  try {
+    const response = await fetch(`/map_data/info_panel/${cultivarId}`);
+    console.log('request fired');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    const infoPanelContainer = document.getElementById('info-panel-container');
+    if (!infoPanelContainer) {
+      return;
+    }
+    infoPanelContainer.innerHTML = data.name;
+  } catch (error) {
+    console.error('Error fetching plants:', error);
+    throw error;
+  }
 }
