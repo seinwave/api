@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post    '/login',                 to: "sessions#create"
   get     '/magic_link',            to: "sessions#edit", as: "magic_link"
   get     '/map',                   to: "map#show"
+  get     '/map/info_panel/:id',    to: "info_panel#show"
   resources :users 
   resources :cultivars
 
