@@ -27,7 +27,6 @@ export async function routeToInfoPanel(cultivarId: number) {
     if (!infoPanelContainer) {
       return;
     }
-    infoPanelContainer.innerHTML = data.name;
   } catch (error) {
     console.error('Error fetching plants:', error);
     throw error;

@@ -43,6 +43,14 @@ module SessionsHelper
         end 
       end 
   end
+
+  def current_cultivar
+    if(session[:cultivar_id].nil?)
+      return nil
+    else 
+      @cultivar = Cultivar.find(session[:cultivar_id]) 
+    end 
+  end
     
 
 end
