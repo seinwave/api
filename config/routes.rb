@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post    'hide_info',                      to: "cultivars#hide",        as: "hide_info_panel"
   resources :users 
   resources :cultivars
+  resources :favorites,                     only: [:create, :destroy]
 
   root "cultivars#index"
 end

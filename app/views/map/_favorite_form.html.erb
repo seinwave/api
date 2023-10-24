@@ -1,0 +1,8 @@
+<div id="follow_form">
+    <% if current_user.favorited?(current_cultivar) %>
+            <p> You love this plant!</p>
+            <%= link_to "Unlove this cultivar", favorite_cultivar_path(id: current_cultivar.id), data: {"turbo-method": :post} %>
+        <% else %>
+            <%= link_to "Fave this cultivar", favorite_cultivar_path(id: current_cultivar.id), data: {"turbo-method": :post} %>
+        <% end %>
+</div>
