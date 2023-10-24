@@ -2,7 +2,7 @@
     <h2><%= current_cultivar.name %></h2>
     <% if logged_in? %>
     <%= link_to "Hide info panel", hide_info_panel_path, data: {"turbo-method": :post} %>
-    <%= render 'follow_form' %>
+    <%= render 'favorite_form' %>
 <% else %>
     <%= link_to "Log in", login_path %>
 <% end %>

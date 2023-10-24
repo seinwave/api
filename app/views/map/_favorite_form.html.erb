@@ -1,8 +1,11 @@
 <div id="favorite_form">
-    <% if current_user.favorited?(current_cultivar) %>
-            <p> You love this plant!</p>
-            <%= link_to "Unlove this cultivar", favorite_cultivar_path(id: current_cultivar.id), data: {"turbo-method": :post} %>
+    <% if logged_in? %>
+        <% if current_user.favorites.include?(current_cultivar) %>
+            <%= render 'unfavorite' %>
         <% else %>
-            <%= link_to "Fave this cultivar", favorite_cultivar_path(id: current_cultivar.id), data: {"turbo-method": :post} %>
+            <%= render 'add_favorite' %>
         <% end %>
+    <% else %>
+        <%= link_to "Log in", login_path %>
+    <% end %>
 </div>

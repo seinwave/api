@@ -4,10 +4,18 @@ class FavoritesController < ApplicationController
   def create
     cultivar = Cultivar.find(params[:favorite_cultivar_id])
     current_user.favorite(cultivar)
+    respond_to do |format|
+      format.html { redirect_to '/map'}
+      format.turbo_stream
+    end
   end 
 
   def destroy
-    cultivar = Favorite.find(params[:id]).favorite_cultivar
-    current_user.unfavorite(cultivar)
+    @cultivar = Cultivar.find(params[:id])
+    current_user.unfavorite(@cultivar)
+    respond_to do |format|
+      format.html { redirect_to '/map' }
+      format.turbo_stream
+    end
   end 
 end
