@@ -12,6 +12,5 @@ Rails.application.routes.draw do
   resources :users 
   resources :cultivars
   resources :favorites,                     only: [:create, :destroy]
-
   root "cultivars#index"
 end
