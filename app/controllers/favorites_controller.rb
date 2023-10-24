@@ -7,9 +7,7 @@ class FavoritesController < ApplicationController
   end 
 
   def destroy
-    puts 'DESTROYING!'
-    cultivar_id = Favorite.find(params[:id]).favorite_cultivar_id
-    cultivar = Cultivar.find(cultivar_id)
+    cultivar = Favorite.find(params[:id]).favorite_cultivar
     current_user.unfavorite(cultivar)
   end 
 end

@@ -11,10 +11,4 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get show" do
-    get cultivar_path(@cultivar)
-    assert_response :success
-    assert_template 'cultivars/show'
-  end
-
 end

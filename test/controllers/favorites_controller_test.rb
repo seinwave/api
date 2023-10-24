@@ -11,7 +11,7 @@ class FavoritesControllerTest < ActionDispatch::IntegrationTest
 
   test "destroy should require logged-in user" do
     assert_no_difference 'Favorite.count' do
-      delete favorites_path(favorites(:one))
+      delete delete_favorite_path(favorites(:one))
     end
     assert_redirected_to login_url
   end
