@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out 
+    session[:current_cultivar] = nil
     redirect_to root_url, status: :see_other
   end 
 

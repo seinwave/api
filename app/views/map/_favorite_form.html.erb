@@ -1,9 +1,9 @@
 <div id="favorite_form">
     <% if logged_in? %>
         <% if current_user.favorites.include?(current_cultivar) %>
-            <%= render 'unfavorite' %>
+            <%= render 'map/unfavorite', current_cultivar: current_cultivar %>
         <% else %>
-            <%= render 'add_favorite' %>
+            <%= render 'map/add_favorite', current_cultivar: current_cultivar %>
         <% end %>
     <% else %>
         <%= link_to "Log in", login_path %>

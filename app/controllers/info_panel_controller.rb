@@ -6,4 +6,17 @@ class InfoPanelController < ApplicationController
 
   def hide
   end
+
+  def create
+    @cultivar = Cultivar.find(params[:id])
+    @current_cultivar = @cultivar
+    respond_to do |format|
+      format.html { redirect_to '/map' }
+      format.turbo_stream
+    end
+  end 
+
+  def destroy
+  end 
+
 end

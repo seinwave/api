@@ -1,7 +1,5 @@
 <div class="wrapper">
     <div id="map-container" data-controller="map" data-rose-icon-path="<%= asset_path('rose-icon.svg') %>">
     </div>
-    <% if !current_cultivar.nil? %>
-        <%= render 'info_panel' %>
-    <% end %>
+    <%= render 'info_panel' %>
 </div>

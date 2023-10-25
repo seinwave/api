@@ -15,20 +15,23 @@ export async function fetchPlants(): Promise<Plant[]> {
 }
 
 export async function routeToInfoPanel(cultivarId: number) {
-  console.log('firing request');
+  const token = document && document.querySelector('meta[name="csrf-token"]');
+  if (!token) {
+    throw new Error('CSRF token not found');
+  }
   try {
-    const response = await fetch(`/map_data/info_panel/${cultivarId}`);
-    console.log('request fired');
+    const response = await fetch(`/map_data/info_panel/${cultivarId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'text/vnd.turbo-stream.html',
+        'X-CSRF-Token': token.getAttribute('content') || '',
+      },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const data = await response.json();
-    const infoPanelContainer = document.getElementById('info-panel-container');
-    if (!infoPanelContainer) {
-      return;
-    }
   } catch (error) {
-    console.error('Error fetching plants:', error);
+    console.error('Error fetching cultivar info:', error);
     throw error;
   }
 }
