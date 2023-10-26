@@ -35,6 +35,36 @@ export async function routeToInfoPanel(cultivarId: number) {
 
     const body = await response.text();
     Turbo.renderStreamMessage(body);
+
+    await turboUpdateFavorites(cultivarId);
+  } catch (error) {
+    console.error('Error fetching cultivar info:', error);
+    throw error;
+  }
+}
+
+async function turboUpdateFavorites(cultivarId: number) {
+  const token = document && document.querySelector('meta[name="csrf-token"]');
+  if (!token) {
+    throw new Error('CSRF token not found');
+  }
+
+  // TODO: what endpoint should go here, to update the favorites view?
+  try {
+    const response = await fetch(`/favorites/${cultivarId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'text/vnd.turbo-stream.html',
+        'X-CSRF-Token': token.getAttribute('content') || '',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const body = await response.text();
+    Turbo.renderStreamMessage(body);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
     throw error;
