@@ -1,9 +1,7 @@
-<%= puts current_cultivar %>
-
 <div id="info_panel">
     <% if !current_cultivar.nil? %> 
-        <%= puts current_cultivar.name %>
-        <h1 id="cultivar_name"><% current_cultivar.name %></h1>
+        <%= puts "INFO PANEL NAME:", current_cultivar.name %>
+        <h2 id="cultivar-name"><%= current_cultivar.name %></h2>
         <% if logged_in? %>
             <%= link_to "Hide info panel", hide_info_panel_path, data: {"turbo-method": :post} %>
             <%= render 'map/favorite_form', current_cultivar: current_cultivar %>
@@ -11,5 +9,4 @@
             <%= link_to "Log in", login_path %>
         <% end %>
 <% end %>
-
 </div>    

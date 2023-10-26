@@ -1,4 +1,5 @@
 import { Plant } from '../types';
+import { Turbo } from '@hotwired/turbo-rails';
 
 export async function fetchPlants(): Promise<Plant[]> {
   try {
@@ -27,9 +28,13 @@ export async function routeToInfoPanel(cultivarId: number) {
         'X-CSRF-Token': token.getAttribute('content') || '',
       },
     });
+
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
+
+    const body = await response.text();
+    Turbo.renderStreamMessage(body);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
     throw error;
