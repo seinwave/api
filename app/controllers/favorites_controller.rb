@@ -21,6 +21,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     @cultivar = Cultivar.find(params[:id])
+    @current_cultivar = @cultivar
     current_user.unfavorite(@cultivar)
     respond_to do |format|
       format.html { redirect_to '/map' }
