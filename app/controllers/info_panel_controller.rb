@@ -5,6 +5,9 @@ class InfoPanelController < ApplicationController
   end
 
   def hide
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 
   def create
