@@ -1,4 +1,5 @@
 <div id="favorite_form">
+    <% puts 'FAVORITE CULTIVAR', current_cultivar %>
     <% if logged_in? %>
         <% if current_user.favorites.include?(current_cultivar) %>
             <%= render 'map/unfavorite', current_cultivar: current_cultivar %>

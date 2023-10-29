@@ -1,4 +1,5 @@
 <div>
+<% puts 'UNFAVORITE CULTIVAR', current_cultivar %>
 <p> You love this cultivar!</p>
 <%= link_to "Unlove this cultivar", delete_favorite_path(current_cultivar.id), data: {"turbo-method": :delete} %>
 </div>

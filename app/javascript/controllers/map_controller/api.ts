@@ -35,8 +35,6 @@ export async function routeToInfoPanel(cultivarId: number) {
 
     const body = await response.text();
     Turbo.renderStreamMessage(body);
-
-    await turboUpdateFavorites(cultivarId);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
     throw error;

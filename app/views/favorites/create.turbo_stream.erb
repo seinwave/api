@@ -1,3 +1,4 @@
+<% puts 'TURBO STREAM CREATE CURRENT CULTIVAR', @current_cultivar.inspect %>
 <%= turbo_stream.update "favorite_form" do %>
-  <%= render partial: "map/unfavorite" %>
+  <%= render partial: "map/unfavorite", locals: { current_cultivar: @current_cultivar } %>
 <% end %>

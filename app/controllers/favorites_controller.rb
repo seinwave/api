@@ -10,8 +10,9 @@ class FavoritesController < ApplicationController
   end 
 
   def create
-    cultivar = Cultivar.find(params[:favorite_cultivar_id])
-    current_user.favorite(cultivar)
+    @cultivar = Cultivar.find(params[:favorite_cultivar_id])
+    @current_cultivar = @cultivar
+    current_user.favorite(@cultivar)
     respond_to do |format|
       format.html { redirect_to '/map'}
       format.turbo_stream

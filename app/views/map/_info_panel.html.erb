@@ -1,6 +1,5 @@
 <div id="info_panel">
     <% if !current_cultivar.nil? %> 
-        <%= puts "INFO PANEL NAME:", current_cultivar.name %>
         <h2 id="cultivar-name"><%= current_cultivar.name %></h2>
         <% if logged_in? %>
             <%= link_to "Hide info panel", hide_info_panel_path, data: {"turbo-method": :post} %>
