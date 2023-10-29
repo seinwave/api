@@ -1,2 +1,1 @@
-<% puts 'ADD FAVORITE CULTIVAR', current_cultivar %>
 <%= link_to "Fave this cultivar", favorites_path(favorite_cultivar_id: current_cultivar.id), data: {"turbo-method": :post} %>
