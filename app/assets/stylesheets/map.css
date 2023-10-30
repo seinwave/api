@@ -1,0 +1,14 @@
+#map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.info-panel-container {
+  position: absolute;
+  left: 0;
+  width: 20%;
+  height: 200px;
+  background-color: white;
+}

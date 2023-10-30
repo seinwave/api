@@ -14,5 +14,18 @@ class ActiveSupport::TestCase
   def is_logged_in?
     !session[:user_id].nil?
   end
+
+  def log_in_as(user)
+    session[:user_id] = user.id   
+  end 
   
+end
+
+
+class ActionDispatch::IntegrationTest
+  def log_in_as(user)
+    login_token = User.new_token
+    user.update_attribute(:login_token_digest, User.digest(login_token))
+    get magic_link_path, params: { email: user.email, login_token: login_token }
+  end
 end

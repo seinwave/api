@@ -42,7 +42,6 @@ module SessionsHelper
           @current_user = user
         end 
       end 
-  end
-    
+  end    
 
 end

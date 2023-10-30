@@ -5,5 +5,7 @@ class CultivarsController < ApplicationController
 
   def show
     @cultivar = Cultivar.find(params[:id])
+    render json: @cultivar
   end
+
 end

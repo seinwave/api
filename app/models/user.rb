@@ -65,15 +65,19 @@ class User < ApplicationRecord
   # FAVORITING METHODS # 
 
   def favorite(cultivar)
-    favorite_cultivars << cultivar
+    favorite_cultivars << cultivar unless favorited?(cultivar)
   end
 
   def unfavorite(cultivar)
-    favorite_cultivars.delete(cultivar)
+    favorite_cultivars.delete(cultivar) if favorited?(cultivar)
   end
 
   def favorited?(cultivar)
     favorite_cultivars.include?(cultivar)
+  end
+
+  def favorites
+    favorite_cultivars.count
   end
 
 
