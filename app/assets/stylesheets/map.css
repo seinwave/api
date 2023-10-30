@@ -5,8 +5,7 @@
   width: 100%;
 }
 
-#info_panel {
-  z-index: 999;
+.info-panel-container {
   position: absolute;
   left: 0;
   width: 20%;

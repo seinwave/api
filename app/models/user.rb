@@ -69,7 +69,7 @@ class User < ApplicationRecord
   end
 
   def unfavorite(cultivar)
-    favorite_cultivars.delete(cultivar)
+    favorite_cultivars.delete(cultivar) if favorited?(cultivar)
   end
 
   def favorited?(cultivar)

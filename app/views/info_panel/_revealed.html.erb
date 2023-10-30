@@ -1,0 +1,9 @@
+<div id="info_panel" class="info-panel-container">
+        <h2 id="cultivar-name"><%= current_cultivar.name %></h2>
+        <% if logged_in? %>
+            <%= link_to "Hide info panel", hide_info_panel_path, data: {"turbo-method": :post} %>
+            <%= render 'map/favorite_form', current_cultivar: current_cultivar %>
+        <% else %>
+            <%= link_to "Log in", login_path %>
+        <% end %>
+</div>    
