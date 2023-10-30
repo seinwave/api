@@ -1,14 +1,10 @@
 require "test_helper"
 
 class Favorites < ActionDispatch::IntegrationTest
-
   def setup
     @user = users(:matt)
     log_in_as(@user)
   end
-  
-  
- 
 end
 
 class AddFavorite < Favorites
