@@ -8,6 +8,4 @@ class CultivarsController < ApplicationController
     render json: @cultivar
   end
 
-
-
 end
