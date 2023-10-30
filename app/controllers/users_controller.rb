@@ -14,20 +14,6 @@ class UsersController < ApplicationController
     end 
   end
 
-  def toggle_favorite
-    if logged_in?
-      @cultivar = Cultivar.find(params[:id])
-      if current_user.favorited?(@cultivar)
-        current_user.unfavorite(@cultivar)
-      else 
-        current_user.favorite(@cultivar)
-      end
-    else
-      redirect_to login_path
-      flash[:info] = "Please login to favorite cultivars"
-    end 
-  end
-
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email)

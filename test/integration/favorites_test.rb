@@ -1,18 +1,37 @@
 require "test_helper"
 
-class FavoritesTest < ActionDispatch::IntegrationTest
-  
-   test 'should create favorite if logged-in user has NOT favorited the cultivar' do
-    log_in_as(users(:matt))
-    assert_difference 'Favorite.count', 1 do
-      post toggle_favorite_path(cultivars(:rose))
-    end
-  end
+class Favorites < ActionDispatch::IntegrationTest
 
-  test 'should delete favorite if logged-in user has favorited the cultivar' do
-    log_in_as(users(:matt))
-    assert_difference 'Favorite.count', -1 do
-      post toggle_favorite_path(cultivars(:rose))
-    end
+  def setup
+    @user = users(:matt)
+    log_in_as(@user)
+  end
+  
+  
+ 
+end
+
+class AddFavorite < Favorites
+  def setup
+    super 
+  end 
+  
+  test 'should create favorite if logged-in user has NOT favorited the cultivar' do
+   assert_difference '@user.favorite_cultivars.count', 1 do
+     post add_favorite_path(cultivars(:lily), format: :turbo_stream)
+   end
   end
 end
+
+class UnFavorite < Favorites
+  def setup
+    super
+    @user.favorite(cultivars(:rose)) 
+  end 
+  
+   test 'should delete favorite if logged-in user has favorited the cultivar' do
+    assert_difference '@user.favorite_cultivars.count', -1 do
+      delete delete_favorite_path(cultivars(:rose), format: :turbo_stream)
+    end
+  end
+end 

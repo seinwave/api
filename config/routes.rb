@@ -7,11 +7,10 @@ Rails.application.routes.draw do
   get     '/magic_link',                    to: "sessions#edit",          as: "magic_link"
   get     '/map',                           to: "map#show"
   post    'map_data/info_panel/:id',        to: "info_panel#create"
-  post    'favorite_cultivar/:id',          to: "users#toggle_favorite",  as: "toggle_favorite"
+  delete  'favorite_cultivar/:id',          to: "favorites#destroy",      as: "delete_favorite"
+  post    'favorite_culitvar/:id',          to: "favorites#create",       as: "add_favorite"
   post    'hide_info',                      to: "info_panel#hide",        as: "hide_info_panel"
   resources :users 
   resources :cultivars
-  resources :favorites,                     only: [:create]
-  delete '/favorites/:id',                  to: 'favorites#destroy',      as: "delete_favorite"
   root "cultivars#index"
 end

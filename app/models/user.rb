@@ -76,6 +76,10 @@ class User < ApplicationRecord
     favorite_cultivars.include?(cultivar)
   end
 
+  def favorites
+    favorite_cultivars.count
+  end
+
 
   private
   def downcase_email
