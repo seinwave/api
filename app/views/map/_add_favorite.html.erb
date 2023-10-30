@@ -1,1 +1,1 @@
-<%= link_to "Fave this cultivar", favorites_path(favorite_cultivar_id: current_cultivar.id), data: {"turbo-method": :post} %>
+<%= link_to "Fave this cultivar", toggle_favorite_path(favorite_cultivar_id: current_cultivar.id), data: {"turbo-method": :post} %>

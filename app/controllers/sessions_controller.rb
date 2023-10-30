@@ -16,7 +16,6 @@ class SessionsController < ApplicationController
   def edit
     @user = User.find_by(email: params[:email])
     login_token = params[:login_token]
-
     if @user && @user.authenticated_token?(:login_token, login_token)
       log_in @user
       remember @user
