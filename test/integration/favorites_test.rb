@@ -1,10 +1,27 @@
 require "test_helper"
 
 class Favorites < ActionDispatch::IntegrationTest
+end
+
+
+class FavoritesLoggedOut < Favorites 
   test 'favoriting links should not be visible to logged-out users' do
     get '/map'
     assert_select 'div#favorite_form', false
   end
+
+  test 'adding favorites should not work for logged-out users' do 
+    assert_no_difference 'Favorite.count' do
+      post add_favorite_path(cultivars(:lily), format: :turbo_stream)
+    end
+  end
+
+  test 'removing favorites should not work for logged-out users' do 
+    assert_no_difference 'Favorite.count' do
+      delete delete_favorite_path(cultivars(:rose), format: :turbo_stream)
+    end
+  end
+
 end
 
 class FavoritesWithLogin < Favorites
