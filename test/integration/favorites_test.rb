@@ -1,13 +1,20 @@
 require "test_helper"
 
 class Favorites < ActionDispatch::IntegrationTest
+  test 'favoriting links should not be visible to logged-out users' do
+    get '/map'
+    assert_select 'div#favorite_form', false
+  end
+end
+
+class FavoritesWithLogin < Favorites
   def setup
     @user = users(:matt)
     log_in_as(@user)
   end
-end
-
-class AddFavorite < Favorites
+end 
+  
+class AddFavorite < FavoritesWithLogin
   def setup
     super 
   end 
@@ -20,7 +27,7 @@ class AddFavorite < Favorites
   end
 end
 
-class UnFavorite < Favorites
+class UnFavorite < FavoritesWithLogin
   def setup
     super
     @user.favorite(cultivars(:rose)) 
