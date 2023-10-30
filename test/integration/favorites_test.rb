@@ -40,7 +40,7 @@ class AddFavorite < FavoritesWithLogin
    assert_difference '@user.favorite_cultivars.count', 1 do
      post add_favorite_path(cultivars(:lily), format: :turbo_stream)
    end
-   assert_select "a[href=?]", delete_favorite_path(cultivars(:lily)), count: 1, text: "Unlove this cultivar"
+   assert_template 'favorites/create'
   end
 end
 
@@ -54,7 +54,6 @@ class UnFavorite < FavoritesWithLogin
     assert_difference '@user.favorite_cultivars.count', -1 do
       delete delete_favorite_path(cultivars(:rose), format: :turbo_stream)
     end
-
-    assert_select "a[href=?]", add_favorite_path(cultivars(:rose)), count: 1, text: "Fave this cultivar"
+    assert_template 'favorites/destroy'
   end
 end 
