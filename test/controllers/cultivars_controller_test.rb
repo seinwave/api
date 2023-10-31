@@ -11,4 +11,11 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "query should return json" do
+    get query_cultivars_path, params: { query: "lily" }
+    assert_response :success
+    assert_equal "application/json", @response.media_type
+    assert_equal "[]", @response.body
+  end
+
 end

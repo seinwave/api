@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get     'map_data/plants',                to: "plants#mapped_plants"
+  get     'map_data/cultivars',             to: "cultivars#query",        as: "query_cultivars"
   get     '/signup',                        to: "users#new"
   get     '/login',                         to: "sessions#new"
   delete  '/logout',                        to: "sessions#destroy"
