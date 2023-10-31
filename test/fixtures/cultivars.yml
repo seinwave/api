@@ -26,7 +26,7 @@ lily:
 
 <% 30.times do |n| %>
 cultivar_<%= n %>:
-  name:  <%= "User #{n}" %>
+  name:  <%= "Cultivar #{n}" %>
   breeder: "Heenis Weenis"
   description: 'Elegant white lily'
   is_deleted: false
