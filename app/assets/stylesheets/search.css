@@ -1,5 +1,4 @@
 .search-form {
-  /* mimicking google maps */
   position: absolute;
   z-index: 99999999999;
   top: 2rem;
