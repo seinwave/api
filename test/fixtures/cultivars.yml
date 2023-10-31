@@ -23,3 +23,15 @@ lily:
   introduced_year: 2016
   cultivar_group_id: 1
   image_url: ''
+
+<% 30.times do |n| %>
+cultivar_<%= n %>:
+  name:  <%= "User #{n}" %>
+  breeder: "Heenis Weenis"
+  description: 'Elegant white lily'
+  is_deleted: false
+  bred_year: 2015
+  introduced_year: 2016
+  cultivar_group_id: 1
+  image_url: ''
+<% end %>
