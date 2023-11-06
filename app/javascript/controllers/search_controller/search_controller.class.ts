@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import { queryCultivars } from '../api';
+import { queryCultivars, routeToInfoPanel } from '../api';
 
 // Connects to data-controller="search"
 export class SearchController extends Controller {
@@ -8,14 +8,17 @@ export class SearchController extends Controller {
       'search-form'
     ) as HTMLFormElement;
 
-    searchForm?.addEventListener('submit', (event) => {
+    searchForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       const inputForm = (event.target as HTMLFormElement)
         .elements[0] as HTMLInputElement;
       const query = inputForm.value;
 
-      queryCultivars(query);
+      const result = await queryCultivars(query);
+      const cultivarId = result[0]?.id;
+
+      routeToInfoPanel(cultivarId);
     });
   }
 }
