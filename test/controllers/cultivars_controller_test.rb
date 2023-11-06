@@ -28,6 +28,4 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template 'info_panel/_search_results'
   end 
-    
-
 end
