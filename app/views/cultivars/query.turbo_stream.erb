@@ -5,9 +5,7 @@
     <% @current_cultivar = @cultivars.first %>
     <%= render partial: "map/info_panel_container", locals: { current_cultivar: @current_cultivar } %>
   <% else %> 
-    <div class="result" role="alert">
-      Multiple cultivars found.
-    </div>
-    <% end %> 
+    <%= render partial: "info_panel/search_results", locals: { cultivars: @cultivars } %>    
+  <% end %> 
 <% end %>
 

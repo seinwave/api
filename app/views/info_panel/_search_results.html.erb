@@ -1,0 +1,7 @@
+<div id="info_panel" class="info-panel-container">
+    <% @cultivars.each do |cultivar| %>
+        <div class="cultivar-result">
+            <h3><%= link_to cultivar.name, cultivar_path(cultivar) %></h3>
+        </div>
+    <% end %>
+</div>    

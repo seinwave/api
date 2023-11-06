@@ -68,14 +68,14 @@ export async function routeToResultPanel(results: Cultivar[]) {
   }
 }
 
-export async function queryCultivars(queryString: string): Promise<Cultivar[]> {
+export async function queryCultivars(queryString: string) {
   try {
     const response = await fetch(`/map_data/cultivars?query=${queryString}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const data = await response.json();
-    return data;
+    const body = await response.text();
+    Turbo.renderStreamMessage(body);
   } catch (error) {
     console.error('Error querying cultivars:', error);
     throw error;
