@@ -12,13 +12,5 @@ class InfoPanelController < ApplicationController
       format.turbo_stream
     end
   end
-  
-  def list_results(results)
-    @cultivars = results
-    respond_to do |format|
-      format.turbo_stream
-    end
-  end
-
 
 end

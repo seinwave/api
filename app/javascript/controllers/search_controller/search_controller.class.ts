@@ -18,9 +18,9 @@ export class SearchController extends Controller {
       const result = await queryCultivars(query);
 
       if (result.length === 0) {
+        // todo: add empty result view
         return;
       }
-
       if (result.length === 1) {
         routeToInfoPanel(result[0].id);
         return;

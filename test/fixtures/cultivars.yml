@@ -24,6 +24,19 @@ lily:
   cultivar_group_id: 1
   image_url: ''
 
+fleur:
+  id: 3
+  name: 'Betty White'
+  breeder: 'Jane Smith'
+  created_at: <%= 4.days.ago %>
+  updated_at: <%= 4.days.ago %>
+  description: 'Elegant white lily'
+  is_deleted: false
+  bred_year: 2015
+  introduced_year: 2016
+  cultivar_group_id: 1
+  image_url: ''
+
 <% 30.times do |n| %>
 cultivar_<%= n %>:
   name:  <%= "Cultivar #{n}" %>

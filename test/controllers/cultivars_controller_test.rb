@@ -11,20 +11,23 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "exact query should return json" do
-    get query_cultivars_path, params: { query: "White Lily" }
-    assert_response :success
-    assert_equal "application/json", @response.media_type
-    parsed_body = JSON.parse(@response.body)
-    assert_equal "White Lily", parsed_body[0]['name']
-  end
+  # test "null result should render info panel" do
+  #   get query_cultivars_path(params: { query: "Baby Beluga" }, format: :turbo_stream) 
+  #   assert_response :success
+  #   assert_template 'info_panel/_empty'
+  # end
 
-  test "fuzzy query should return result" do
-    get query_cultivars_path, params: { query: "White" }
+  # test "single result should render info panel" do
+  #   get query_cultivars_path(params: { query: "White Lily" }, format: :turbo_stream) 
+  #   assert_response :success
+  #   assert_template 'info_panel/_revealed'
+  # end
+
+  test "multiple results should render result panel" do
+    get query_cultivars_path(params: { query: "White" }, format: :turbo_stream) 
     assert_response :success
-    assert_equal "application/json", @response.media_type
-    parsed_body = JSON.parse(@response.body)
-    assert_equal "White Lily", parsed_body[0]['name']
-  end
+    assert_template 'result_panel/_revealed'
+  end 
+    
 
 end
