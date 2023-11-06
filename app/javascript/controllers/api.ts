@@ -1,4 +1,4 @@
-import { Plant } from '../types';
+import { type Plant, type Cultivar } from './types';
 import { Turbo } from '@hotwired/turbo-rails';
 
 export async function fetchPlants(): Promise<Plant[]> {
@@ -37,6 +37,20 @@ export async function routeToInfoPanel(cultivarId: number) {
     Turbo.renderStreamMessage(body);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
+    throw error;
+  }
+}
+
+export async function queryCultivars(queryString: string): Promise<Cultivar[]> {
+  try {
+    const response = await fetch(`/map_data/cultivars?query=${queryString}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error querying cultivars:', error);
     throw error;
   }
 }

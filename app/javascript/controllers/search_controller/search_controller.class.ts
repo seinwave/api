@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import { queryCultivars } from './api';
+import { queryCultivars } from '../api';
 
 // Connects to data-controller="search"
 export class SearchController extends Controller {
