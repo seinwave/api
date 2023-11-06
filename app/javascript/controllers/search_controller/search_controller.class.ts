@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import { queryCultivars, routeToInfoPanel } from '../api';
+import { queryCultivars, routeToInfoPanel, routeToResultPanel } from '../api';
 
 // Connects to data-controller="search"
 export class SearchController extends Controller {
@@ -16,9 +16,17 @@ export class SearchController extends Controller {
       const query = inputForm.value;
 
       const result = await queryCultivars(query);
-      const cultivarId = result[0]?.id;
 
-      routeToInfoPanel(cultivarId);
+      if (result.length === 0) {
+        return;
+      }
+
+      if (result.length === 1) {
+        routeToInfoPanel(result[0].id);
+        return;
+      } else {
+        routeToResultPanel(result);
+      }
     });
   }
 }
