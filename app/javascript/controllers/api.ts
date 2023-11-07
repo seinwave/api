@@ -1,4 +1,4 @@
-import { type Plant, type Cultivar } from './types';
+import { type Plant } from './types';
 import { Turbo } from '@hotwired/turbo-rails';
 
 export async function fetchPlants(): Promise<Plant[]> {
@@ -16,25 +16,10 @@ export async function fetchPlants(): Promise<Plant[]> {
 }
 
 export async function routeToInfoPanel(cultivarId: number) {
-  const token = document && document.querySelector('meta[name="csrf-token"]');
-  if (!token) {
-    throw new Error('CSRF token not found');
-  }
   try {
-    const response = await fetch(`/map_data/info_panel/${cultivarId}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'text/vnd.turbo-stream.html',
-        'X-CSRF-Token': token.getAttribute('content') || '',
-      },
+    Turbo.visit('/map_data/info_panel/' + cultivarId, {
+      acceptsStreamResponse: true,
     });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const body = await response.text();
-    Turbo.renderStreamMessage(body);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
     throw error;
@@ -43,12 +28,9 @@ export async function routeToInfoPanel(cultivarId: number) {
 
 export async function queryCultivars(queryString: string) {
   try {
-    const response = await fetch(`/map_data/cultivars?query=${queryString}`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const body = await response.text();
-    Turbo.renderStreamMessage(body);
+    Turbo.visit('/map_data/cultivars?query=' + queryString, {
+      acceptsStreamResponse: true,
+    });
   } catch (error) {
     console.error('Error querying cultivars:', error);
     throw error;
