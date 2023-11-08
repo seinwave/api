@@ -12,7 +12,7 @@ class CultivarsController < ApplicationController
     query_string = params[:query]
     @cultivars = Cultivar.where("name LIKE ?", "%#{query_string}%")
     respond_to do |format|
-       format.turbo_stream
+      format.turbo_stream
     end
   end
 
