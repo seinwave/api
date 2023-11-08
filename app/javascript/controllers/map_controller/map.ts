@@ -1,6 +1,6 @@
 import mapboxgl from 'mapbox-gl';
 import type { Map } from 'mapbox-gl';
-import { fetchPlants, routeToInfoPanel } from './api';
+import { fetchPlants, routeToInfoPanel } from '../api';
 
 function fetchMap() {
   const accessToken =

@@ -8,4 +8,12 @@ class CultivarsController < ApplicationController
     render json: @cultivar
   end
 
+  def query
+    query_string = params[:query]
+    @cultivars = Cultivar.where("name LIKE ?", "%#{query_string}%")
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
 end

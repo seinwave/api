@@ -9,3 +9,17 @@ export interface Plant {
   sector_id: number;
   form: number;
 }
+
+export interface Cultivar {
+  id: number;
+  name: string;
+  breeder: string;
+  description: string;
+  bred_year: number;
+  introduced_year: number;
+  cultivar_group_id: number;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+  is_deleted: boolean;
+}

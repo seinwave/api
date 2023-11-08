@@ -1,3 +1,3 @@
-import { MapController } from './map_controller.logic';
+import { MapController } from './map_controller.class';
 
 export default MapController;
