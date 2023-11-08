@@ -21,7 +21,7 @@ export async function routeToInfoPanel(cultivarId: number) {
       acceptsStreamResponse: true,
       action: 'advance',
     });
-    Turbo.navigator.history.push('/map_data/info_panel/' + cultivarId);
+    history.pushState(history.state, '', '/map_data/info_panel/' + cultivarId);
   } catch (error) {
     console.error('Error fetching cultivar info:', error);
     throw error;
@@ -34,7 +34,11 @@ export async function queryCultivars(queryString: string) {
       acceptsStreamResponse: true,
       action: 'advance',
     });
-    Turbo.navigator.history.push('/map_data/cultivars?query=' + queryString);
+    history.pushState(
+      history.state,
+      '',
+      '/map_data/cultivars?query=' + queryString
+    );
   } catch (error) {
     console.error('Error querying cultivars:', error);
     throw error;
