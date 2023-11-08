@@ -11,7 +11,7 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "null result should render info panel" do
+  test "null result should render empty info panel" do
     get query_cultivars_path(params: { query: "Baby Beluga" }, format: :turbo_stream) 
     assert_response :success
     assert_template 'info_panel/_empty'

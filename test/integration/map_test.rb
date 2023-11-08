@@ -8,7 +8,7 @@ class MapTest < ActionDispatch::IntegrationTest
   end
 
   test "a map_data request for a cultivar should reveal an info_panel with relevant information" do 
-    post info_panel_path(1, format: :turbo_stream)
+    get info_panel_path(1, format: :turbo_stream)
     assert_response :success
     assert_template 'info_panel/_revealed'
   end
