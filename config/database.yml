@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: rose_garden_prod
-  username: rose_garden
-  password: <%= ENV["ROSE_GARDEN_DATABASE_PASSWORD"] %>
+  database: <%= Rails.application.credentials.dig(:render, :db_endpoint) %>
