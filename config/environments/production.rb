@@ -68,15 +68,12 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'bbg-roses.onrender.com'
-  config.action_mailer.default_url_options = { host: host }
+  host = 'bbgroses.com'
+  config.action_mailer.default_url_options = { host: 'bbgroses.com' }
   ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => 'apikey',
-    :password       => Rails.application.credentials.dig(:sendgrid, :api_key),
-    :domain         => 'onrender.com',
+    :address        => Rails.application.credentials.dig(:aws, :smtp, :endpoint),
+    :user_name      => Rails.application.credentials.dig(:aws, :smtp, :username),
+    :password       => Rails.application.credentials.dig(:aws, :password),
     :enable_starttls_auto => true
   }
 
