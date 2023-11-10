@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:aws, :rds_endpoint) %>
-  username: <%= Rails.application.credentials.dig(:aws, :rds_username) %>
-  password: <%= Rails.application.credentials.dig(:aws, :rds_password) %>
+  database: <%= Rails.application.credentials.dig(:render, :db_endpoint) %>
