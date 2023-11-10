@@ -73,7 +73,7 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     :address        => Rails.application.credentials.dig(:aws, :smtp, :endpoint),
     :user_name      => Rails.application.credentials.dig(:aws, :smtp, :username),
-    :password       => Rails.application.credentials.dig(:aws, :password),
+    :password       => Rails.application.credentials.dig(:aws, :smtp, :password),
     :enable_starttls_auto => true
   }
 
