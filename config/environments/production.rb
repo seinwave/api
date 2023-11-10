@@ -75,7 +75,7 @@ Rails.application.configure do
     :port           => '587',
     :authentication => :plain,
     :user_name      => 'apikey',
-    :password       => Rails.application.credentials.dig(:sendgrid, :sendgrid_api_key),
+    :password       => Rails.application.credentials.dig(:sendgrid, :api_key),
     :domain         => 'onrender.com',
     :enable_starttls_auto => true
   }
