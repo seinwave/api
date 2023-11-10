@@ -73,7 +73,7 @@ Rails.application.configure do
     :address        => Rails.application.credentials.dig(:aws, :smtp, :endpoint),
     :user_name      => Rails.application.credentials.dig(:aws, :smtp, :username),
     :password       => Rails.application.credentials.dig(:aws, :smtp, :password),
-    :enable_starttls_auto => true
+    :enable_starttls_auto => true,
     :domain => 'bbgroses.com',
     :port => 587
   }
