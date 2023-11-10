@@ -74,6 +74,8 @@ Rails.application.configure do
     :user_name      => Rails.application.credentials.dig(:aws, :smtp, :username),
     :password       => Rails.application.credentials.dig(:aws, :smtp, :password),
     :enable_starttls_auto => true
+    :domain => 'bbgroses.com',
+    :port => 587
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
