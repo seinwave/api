@@ -64,6 +64,10 @@ function generateMarkers(map: Map) {
         'icon-image': 'rose-icon',
         'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.005, 22, 0.05],
         'icon-allow-overlap': false,
+        'text-field': ['get', 'cultivar_name'],
+        'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+        'text-radial-offset': 1.5,
+        'text-justify': 'auto',
       },
     });
   });
