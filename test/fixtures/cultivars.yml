@@ -9,7 +9,6 @@ rose:
   bred_year: 2010
   introduced_year: 2011
   cultivar_group_id: 2
-  image_url: ''
 
 lily:
   id: 2
@@ -22,7 +21,6 @@ lily:
   bred_year: 2015
   introduced_year: 2016
   cultivar_group_id: 1
-  image_url: ''
 
 fleur:
   id: 3
@@ -35,7 +33,6 @@ fleur:
   bred_year: 2015
   introduced_year: 2016
   cultivar_group_id: 1
-  image_url: ''
 
 <% 30.times do |n| %>
 cultivar_<%= n %>:
@@ -46,5 +43,4 @@ cultivar_<%= n %>:
   bred_year: 2015
   introduced_year: 2016
   cultivar_group_id: 1
-  image_url: ''
 <% end %>

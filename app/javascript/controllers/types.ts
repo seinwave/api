@@ -1,6 +1,7 @@
 export interface Plant {
   id: number;
   cultivar_id: number;
+  cultivar_name?: string;
   latitude: number;
   longitude: number;
   is_deleted: boolean;
