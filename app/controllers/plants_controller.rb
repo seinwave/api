@@ -6,8 +6,7 @@ class PlantsController < ApplicationController
   end
 
   def mapped_plants
-    @plants_to_map = []
-    Plant.all.map do |plant|
+    @plants_to_map = Plant.all.map do |plant|
       plant.attributes.merge(cultivar_name: Cultivar.find(plant.cultivar_id).name)
     end 
     render json: @plants_to_map
