@@ -28,8 +28,6 @@ function generateMarkers(map: Map) {
 
     const plantData = await fetchPlants();
 
-    console.log({ plantData });
-
     const geoJsonFeatures: Array<
       GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>
     > = plantData.map((plant) => ({
@@ -41,6 +39,7 @@ function generateMarkers(map: Map) {
       properties: {
         id: plant.id,
         cultivar_id: plant.cultivar_id,
+        cultivar_name: plant.cultivar_name,
       },
     }));
 
