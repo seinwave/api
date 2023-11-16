@@ -9,6 +9,3 @@ application.register('map', MapController);
 
 import SearchController from './search_controller/search_controller';
 application.register('search', SearchController);
-
-import FavoritingController from './favoriting_controller/favoriting_controller';
-application.register('favoriting', FavoritingController);
