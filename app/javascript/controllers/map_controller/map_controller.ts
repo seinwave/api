@@ -4,8 +4,14 @@ import mapboxgl from 'mapbox-gl';
 import type { Map } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
+  static targets = ['mapContainer', 'favorite-link'];
+  declare mapValue: Map;
+
   initialize() {
-    this.generateMap();
+    const map = this.fetchMap();
+    this.mapValue = map;
+    this.generateMarkers();
+    this.addClickHandlers();
   }
 
   fetchMap() {
@@ -37,7 +43,8 @@ export default class MapController extends Controller<Element> {
     return { roseIcon, heartIcon };
   }
 
-  generateMarkers(map: Map) {
+  generateMarkers() {
+    const map = this.mapValue;
     const { roseIcon, heartIcon } = this.generateIcons();
 
     map.on('load', async () => {
@@ -56,9 +63,9 @@ export default class MapController extends Controller<Element> {
         },
         properties: {
           id: plant.id,
+          icon: plant.is_favorite ? 'heart-icon' : 'rose-icon',
           cultivar_id: plant.cultivar_id,
           cultivar_name: plant.cultivar_name,
-          is_favorite: plant.is_favorite?.toString(),
         },
       }));
 
@@ -80,15 +87,7 @@ export default class MapController extends Controller<Element> {
         type: 'symbol',
         source: 'plants-source',
         layout: {
-          'icon-image': [
-            'match',
-            ['get', 'is_favorite'],
-            ['true'],
-            'heart-icon',
-            ['false'],
-            'rose-icon',
-            'heart-icon',
-          ],
+          'icon-image': ['get', 'icon'],
           'icon-size': [
             'interpolate',
             ['linear'],
@@ -108,7 +107,8 @@ export default class MapController extends Controller<Element> {
     });
   }
 
-  addClickHandlers(map: Map) {
+  addClickHandlers() {
+    const map = this.mapValue;
     map.on('click', 'custom-marker-layer', function (e) {
       if (!e.features || !e.features[0] || !e.features[0].properties) {
         return;
@@ -118,9 +118,41 @@ export default class MapController extends Controller<Element> {
     });
   }
 
-  generateMap() {
-    const map = this.fetchMap();
-    this.generateMarkers(map);
-    this.addClickHandlers(map);
+  removeFavorite(event: any) {
+    const cultivarId = event.params.id;
+    if (!cultivarId) {
+      return [];
+    }
+    const map = this.mapValue;
+    // @ts-ignore
+    const geoJsonData = map.getSource('plants-source')._data;
+
+    geoJsonData.features.map((feature) => {
+      if (feature.properties && feature.properties.cultivar_id === cultivarId) {
+        feature.properties.icon = 'rose-icon';
+        return feature;
+      }
+    });
+    // @ts-ignore
+    map.getSource('plants-source').setData(geoJsonData);
+  }
+
+  addFavorite(event: any) {
+    const cultivarId = event.params.id;
+    if (!cultivarId) {
+      return [];
+    }
+    const map = this.mapValue;
+    // @ts-ignore
+    const geoJsonData = map.getSource('plants-source')._data;
+
+    geoJsonData.features.map((feature) => {
+      if (feature.properties && feature.properties.cultivar_id === cultivarId) {
+        feature.properties.icon = 'heart-icon';
+        return feature;
+      }
+    });
+    // @ts-ignore
+    map.getSource('plants-source').setData(geoJsonData);
   }
 }
