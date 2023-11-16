@@ -2,8 +2,12 @@ import { Controller } from '@hotwired/stimulus';
 import { queryCultivars } from '../api';
 
 // Connects to data-controller="search"
-export class SearchController extends Controller {
+export default class SearchController extends Controller {
   initialize() {
+    this.addSearchForm();
+  }
+
+  addSearchForm() {
     const searchForm = document.getElementById(
       'search-form'
     ) as HTMLFormElement;
