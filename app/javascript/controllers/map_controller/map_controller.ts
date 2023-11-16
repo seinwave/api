@@ -122,7 +122,8 @@ export default class MapController extends Controller<Element> {
     });
   }
 
-  updateFeatures(cultivarId: number | '' | undefined) {
+  removeFavorite(event: any) {
+    const cultivarId = event.params.id;
     if (!cultivarId) {
       return [];
     }
@@ -136,15 +137,26 @@ export default class MapController extends Controller<Element> {
         return feature;
       }
     });
-
     // @ts-ignore
     map.getSource('plants-source').setData(geoJsonData);
   }
 
-  removeFavorite(event: any) {}
-
   addFavorite(event: any) {
     const cultivarId = event.params.id;
-    this.updateFeatures(cultivarId);
+    if (!cultivarId) {
+      return [];
+    }
+    const map = this.mapValue;
+    // @ts-ignore
+    const geoJsonData = map.getSource('plants-source')._data;
+
+    geoJsonData.features.map((feature) => {
+      if (feature.properties && feature.properties.cultivar_id === cultivarId) {
+        feature.properties.icon = 'heart-icon';
+        return feature;
+      }
+    });
+    // @ts-ignore
+    map.getSource('plants-source').setData(geoJsonData);
   }
 }
