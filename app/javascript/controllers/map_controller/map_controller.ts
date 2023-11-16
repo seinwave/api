@@ -53,8 +53,6 @@ export default class MapController extends Controller<Element> {
 
       const plantData = await fetchPlants();
 
-      console.log({ plantData });
-
       const geoJsonFeatures: Array<
         GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>
       > = plantData.map((plant) => ({
