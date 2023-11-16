@@ -81,7 +81,7 @@ function generateMarkers(map: Map) {
           'heart-icon',
           ['false'],
           'rose-icon',
-          'heart-icon', // default ?
+          'heart-icon',
         ],
         'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.005, 22, 0.05],
         'icon-allow-overlap': false,
