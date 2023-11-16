@@ -7,8 +7,6 @@ export default class MapController extends Controller<Element> {
   static targets = ['mapContainer', 'favorite-link'];
   declare mapValue: Map;
 
-  mapContainerTargetConnected() {}
-
   initialize() {
     const map = this.fetchMap();
     this.mapValue = map;
