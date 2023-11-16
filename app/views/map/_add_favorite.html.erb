@@ -1,1 +1,1 @@
-<%= link_to "Fave this cultivar", add_favorite_path(current_cultivar.id), data: {"turbo-method": :post, "controller": "favoriting", "action": "favoriting#addFavorite", "cultivar_id": current_cultivar.id} %>
+<%= link_to "Fave this cultivar", add_favorite_path(current_cultivar.id), data: {"turbo-method": :post, "action": "map#addFavorite", "map-id-param": current_cultivar.id} %>
