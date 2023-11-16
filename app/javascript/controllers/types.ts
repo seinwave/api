@@ -9,6 +9,7 @@ export interface Plant {
   updated_at: string;
   sector_id: number;
   form: number;
+  is_favorite?: boolean;
 }
 
 export interface Cultivar {

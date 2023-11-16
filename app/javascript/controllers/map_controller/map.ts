@@ -17,14 +17,26 @@ function fetchMap() {
   return map;
 }
 
-function generateMarkers(map: Map) {
-  const roseIcon = new Image();
+function generateIcons() {
   const mapContainer = document.getElementById('map-container');
-  const roseIconPath = mapContainer && mapContainer.dataset.roseIconPath;
 
+  const roseIcon = new Image();
+  const roseIconPath = mapContainer && mapContainer.dataset.roseIconPath;
   roseIcon.src = roseIconPath || '';
+
+  const heartIcon = new Image();
+  const heartIconPath = mapContainer && mapContainer.dataset.heartIconPath;
+  heartIcon.src = heartIconPath || '';
+
+  return { roseIcon, heartIcon };
+}
+
+function generateMarkers(map: Map) {
+  const { roseIcon, heartIcon } = generateIcons();
+
   map.on('load', async () => {
     map.addImage('rose-icon', roseIcon);
+    map.addImage('heart-icon', heartIcon);
 
     const plantData = await fetchPlants();
 
@@ -40,6 +52,7 @@ function generateMarkers(map: Map) {
         id: plant.id,
         cultivar_id: plant.cultivar_id,
         cultivar_name: plant.cultivar_name,
+        is_favorite: plant.is_favorite?.toString(),
       },
     }));
 
@@ -61,7 +74,15 @@ function generateMarkers(map: Map) {
       type: 'symbol',
       source: 'plants-source',
       layout: {
-        'icon-image': 'rose-icon',
+        'icon-image': [
+          'match',
+          ['get', 'is_favorite'],
+          ['true'],
+          'heart-icon',
+          ['false'],
+          'rose-icon',
+          'heart-icon', // default ?
+        ],
         'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.005, 22, 0.05],
         'icon-allow-overlap': false,
         'text-field': ['get', 'cultivar_name'],
