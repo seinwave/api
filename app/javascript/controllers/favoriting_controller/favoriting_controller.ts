@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus';
-import type { Map } from 'mapbox-gl';
 
 // Connects to data-controller="favoriting"
 export default class FavoritingController extends Controller {

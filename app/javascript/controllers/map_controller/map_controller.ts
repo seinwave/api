@@ -118,6 +118,13 @@ export default class MapController extends Controller<Element> {
     });
   }
 
+  querySourceFeatures(map: Map, cultivar_id) {
+    const features = map.querySourceFeatures('plants-source', {
+      filter: ['==', 'cultivar_id', cultivar_id],
+    });
+    return features;
+  }
+
   generateMap() {
     const map = this.fetchMap();
     this.generateMarkers(map);
