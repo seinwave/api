@@ -133,7 +133,7 @@ export default class MapController extends Controller<Element> {
 
     geoJsonData.features.map((feature) => {
       if (feature.properties && feature.properties.cultivar_id === cultivarId) {
-        feature.properties.icon = 'heart-icon';
+        feature.properties.icon = 'rose-icon';
         return feature;
       }
     });
