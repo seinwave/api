@@ -15,7 +15,7 @@ class PlantsController < ApplicationController
 
   private 
 
-  def is_favorite(cultivar)?
+  def is_favorite(cultivar)
     return false if !current_user
     return current_user.favorited?(cultivar)
   end
