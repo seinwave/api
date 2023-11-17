@@ -7,6 +7,8 @@ gem 'bcrypt'
 
 gem 'jsbundling-rails'
 
+gem 'pry-rails'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
 
