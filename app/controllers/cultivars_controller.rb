@@ -9,11 +9,15 @@ class CultivarsController < ApplicationController
   end
 
   def query
-    query_string = params[:query]
-    @cultivars = Cultivar.where("name LIKE ?", "%#{query_string}%")
-    respond_to do |format|
-      format.turbo_stream
-    end
+    if request.referer == nil
+      redirect_to controller: 'map', action: 'show_with_query', query: params[:query]
+    else
+      query_string = params[:query]
+      @cultivars = Cultivar.where("name LIKE ?", "%#{query_string}%")
+      respond_to do |format|
+        format.turbo_stream
+      end
+    end 
   end
 
 end
