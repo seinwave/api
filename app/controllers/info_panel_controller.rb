@@ -6,8 +6,9 @@ class InfoPanelController < ApplicationController
   end
 
   def create
-    if request.referer != root_url
-      redirect_to root_url
+    if request.referer == nil
+      puts request.referer
+      redirect_to controller: 'map', action: 'show', id: params[:id]
     else
       @cultivar = Cultivar.find(params[:id])
       @current_cultivar = @cultivar

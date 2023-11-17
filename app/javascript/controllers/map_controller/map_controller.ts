@@ -5,9 +5,10 @@ import type { Map } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
   static targets = ['mapContainer', 'favorite-link'];
+  static values = { url: String };
   declare mapValue: Map;
 
-  initialize() {
+  connect() {
     const map = this.fetchMap();
     this.mapValue = map;
     this.generateMarkers();
