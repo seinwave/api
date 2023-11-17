@@ -8,7 +8,7 @@ class SearchTest < ActionDispatch::IntegrationTest
   end
 
   test "a search that matches 1 cultivar should yield an info panel" do 
-    get query_cultivars_path, params: {query: "white lily", format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }
+    get query_cultivars_path, params: {query: "White Lily", format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }
     assert_response :success
     assert_template 'info_panel/_revealed'
   end
