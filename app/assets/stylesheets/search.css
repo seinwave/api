@@ -1,11 +1,16 @@
 .search-input {
   position: absolute;
   z-index: 99999999999;
-  top: 2rem;
-  left: 35rem;
-  padding: 1rem 1rem 1rem 4rem;
+  top: 1rem;
+  left: 3rem;
+  width: 15rem;
+  padding: 1rem;
   font-size: 1.25rem;
   border-radius: 15px;
   box-shadow: 0 0 2px rgb(0 0 0/20%), 0 -1px 0 rgb(0 0 0/2%);
   border: none;
+}
+
+.search-input:focus {
+  outline: none;
 }
