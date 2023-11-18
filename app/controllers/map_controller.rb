@@ -1,7 +1,6 @@
 class MapController < ApplicationController
   def show
       @current_cultivar = nil
-      @plants = Plant.all
   end
 
   def show_with_id
