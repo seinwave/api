@@ -11,12 +11,33 @@ export default class extends Controller {
 
   openModal() {
     this.open = true;
-    this.element.classList.add('open');
+    this.revealModalBackground();
+    this.revealModalDialog();
+  }
+
+  revealModalBackground() {
+    const modalBackground = document.getElementById('modal-background');
+    modalBackground?.classList.add('open');
+  }
+
+  revealModalDialog() {
+    const modalDialog = this.element.querySelector('.modal-dialog');
+    modalDialog?.classList.add('open');
   }
 
   closeModal() {
     this.open = false;
-    this.element.classList.remove('open');
+    this.hideModalBackground();
+  }
+
+  hideModalBackground() {
+    const modalBackground = document.getElementById('modal-background');
+    modalBackground?.classList.remove('open');
+  }
+
+  hideModalDialog() {
+    const modalDialog = this.element.querySelector('.modal-dialog');
+    modalDialog?.classList.remove('open');
   }
 
   toggleModal() {
