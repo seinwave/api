@@ -22,7 +22,7 @@
 .info-panel-container {
   position: absolute;
   top: 2rem;
-  z-index: 9999;
+  z-index: 4;
   left: 3rem;
   width: 30rem;
   background-color: white;

@@ -45,6 +45,7 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: all 0.7s ease;
+  transform: translateY(-200%);
   width: 200px;
   height: 100px;
   background-color: white;

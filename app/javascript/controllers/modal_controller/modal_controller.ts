@@ -21,13 +21,14 @@ export default class extends Controller {
   }
 
   revealModalDialog() {
-    const modalDialog = this.element.querySelector('.modal-dialog');
+    const modalDialog = document.querySelector('.modal-dialog');
     modalDialog?.classList.add('open');
   }
 
   closeModal() {
     this.open = false;
     this.hideModalBackground();
+    this.hideModalDialog();
   }
 
   hideModalBackground() {
@@ -36,7 +37,7 @@ export default class extends Controller {
   }
 
   hideModalDialog() {
-    const modalDialog = this.element.querySelector('.modal-dialog');
+    const modalDialog = document.querySelector('.modal-dialog');
     modalDialog?.classList.remove('open');
   }
 
