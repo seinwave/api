@@ -1,7 +1,20 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 
 // Connects to data-controller="modal"
 export default class extends Controller {
-  connect() {
+  declare open: boolean;
+
+  initialize() {
+    this.open = false;
+  }
+
+  openModal() {
+    this.open = true;
+    this.element.classList.add('open');
+  }
+
+  closeModal() {
+    this.open = false;
+    this.element.classList.remove('open');
   }
 }
