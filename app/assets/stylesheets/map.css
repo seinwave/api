@@ -1,3 +1,17 @@
+.header {
+  display: flex;
+  background-color: transparent;
+  justify-content: right;
+}
+
+.login-panel {
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
 #map-container {
   position: absolute;
   top: 0;
@@ -10,7 +24,7 @@
   top: 2rem;
   z-index: 9999;
   left: 3rem;
-  width: 15rem;
+  width: 30rem;
   background-color: white;
   border-radius: 15px;
   padding: 1rem;
