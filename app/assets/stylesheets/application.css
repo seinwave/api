@@ -18,9 +18,3 @@ body {
   margin: 0;
   padding: 0;
 }
-
-header {
-  display: flex;
-  z-index: 99999999999;
-  background-color: transparent;
-}
