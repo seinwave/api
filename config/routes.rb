@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   post    'hide_info',                      to: "info_panel#hide",        as: "hide_info_panel"
   resources :users 
   resources :cultivars
+  get     'modal',                          to: 'modal#toggle',           as: "toggle_modal"
   root "map#show"
 end

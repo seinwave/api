@@ -1,5 +1,6 @@
 <div class ="header">
     <div class = "login-panel">
+        <%= link_to "Toggle Modal", toggle_modal_path, id: 'toggle-link', data: {turbo_frame: "modal"} %>
         <% if logged_in? %>
             <%= link_to "Log out", logout_path, data: {"turbo-method": :delete} %>
         <% else %>
