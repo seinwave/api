@@ -6,6 +6,7 @@ export default class extends Controller {
 
   initialize() {
     this.open = false;
+    this.addKeyboardEvents();
   }
 
   openModal() {
@@ -30,6 +31,14 @@ export default class extends Controller {
     toggleLink?.addEventListener('click', (event) => {
       event.preventDefault();
       this.toggleModal();
+    });
+  }
+
+  addKeyboardEvents() {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && this.open) {
+        this.closeModal();
+      }
     });
   }
 }

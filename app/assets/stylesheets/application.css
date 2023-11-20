@@ -22,18 +22,17 @@ body {
 .modal {
   z-index: 5;
   position: absolute;
-  display: none;
   height: 100%;
   width: 100%;
   content: '';
   opacity: 0;
+  pointer-events: none;
+  background-color: black;
+  transition: opacity 0.5s ease;
 }
 
 .modal.open {
   display: block;
-  height: 100%;
-  width: 100%;
-  content: '';
   opacity: 0.5;
   background-color: black;
 }
