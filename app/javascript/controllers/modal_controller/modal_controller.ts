@@ -17,4 +17,19 @@ export default class extends Controller {
     this.open = false;
     this.element.classList.remove('open');
   }
+
+  toggleModal() {
+    this.open ? this.closeModal() : this.openModal();
+  }
+
+  addToggleLink() {
+    const toggleLink = document.getElementById(
+      'toggle-link'
+    ) as HTMLAnchorElement;
+
+    toggleLink?.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.toggleModal();
+    });
+  }
 }
