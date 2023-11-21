@@ -18,7 +18,7 @@
     <a href="https://github.com/seinwave/rose_garden"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https:www.bbgroses.com">View Demo</a> 
+    <a href="https://www.bbgroses.com">View Demo</a> 
     ·
     <a href="https://github.com/seinwave/rose_garden/issues">Report Bug</a>
     ·
