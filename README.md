@@ -67,7 +67,7 @@ BBG Roses is here to help you find your favorite flowers, and remember where the
 ### Built With
 
 - [![Rails][Rails]][Rails-url]
-- [![TypeScript][Typescript]][Typescript]
+- [![TypeScript][Typescript]][Typescript-url]
 - [![Mapbox][Mapbox]][Mapbox-url]
 - [![Hotwire][Hotwire]][Hotwire-url]
 
