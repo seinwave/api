@@ -7,12 +7,14 @@ export default class extends Controller {
   initialize() {
     this.open = false;
     this.addKeyboardEvents();
+    this.addModalBackgroundClickEvent();
   }
 
   openModal() {
     this.open = true;
     this.revealModalBackground();
     this.revealModalDialog();
+    this.disableClickThroughs();
   }
 
   revealModalBackground() {
@@ -25,10 +27,21 @@ export default class extends Controller {
     modalDialog?.classList.add('open');
   }
 
+  disableClickThroughs() {
+    const wrapper = document.querySelector('.wrapper');
+    wrapper?.classList.add('no-click-through');
+  }
+
+  restoreClickThroughs() {
+    const wrapper = document.querySelector('.wrapper');
+    wrapper?.classList.remove('no-click-through');
+  }
+
   closeModal() {
     this.open = false;
     this.hideModalBackground();
     this.hideModalDialog();
+    this.restoreClickThroughs();
   }
 
   hideModalBackground() {
@@ -61,6 +74,13 @@ export default class extends Controller {
       if (event.key === 'Escape' && this.open) {
         this.closeModal();
       }
+    });
+  }
+
+  addModalBackgroundClickEvent() {
+    const modalBackground = document.getElementById('modal-background');
+    modalBackground?.addEventListener('click', () => {
+      this.closeModal();
     });
   }
 }
