@@ -35,6 +35,9 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
+      <ul>
+        <li><a href="#deployed-on">Deployed on</a></li>
+      </ul>
     </li>
     <li>
       <a href="#running-locally">Running locally</a>
@@ -70,6 +73,12 @@ BBG Roses is here to help you find your favorite flowers, and remember where the
 - [![Hotwire][Hotwire]][Hotwire-url]
 - [![TypeScript][Typescript]][Typescript-url]
 - [![Mapbox][Mapbox]][Mapbox-url]
+
+### Deployed On
+
+- [![Render][Render]][Render-url]
+- [![SES][SES]][SES-url]
+- [![Route 53][Route-53]][Route-53-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -199,3 +208,9 @@ Matt Seidholz - mseidholz@gmail.com
 [Hotwire-url]: https://hotwired.dev/
 [Hotwire]: https://img.shields.io/badge/Hotwire-FFE801?style=for-the-badge&logo=hotwire&logoColor=000000&link=https%3A%2F%2Fhotwired.dev%2F
 [Hotwire-url]: https://hotwired.dev/
+[Render]: https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white
+[Render-url]: https://render.com/
+[SES]: https://img.shields.io/badge/Amazon%20SES-DD344C?style=for-the-badge&logo=amazonsimpleemailservice&logoColor=white
+[SES-url]: https://aws.amazon.com/ses/
+[Route-53]: https://img.shields.io/badge/Amazon%20Route%2053-8C4FFF?style=for-the-badge&logo=amazonroute53&logoColor=white
+[Route-53-url]: https://aws.amazon.com/route53/
