@@ -90,7 +90,6 @@ export default class extends Controller {
         this.closeModal();
       }
       if (event.key === 'Tab' && this.open) {
-        console.log('tabbing');
         this.retainFocus(event);
       }
     });
