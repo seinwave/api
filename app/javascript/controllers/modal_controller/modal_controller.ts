@@ -1,5 +1,19 @@
 import { Controller } from '@hotwired/stimulus';
 
+const FOCUSABLE_ELEMENTS = [
+  'a[href]',
+  'area[href]',
+  'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+  'select:not([disabled]):not([aria-hidden])',
+  'textarea:not([disabled]):not([aria-hidden])',
+  'button:not([disabled]):not([aria-hidden])',
+  'iframe',
+  'object',
+  'embed',
+  '[contenteditable]',
+  '[tabindex]:not([tabindex^="-"])',
+];
+
 // Connects to data-controller="modal"
 export default class extends Controller {
   declare open: boolean;
@@ -15,6 +29,7 @@ export default class extends Controller {
     this.revealModalBackground();
     this.revealModalDialog();
     this.disableClickThroughs();
+    this.setFocusToFirstNode();
   }
 
   revealModalBackground() {
@@ -74,6 +89,10 @@ export default class extends Controller {
       if (event.key === 'Escape' && this.open) {
         this.closeModal();
       }
+      if (event.key === 'Tab' && this.open) {
+        console.log('tabbing');
+        this.retainFocus(event);
+      }
     });
   }
 
@@ -82,5 +101,53 @@ export default class extends Controller {
     modalBackground?.addEventListener('click', () => {
       this.closeModal();
     });
+  }
+
+  /* TAB AND FOCUS MANAGEMENT */
+
+  getFocusableNodes() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    const nodes = modalDialog?.querySelectorAll(FOCUSABLE_ELEMENTS.join(', '));
+    return Array.from(nodes || []);
+  }
+
+  setFocusToFirstNode() {
+    const focusableNodes = this.getFocusableNodes();
+
+    // no focusable nodes
+    if (focusableNodes.length === 0) return;
+
+    const nodesWhichAreNotCloseTargets = focusableNodes.filter((node) => {
+      return !node.hasAttribute('closeTrigger');
+    });
+
+    if (nodesWhichAreNotCloseTargets.length > 0) {
+      (nodesWhichAreNotCloseTargets[0] as HTMLElement).focus();
+    } else {
+      (focusableNodes[0] as HTMLElement).focus();
+    }
+  }
+
+  retainFocus(event) {
+    let focusableNodes = this.getFocusableNodes();
+
+    // no focusable nodes
+    if (focusableNodes.length === 0) return;
+
+    const focusedItemIndex = 0;
+
+    if (event.shiftKey && focusedItemIndex === 0) {
+      (focusableNodes[focusableNodes.length - 1] as HTMLElement).focus();
+      event.preventDefault();
+    }
+
+    if (
+      !event.shiftKey &&
+      focusableNodes.length > 0 &&
+      focusedItemIndex === focusableNodes.length - 1
+    ) {
+      (focusableNodes[0] as HTMLElement).focus();
+      event.preventDefault();
+    }
   }
 }
