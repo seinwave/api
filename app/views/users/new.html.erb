@@ -1,2 +1,4 @@
-<h1>Sign up</h1>
-<%= render 'form' %>
+<%= turbo_frame_tag "modal" do %>
+  <h1>Sign up</h1>
+  <%= render 'form' %>
+<% end %>

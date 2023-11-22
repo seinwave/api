@@ -1,2 +1,4 @@
-<h1>Gimme your email, get your magic link</h1>
-<%= render 'form' %>
+<%= turbo_frame_tag "modal" do %>
+  <h1>Gimme your email, get your magic link</h1>
+  <%= render 'form' %>
+<% end %>

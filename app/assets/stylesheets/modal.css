@@ -24,10 +24,9 @@
   pointer-events: none;
   transition: all 0.7s ease;
   transform: translateY(-200%);
-  width: 200px;
-  height: 100px;
+  width: 400px;
   background-color: white;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 15px;
 }
 
