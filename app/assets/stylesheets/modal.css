@@ -1,0 +1,39 @@
+#modal-background {
+  z-index: 5;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0);
+  transition: opacity 0.5s ease;
+}
+
+#modal-background.open {
+  display: block;
+  opacity: 0.5;
+  background-color: black;
+}
+
+.modal-dialog {
+  z-index: 6;
+  position: absolute;
+  top: 0;
+  left: 40%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.7s ease;
+  transform: translateY(-200%);
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.modal-dialog.open {
+  opacity: 1;
+  transform: translateY(200%);
+  pointer-events: auto;
+}
