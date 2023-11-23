@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "modal" do %>
+  <button data-action="click->modal#closeModal">Close</button>
   <h1>Sign up</h1>
   <%= render 'form' %>
 <% end %>

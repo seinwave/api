@@ -150,6 +150,7 @@ export default class extends Controller {
   }
 
   restoreLastFocusedElement() {
+    if (!this.lastFocusedElement) return;
     this.lastFocusedElement.focus();
   }
 
