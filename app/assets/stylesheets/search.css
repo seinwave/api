@@ -1,6 +1,6 @@
 .search-input {
   position: absolute;
-  z-index: 4;
+  z-index: 5;
   top: 1rem;
   left: 3rem;
   width: 30rem;
