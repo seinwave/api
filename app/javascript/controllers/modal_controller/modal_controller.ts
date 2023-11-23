@@ -171,7 +171,7 @@ export default class extends Controller {
     if (focusableNodes.length === 0) return;
 
     const nodesWhichAreNotCloseTargets = focusableNodes.filter((node) => {
-      return !node.hasAttribute('closeTrigger');
+      return !node.hasAttribute('closetrigger');
     });
 
     if (nodesWhichAreNotCloseTargets.length > 0) {

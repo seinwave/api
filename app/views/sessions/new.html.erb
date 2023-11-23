@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "modal" do %>
-  <button data-action="click->modal#closeModal">Close</button>
+  <button data-action="click->modal#closeModal" closeTrigger="true">Close</button>
   <h1>Gimme your email, get your magic link</h1>
   <%= render 'form' %>
 <% end %>
