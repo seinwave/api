@@ -17,6 +17,7 @@ const FOCUSABLE_ELEMENTS = [
 // Connects to data-controller="modal"
 export default class extends Controller {
   declare open: boolean;
+  declare lastFocusedElement: HTMLElement;
 
   initialize() {
     this.open = false;
@@ -24,64 +25,8 @@ export default class extends Controller {
     this.addModalBackgroundClickEvent();
   }
 
-  openModal() {
-    this.open = true;
-    this.revealModalBackground();
-    this.revealModalDialog();
-    this.disableClickThroughs();
-    this.setFocusToFirstNode();
-  }
-
-  revealModalBackground() {
-    const modalBackground = document.getElementById('modal-background');
-    modalBackground?.classList.add('open');
-  }
-
-  revealModalDialog() {
-    const modalDialog = document.querySelector('.modal-dialog');
-    modalDialog?.classList.add('open');
-  }
-
-  disableClickThroughs() {
-    const wrapper = document.querySelector('.wrapper');
-    wrapper?.classList.add('no-click-through');
-  }
-
-  restoreClickThroughs() {
-    const wrapper = document.querySelector('.wrapper');
-    wrapper?.classList.remove('no-click-through');
-  }
-
-  closeModal() {
-    this.open = false;
-    this.hideModalBackground();
-    this.hideModalDialog();
-    this.restoreClickThroughs();
-  }
-
-  hideModalBackground() {
-    const modalBackground = document.getElementById('modal-background');
-    modalBackground?.classList.remove('open');
-  }
-
-  hideModalDialog() {
-    const modalDialog = document.querySelector('.modal-dialog');
-    modalDialog?.classList.remove('open');
-  }
-
   toggleModal() {
     this.open ? this.closeModal() : this.openModal();
-  }
-
-  addToggleLink() {
-    const toggleLink = document.getElementById(
-      'toggle-link'
-    ) as HTMLAnchorElement;
-
-    toggleLink?.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.toggleModal();
-    });
   }
 
   addKeyboardEvents() {
@@ -102,16 +47,124 @@ export default class extends Controller {
     });
   }
 
+  /* OPENING THE MODAL */
+  openModal() {
+    this.setLastFocusedElement();
+    this.open = true;
+    this.revealModalBackground();
+    this.revealModalDialog();
+    this.removeAriaHidden();
+    this.addAriaModal();
+    this.addDialogRole();
+    this.disableClickThroughs();
+    this.setFocusToFirstNode();
+  }
+
+  addAriaModal() {
+    const modalDialog = document.getElementById('modal-dialog');
+    modalDialog?.setAttribute('aria-modal', 'true');
+  }
+
+  addDialogRole() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    modalDialog?.setAttribute('role', 'dialog');
+  }
+
+  removeAriaHidden() {
+    const modal = document.querySelector('.modal');
+    modal?.removeAttribute('aria-hidden');
+  }
+
+  revealModalBackground() {
+    const modalBackground = document.getElementById('modal-background');
+    modalBackground?.classList.add('open');
+  }
+
+  revealModalDialog() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    modalDialog?.classList.add('open');
+  }
+
+  disableClickThroughs() {
+    const wrapper = document.querySelector('.wrapper');
+    wrapper?.classList.add('no-click-through');
+  }
+
+  /* CLOSING THE MODAL */
+
+  closeModal() {
+    this.open = false;
+    this.restoreLastFocusedElement();
+    this.hideModalBackground();
+    this.hideModalDialog();
+    this.addAriaHidden();
+    this.removeAriaModal();
+    this.removeDialogRole();
+    this.restoreClickThroughs();
+  }
+
+  removeAriaModal() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    modalDialog?.removeAttribute('aria-modal');
+  }
+
+  addAriaHidden() {
+    const modal = document.querySelector('.modal');
+    modal?.setAttribute('aria-hidden', 'true');
+  }
+
+  removeDialogRole() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    modalDialog?.removeAttribute('role');
+  }
+
+  hideModalBackground() {
+    const modalBackground = document.getElementById('modal-background');
+    modalBackground?.classList.remove('open');
+  }
+
+  hideModalDialog() {
+    const modalDialog = document.querySelector('.modal-dialog');
+    modalDialog?.classList.remove('open');
+  }
+
+  restoreClickThroughs() {
+    const wrapper = document.querySelector('.wrapper');
+    wrapper?.classList.remove('no-click-through');
+  }
+
   /* TAB AND FOCUS MANAGEMENT */
 
-  getFocusableNodes() {
+  /* Restores focus to the last element that had focus before the modal opened.
+   A WAI/ARIA requirement -- see http://www.w3.org/TR/wai-aria-practices/#dialog_modal 
+  */
+  getLastFocusedElement() {
+    const focusedElementBeforeModalOpened = document.querySelector(
+      ':focus'
+    ) as HTMLElement;
+    return focusedElementBeforeModalOpened;
+  }
+
+  setLastFocusedElement() {
+    this.lastFocusedElement = this.getLastFocusedElement();
+  }
+
+  restoreLastFocusedElement() {
+    this.lastFocusedElement.focus();
+  }
+
+  /* Captures focus within the dialog modal.
+   A WAI/ARIA requirement -- see http://www.w3.org/TR/wai-aria-practices/#dialog_modal 
+  */
+
+  getFocusableNodesWithinModal() {
     const modalDialog = document.querySelector('.modal-dialog');
     const nodes = modalDialog?.querySelectorAll(FOCUSABLE_ELEMENTS.join(', '));
     return Array.from(nodes || []);
   }
 
   setFocusToFirstNode() {
-    const focusableNodes = this.getFocusableNodes();
+    const focusableNodes = this.getFocusableNodesWithinModal();
 
     // no focusable nodes
     if (focusableNodes.length === 0) return;
@@ -128,7 +181,7 @@ export default class extends Controller {
   }
 
   retainFocus(event) {
-    let focusableNodes = this.getFocusableNodes();
+    let focusableNodes = this.getFocusableNodesWithinModal();
 
     // no focusable nodes
     if (focusableNodes.length === 0) return;
