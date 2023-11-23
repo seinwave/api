@@ -10,6 +10,14 @@
   top: 1rem;
   font-size: 1.5rem;
   z-index: 1;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 15px;
+
+  @media screen and (max-width: 768px) {
+    top: unset;
+    bottom: 3rem;
+  }
 }
 
 #map-container {
@@ -29,12 +37,13 @@
   border-radius: 15px;
   padding: 1rem;
   padding-top: 2rem;
+  max-height: 30vh;
+  overflow-y: scroll;
+  /* make scroll bar invisible */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   @media (max-width: 768px) {
-    max-height: 30vh;
-    overflow-y: scroll;
-    /* make scroll bar invisible */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    width: 15rem;
   }
 }
