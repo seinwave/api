@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   get     'map_data/plants',                to: "plants#mapped_plants"
   get     'map_data/cultivars',             to: "cultivars#query",        as: "query_cultivars",  defaults: {format: :turbo_stream}
   get     '/signup',                        to: "users#new"
-  get     '/login',                         to: "sessions#new"
+  get     '/login',                         to: "sessions#new",           as: "login"            
   delete  '/logout',                        to: "sessions#destroy"
-  post    '/login',                         to: "sessions#create"
+  post    '/login',                         to: "sessions#create"                                
   get     '/magic_link',                    to: "sessions#edit",          as: "magic_link"
   get     '/map',                           to: "map#show"
   get     '/map/:id',                       to: "map#show_with_id",       as: "map_with_id"
@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   post    'hide_info',                      to: "info_panel#hide",        as: "hide_info_panel"
   resources :users 
   resources :cultivars
+  get     'modal',                          to: 'modal#toggle',           as: "toggle_modal"
   root "map#show"
 end

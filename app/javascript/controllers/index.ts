@@ -9,3 +9,6 @@ application.register('map', MapController);
 
 import SearchController from './search_controller/search_controller';
 application.register('search', SearchController);
+
+import ModalController from './modal_controller/modal_controller';
+application.register('modal', ModalController);

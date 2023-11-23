@@ -4,6 +4,6 @@
             <%= link_to "Hide info panel", hide_info_panel_path, data: {"turbo-method": :post} %>
             <%= render 'map/favorite_form', current_cultivar: current_cultivar %>
         <% else %>
-            <%= link_to "Log in", login_path %>
+             <%= link_to "Log in", login_path, data: {turbo_frame: "modal"} %>
         <% end %>
 </div>    
