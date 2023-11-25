@@ -43,8 +43,10 @@
   /* make scroll bar invisible */
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+  .info-panel-container {
     width: 15rem;
   }
 }
