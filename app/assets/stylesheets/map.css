@@ -13,13 +13,14 @@
   background-color: white;
   padding: 0.5rem;
   border-radius: 15px;
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+  .login-panel {
     top: unset;
     bottom: 3rem;
   }
 }
-
 #map-container {
   position: absolute;
   top: 0;
