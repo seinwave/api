@@ -17,7 +17,7 @@ export default class SearchController extends Controller {
 
       const inputForm = (event.target as HTMLFormElement)
         .elements[0] as HTMLInputElement;
-      const query = inputForm.value;
+      const query = inputForm.value.toLowerCase();
 
       await queryCultivars(query);
     });
