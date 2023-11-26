@@ -1,3 +1,5 @@
+@import 'z-index-map.scss';
+
 .header {
   display: flex;
   background-color: transparent;
@@ -9,7 +11,7 @@
   right: 2rem;
   top: 1rem;
   font-size: 1.5rem;
-  z-index: 1;
+  z-index: map-get($zindex, base);
   background-color: white;
   padding: 0.5rem;
   border-radius: 15px;
@@ -31,7 +33,7 @@
 .info-panel-container {
   position: absolute;
   top: 2rem;
-  z-index: 4;
+  z-index: map-get($zindex, info-panel);
   left: 3rem;
   width: 30rem;
   background-color: white;
