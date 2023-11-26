@@ -13,13 +13,14 @@
   background-color: white;
   padding: 0.5rem;
   border-radius: 15px;
+}
 
-  @media screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .login-panel {
     top: unset;
     bottom: 3rem;
   }
 }
-
 #map-container {
   position: absolute;
   top: 0;
@@ -42,8 +43,10 @@
   /* make scroll bar invisible */
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+  .info-panel-container {
     width: 15rem;
   }
 }
