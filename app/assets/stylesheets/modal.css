@@ -42,4 +42,8 @@
   .modal-dialog {
     width: 250px;
   }
+
+  .modal-dialog.open {
+    transform: translateY(50%);
+  }
 }
