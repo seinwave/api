@@ -18,13 +18,15 @@
 .modal-dialog {
   z-index: 6;
   position: absolute;
-  top: 0;
-  left: 40%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
   opacity: 0;
   pointer-events: none;
   transition: all 0.7s ease;
-  transform: translateY(-200%);
-  width: 400px;
+  transform: translateY(-100%);
   background-color: white;
   padding: 2rem;
   border-radius: 15px;
@@ -32,6 +34,12 @@
 
 .modal-dialog.open {
   opacity: 1;
-  transform: translateY(200%);
+  transform: translateY(100%);
   pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .modal-dialog {
+    width: 250px;
+  }
 }
