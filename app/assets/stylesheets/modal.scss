@@ -1,4 +1,4 @@
-@import 'z-index-map.scss';
+@import 'variables.scss';
 
 #modal-background {
   z-index: map-get($zindex, overlay);
@@ -32,6 +32,7 @@
   background-color: white;
   padding: 2rem;
   border-radius: 15px;
+  box-shadow: $subtle-box-shadow;
 }
 
 .modal-dialog.open {

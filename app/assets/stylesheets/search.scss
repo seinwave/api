@@ -1,4 +1,4 @@
-@import 'z-index-map.scss';
+@import 'variables.scss';
 
 .search-input {
   position: absolute;
@@ -9,7 +9,7 @@
   padding: 1rem;
   font-size: 1.25rem;
   border-radius: 15px;
-  box-shadow: 0 0 5px hsla(0, 0%, 76%, 1), 0 -2px 5px hsla(0, 0%, 86%, 1);
+  box-shadow: $subtle-box-shadow;
   border: none;
 }
 

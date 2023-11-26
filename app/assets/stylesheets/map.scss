@@ -1,4 +1,4 @@
-@import 'z-index-map.scss';
+@import 'variables.scss';
 
 .header {
   display: flex;
@@ -15,6 +15,7 @@
   background-color: white;
   padding: 0.5rem;
   border-radius: 15px;
+  box-shadow: $subtle-box-shadow;
 }
 
 @media (max-width: 768px) {
