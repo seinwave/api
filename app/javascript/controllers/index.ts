@@ -12,3 +12,6 @@ application.register('search', SearchController);
 
 import ModalController from './modal_controller/modal_controller';
 application.register('modal', ModalController);
+
+import ToastController from './toast_controller/toast_controller';
+application.register('toast', ToastController);

@@ -16,7 +16,7 @@
   <body>
     <div class="container">
       <% flash.each do | message_type, message| %>
-        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %> 
+        <div class="toast" data-controller="toast" data-type="" data-message=""></div> 
         </div>
       <% end %>     
     </div>
