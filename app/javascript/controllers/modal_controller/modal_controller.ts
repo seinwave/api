@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus';
-import { getMagicLink } from '../api';
 
 const FOCUSABLE_ELEMENTS = [
   'a[href]',
@@ -25,10 +24,6 @@ export default class extends Controller {
     this.addKeyboardEvents();
     this.addModalBackgroundClickEvent();
     this.addTurboIntercepEvent();
-  }
-
-  handleSubmit(event) {
-    console.log('handleSubmit');
   }
 
   toggleModal() {
