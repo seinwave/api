@@ -44,3 +44,17 @@ export async function queryCultivars(queryString: string) {
     throw error;
   }
 }
+
+export async function getMagicLink(email: string) {
+  try {
+    const response = await fetch('/login?email=' + email, { method: 'POST' });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching magic link:', error);
+    throw error;
+  }
+}

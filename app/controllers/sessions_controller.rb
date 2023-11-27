@@ -6,10 +6,11 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email].downcase)
     if @user
       @user.send_login_magic_link_email
-      redirect_to root_url
-      flash[:info] = "Check your email for your Magic Login Link!"
+      flash.now[:success] = "Check your email for your BBG Magic Link!"
+      render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
     else 
-      flash[:danger] = "No account associated with that email, bub"
+      flash.now[:error] = "That email address ain't familiar bub"
+      render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
     end 
   end 
 

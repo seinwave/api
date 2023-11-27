@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { getMagicLink } from '../api';
 
 const FOCUSABLE_ELEMENTS = [
   'a[href]',
@@ -23,6 +24,11 @@ export default class extends Controller {
     this.open = false;
     this.addKeyboardEvents();
     this.addModalBackgroundClickEvent();
+    this.addTurboIntercepEvent();
+  }
+
+  handleSubmit(event) {
+    console.log('handleSubmit');
   }
 
   toggleModal() {
@@ -37,6 +43,12 @@ export default class extends Controller {
       if (event.key === 'Tab' && this.open) {
         this.retainFocus(event);
       }
+    });
+  }
+
+  addTurboIntercepEvent() {
+    document.addEventListener('turbo:frame-missing', (event) => {
+      event.preventDefault();
     });
   }
 
