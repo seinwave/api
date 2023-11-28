@@ -1,6 +1,10 @@
 import { Controller } from '@hotwired/stimulus';
 import { Notyf } from 'notyf';
 
+interface ModalController extends Controller {
+  closeModal(): void;
+}
+
 // Connects to data-controller="toast"
 export default class extends Controller {
   static values = {
@@ -8,7 +12,7 @@ export default class extends Controller {
     type: String,
   };
   static outlets = ['modal'];
-  declare modalOutlets: Array<Controller>;
+  declare modalOutlets: Array<ModalController>;
   declare messageValue: string;
   declare typeValue: string;
   declare notyf: Notyf;
@@ -18,11 +22,6 @@ export default class extends Controller {
       // catching turbo previews, which hit a cache
       return;
     }
-
-    console.log(
-      document.documentElement,
-      document.documentElement.hasAttribute('data-turbo-preview')
-    );
 
     this.addToast();
   }
