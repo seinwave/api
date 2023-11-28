@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="<%= form_authenticity_token %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -23,7 +24,7 @@
     tabindex="-1"
     aria-hidden="true"
     data-controller="modal"
-    data-action="turbo:frame-load->modal#toggleModal turbo:submit-end->modal#closeModal">
+    data-action="turbo:frame-load->modal#toggleModal">
     <div id="modal-background"></div>
     <div id="modal-dialog" class="modal-dialog">
       <div class="modal-content">

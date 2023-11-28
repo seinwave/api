@@ -1,3 +1,5 @@
+import { type Notyf } from 'notyf';
+
 export interface Plant {
   id: number;
   cultivar_id: number;
