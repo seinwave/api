@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="<%= form_authenticity_token %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -14,19 +15,16 @@
   </head>
 
   <body>
-    <div class="container">
-      <% flash.each do | message_type, message| %>
-        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %> 
-        </div>
-      <% end %>     
-    </div>
+    <turbo-frame id="flash">
+      <%= render 'shared/flash' %>
+    </turbo-frame>
     <%= yield %>
     <div
     class="modal"
     tabindex="-1"
     aria-hidden="true"
     data-controller="modal"
-    data-action="turbo:frame-load->modal#toggleModal turbo:submit-end->modal#closeModal">
+    data-action="turbo:frame-load->modal#toggleModal">
     <div id="modal-background"></div>
     <div id="modal-dialog" class="modal-dialog">
       <div class="modal-content">

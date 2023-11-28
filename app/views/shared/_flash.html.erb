@@ -1,0 +1,5 @@
+<% flash.each do |type, message| %>
+    <div data-controller="toast" data-toast-type-value="<%= type %>" data-toast-message-value="<%= message %>"
+        data-toast-modal-outlet=".modal">
+    </div>
+<% end %>
