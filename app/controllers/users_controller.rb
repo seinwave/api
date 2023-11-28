@@ -7,10 +7,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_magic_link_email
-      redirect_to root_url
-      flash[:info] = "Check your email for your Magic Login Link!"
+      flash[:success] = "Check your email for your Magic Login Link!"
+      render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
     else
-      render 'new', status: :unprocessable_entity
+      flash.now[:error] = "That email address is already taken bub"
+      render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
     end 
   end
 
