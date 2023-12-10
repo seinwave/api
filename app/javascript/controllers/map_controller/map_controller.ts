@@ -36,8 +36,8 @@ export default class MapController extends Controller<Element> {
     const map = this.mapValue;
 
     const bounds: LngLatBoundsLike = [
-      [-73.96634589482446, 40.6682], // [west, south]
-      [-73.96453426806725, 40.6696], // [east, north]
+      [-73.9654, 40.6682], // [west, south]
+      [-73.9649, 40.6696], // [east, north]
     ];
 
     map.setMaxBounds(bounds);
