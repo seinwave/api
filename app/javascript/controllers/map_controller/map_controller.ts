@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { fetchPlants, routeToInfoPanel } from '../api';
 import mapboxgl from 'mapbox-gl';
-import type { Map } from 'mapbox-gl';
+import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
   static targets = ['mapContainer', 'favorite-link'];
@@ -13,6 +13,7 @@ export default class MapController extends Controller<Element> {
     this.mapValue = map;
     this.generateMarkers();
     this.addClickHandlers();
+    this.setMapBounds();
   }
 
   fetchMap() {
@@ -28,6 +29,17 @@ export default class MapController extends Controller<Element> {
     });
 
     return map;
+  }
+
+  setMapBounds() {
+    const map = this.mapValue;
+
+    const bounds: LngLatBoundsLike = [
+      [-73.96634589482446, 40.6682], // [west, south]
+      [-73.96453426806725, 40.6696], // [east, north]
+    ];
+
+    map.setMaxBounds(bounds);
   }
 
   generateIcons() {
