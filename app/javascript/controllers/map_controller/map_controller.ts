@@ -90,7 +90,6 @@ export default class MapController extends Controller<Element> {
           icon: plant.is_favorite ? 'heart-icon' : 'rose-icon',
           cultivar_id: plant.cultivar_id,
           cultivar_name: plant.cultivar_name,
-          hovered: false,
         },
       }));
 
