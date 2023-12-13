@@ -10,6 +10,7 @@ export default class MapController extends Controller<Element> {
 
   connect() {
     const map = this.fetchMap();
+    const hoverFeature = null;
     this.mapValue = map;
     this.generateMarkers();
     this.addClickHandlers();
@@ -85,9 +86,11 @@ export default class MapController extends Controller<Element> {
         },
         properties: {
           id: plant.id,
+          //todo: change icon based on rose's primary color
           icon: plant.is_favorite ? 'heart-icon' : 'rose-icon',
           cultivar_id: plant.cultivar_id,
           cultivar_name: plant.cultivar_name,
+          hovered: false,
         },
       }));
 
@@ -101,6 +104,7 @@ export default class MapController extends Controller<Element> {
 
       map.addSource('plants-source', {
         type: 'geojson',
+        generateId: true,
         data: featureCollection,
       });
 
@@ -125,6 +129,14 @@ export default class MapController extends Controller<Element> {
           'text-radial-offset': 1.5,
           'text-justify': 'auto',
         },
+        paint: {
+          'icon-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1,
+            0.5,
+          ],
+        },
       });
     });
   }
@@ -135,26 +147,24 @@ export default class MapController extends Controller<Element> {
       if (!e.features || !e.features[0] || !e.features[0].properties) {
         return;
       }
-      const cultivar_id = e.features[0].properties.cultivar_id;
-      map.setFeatureState(
-        { source: 'plants-source', id: cultivar_id },
-        { hover: true }
-      );
+
+      this.hoverFeature = e.features[0];
+
+      const id = e.features[0].id;
 
       map.getCanvas().style.cursor = 'pointer';
+
+      map.setFeatureState({ source: 'plants-source', id: id }, { hover: true });
     });
 
-    map.on('mouseleave', 'custom-marker-layer', function (e) {
-      if (!e.features || !e.features[0] || !e.features[0].properties) {
-        return;
-      }
-      const cultivar_id = e.features[0].properties.cultivar_id;
+    map.on('mouseleave', 'custom-marker-layer', function () {
+      map.getCanvas().style.cursor = '';
+
       map.setFeatureState(
-        { source: 'plants-source', id: cultivar_id },
+        { source: 'plants-source', id: this.hoverFeature.id },
         { hover: false }
       );
-
-      map.getCanvas().style.cursor = '';
+      this.hoverFeature = null;
     });
   }
 
