@@ -90,7 +90,6 @@ export default class MapController extends Controller<Element> {
           icon: plant.is_favorite ? 'heart-icon' : 'rose-icon',
           cultivar_id: plant.cultivar_id,
           cultivar_name: plant.cultivar_name,
-          hovered: false,
         },
       }));
 
@@ -130,11 +129,11 @@ export default class MapController extends Controller<Element> {
           'text-justify': 'auto',
         },
         paint: {
-          'icon-opacity': [
+          'text-color': [
             'case',
             ['boolean', ['feature-state', 'hover'], false],
-            1,
-            0.5,
+            'hsla(203, 97%, 59%, 1)',
+            'hsla(132, 20%, 25%, 1)',
           ],
         },
       });
