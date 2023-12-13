@@ -45,6 +45,9 @@ export default class MapController extends Controller<Element> {
 
   setMapZoomLevels() {
     const map = this.mapValue;
+
+    map.setMinZoom(19.5);
+    map.setMaxZoom(22);
   }
 
   generateIcons() {
