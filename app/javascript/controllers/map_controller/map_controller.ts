@@ -129,11 +129,11 @@ export default class MapController extends Controller<Element> {
           'text-justify': 'auto',
         },
         paint: {
-          'icon-opacity': [
+          'text-color': [
             'case',
             ['boolean', ['feature-state', 'hover'], false],
-            1,
-            0.5,
+            'hsla(203, 97%, 59%, 1)',
+            'hsla(132, 20%, 25%, 1)',
           ],
         },
       });
