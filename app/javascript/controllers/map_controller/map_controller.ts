@@ -15,6 +15,7 @@ export default class MapController extends Controller<Element> {
     this.addClickHandlers();
     this.setMapBounds();
     this.setMapZoomLevels();
+    this.addHoverHandlers();
   }
 
   fetchMap() {
@@ -125,6 +126,35 @@ export default class MapController extends Controller<Element> {
           'text-justify': 'auto',
         },
       });
+    });
+  }
+
+  addHoverHandlers() {
+    const map = this.mapValue;
+    map.on('mouseenter', 'custom-marker-layer', function (e) {
+      if (!e.features || !e.features[0] || !e.features[0].properties) {
+        return;
+      }
+      const cultivar_id = e.features[0].properties.cultivar_id;
+      map.setFeatureState(
+        { source: 'plants-source', id: cultivar_id },
+        { hover: true }
+      );
+
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'custom-marker-layer', function (e) {
+      if (!e.features || !e.features[0] || !e.features[0].properties) {
+        return;
+      }
+      const cultivar_id = e.features[0].properties.cultivar_id;
+      map.setFeatureState(
+        { source: 'plants-source', id: cultivar_id },
+        { hover: false }
+      );
+
+      map.getCanvas().style.cursor = '';
     });
   }
 
