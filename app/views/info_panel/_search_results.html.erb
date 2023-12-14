@@ -1,4 +1,5 @@
 <div id="info_panel" class="info-panel-container">
+    <%= link_to "Hide results", hide_results_path, data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' } %>
     <% @cultivars.each do |cultivar| %>
         <div class="cultivar-result">
             <h3><%= link_to cultivar.name, info_panel_path(cultivar) , data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' }%></h3>
