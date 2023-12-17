@@ -1,4 +1,6 @@
-.info-panel-container {
+@import 'variables.scss';
+
+.cultivar-info-container {
   position: absolute;
   top: 2rem;
   z-index: map-get($zindex, info-panel);
@@ -6,6 +8,9 @@
   width: 30rem;
   background-color: white;
   border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   padding-top: 3rem;
   max-height: 30vh;
@@ -16,7 +21,7 @@
 }
 
 @media (max-width: 768px) {
-  .info-panel-container {
+  .cultivar-info-container {
     width: 15rem;
   }
 }
