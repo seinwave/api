@@ -16,8 +16,9 @@
             <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
                 <%= show_svg("map-icon.svg") %>
             <% end %>
-            <%= button_to "locate on map", add_favorite_path, data: {"turbo-method": :post} %>
-            <%= button_to "upload photo", add_favorite_path, data: {"turbo-method": :post} %>
+            <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
+                <%= show_svg("camera-icon.svg") %>
+            <% end %>
         </div>
     </div>
     <div class="info-body">
