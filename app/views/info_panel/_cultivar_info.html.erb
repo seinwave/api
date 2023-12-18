@@ -10,7 +10,7 @@
             <div class="plants">20 plants</div> <div class="favorites">300 favorites</div>
         </div>
         <div class="icon-row">
-            <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
+            <%= link_to add_favorite_path, data: {"turbo-method": :post, "action": "map#addFavorite", "map-id-param": current_cultivar.id}  do %>
                 <%= show_svg("heart-icon.svg") %>
             <% end %>
             <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
