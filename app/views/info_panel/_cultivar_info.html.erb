@@ -10,15 +10,7 @@
             <div class="plants">20 plants</div> <div class="favorites">300 favorites</div>
         </div>
         <div class="icon-row">
-            <% if current_user.favorited?(current_cultivar) %>
-                <%= link_to delete_favorite_path, data: {"turbo-method": :delete, "action": "map#removeFavorite", "map-id-param": current_cultivar.id}  do %>
-                    <%= show_svg("filled-heart-icon.svg") %>
-                <% end %>
-            <% else %>
-                <%= link_to add_favorite_path, data: {"turbo-method": :post, "action": "map#addFavorite", "map-id-param": current_cultivar.id}  do %>
-                    <%= show_svg("empty-heart-icon.svg") %>
-                <% end %>
-            <% end %>
+            <%= render partial: 'map/favorite_form', locals: {current_cultivar: current_cultivar} %>
             <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
                 <%= show_svg("map-icon.svg") %>
             <% end %>
