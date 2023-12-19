@@ -2,9 +2,14 @@
     <div class="hide-panel-link">
       <%= link_to "Hide results", hide_info_panel_path, data: {"turbo-method": :post} %>
     </div>
-    <% @cultivars.each do |cultivar| %>
-        <div class="cultivar-result">
-            <h3><%= link_to cultivar.name, info_panel_path(cultivar) , data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' }%></h3>
-        </div>
-    <% end %>
+
+    <% if @cultivars.count === 1 %> 
+      <%= render partial: 'info_panel/cultivar_info', locals: {current_cultivar: @cultivars.first} %>
+    <% else %>
+        <% @cultivars.each do |cultivar| %>
+            <div class="cultivar-result">
+                <h3><%= link_to cultivar.name, info_panel_path(cultivar) , data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' }%></h3>
+            </div>
+        <% end %>
+    <% end %> 
 </div>

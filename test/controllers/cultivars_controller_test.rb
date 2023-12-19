@@ -20,7 +20,7 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
   test "single result should render info panel" do
     get query_cultivars_path, params: { query: "White Lily" , format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }  
     assert_response :success
-    assert_template 'info_panel/_revealed'
+    assert_template 'info_panel/_cultivar_info'
   end
 
   test "multiple results should render result panel" do

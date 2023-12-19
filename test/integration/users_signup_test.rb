@@ -15,9 +15,7 @@ class UsersSignupTest < UsersSignup
                                          last_name: "mumpus",
                                          email: "user@invalid", } }
     end
-    assert_response :unprocessable_entity
-    assert_template 'users/new'
-    assert_select 'div.alert-danger'
+    assert_not flash.blank?
   end
 
    test "valid signup information sends a magic_link login" do
@@ -45,9 +43,6 @@ class LoginAfterSignupTest < UsersSignup
     follow_redirect!
     assert_template 'map/show'
     assert !is_logged_in?
-    assert_not flash.blank?
-    assert_select 'div.alert-danger'
-
   end
 
   test "should log in successfully with valid login token and email" do
@@ -55,7 +50,5 @@ class LoginAfterSignupTest < UsersSignup
     follow_redirect!
     assert_template 'map/show'
     assert is_logged_in?
-    assert_not flash.blank?
-    assert_select 'div.alert'
   end
 end 

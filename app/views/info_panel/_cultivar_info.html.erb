@@ -11,10 +11,10 @@
         </div>
         <div class="icon-row">
             <%= render partial: 'map/favorite_form', locals: {current_cultivar: current_cultivar} %>
-            <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
+            <%= link_to add_favorite_path(current_cultivar), data: {"turbo-method": :post} do %>
                 <%= show_svg("map-icon.svg") %>
             <% end %>
-            <%= link_to add_favorite_path, data: {"turbo-method": :post} do %>
+            <%= link_to add_favorite_path(current_cultivar), data: {"turbo-method": :post} do %>
                 <%= show_svg("camera-icon.svg") %>
             <% end %>
         </div>
