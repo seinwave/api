@@ -3,5 +3,7 @@
     <%= render 'search/form' %>
     <div id="map-container"  data-rose-icon-path="<%= asset_path('rose-icon.svg') %>" data-heart-icon-path="<%= asset_path('filled-heart-icon.svg') %>" >
     </div>
-    <%= render 'info_panel_container' %>
+    <div class="info-panel-container">
+      <%= render partial: 'info_panel/info_panel_states/single_cultivar', locals: {current_cultivar: @current_cultivar} %>
+    </div>
 </div>

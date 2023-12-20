@@ -18,21 +18,6 @@
   box-shadow: $subtle-box-shadow;
 }
 
-.info-panel-container {
-  position: absolute;
-  top: 2rem;
-  z-index: map-get($zindex, info-panel);
-  left: 3rem;
-  width: 30rem;
-  background-color: white;
-  border-radius: 15px;
-  padding-top: 3rem;
-  overflow-y: scroll;
-  /* make scroll bar invisible */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
 @media (max-width: 768px) {
   .login-panel {
     top: unset;

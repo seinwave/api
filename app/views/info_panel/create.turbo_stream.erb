@@ -1,5 +1,5 @@
-<%= turbo_stream.replace "info_panel" do %>
-  <%= render partial: "map/info_panel_container", locals: { current_cultivar: @current_cultivar } %>
+<%= turbo_stream.replace "info_panel_content" do %>
+  <%= render partial: "info_panel/info_panel_states/single_cultivar", locals: { current_cultivar: @current_cultivar } %>
 <% end %>
 
 <%= turbo_stream.update "favorite_form" do %>

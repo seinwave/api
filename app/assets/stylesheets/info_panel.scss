@@ -1,6 +1,6 @@
 @import 'variables.scss';
 
-.cultivar-info-container {
+.info-panel-container {
   position: absolute;
   top: 2rem;
   z-index: map-get($zindex, info-panel);
@@ -8,11 +8,17 @@
   width: 30rem;
   background-color: white;
   border-radius: 15px;
+  padding-top: 3rem;
+  overflow-y: scroll;
+  /* make scroll bar invisible */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  height: auto;
+}
 
+.cultivar-info-container {
   display: flex;
   flex-direction: column;
-
-  padding-top: 3rem;
   overflow-y: scroll;
   /* make scroll bar invisible */
   scrollbar-width: none;
