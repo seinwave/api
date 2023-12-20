@@ -11,21 +11,21 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "null result should render empty info panel" do
+  test "null result should render the empty search result state" do
     get query_cultivars_path(params: { query: "Baby Beluga" }, format: :turbo_stream), headers: { "HTTP_REFERER" => "http://bbgroses-test.com" } 
     assert_response :success
-    assert_template 'info_panel/_empty'
+    assert_template 'info_panel/info_panel_states/_empty'
   end
 
-  test "single result should render info panel" do
+  test "single result should render info for a single cultivar" do
     get query_cultivars_path, params: { query: "White Lily" , format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }  
     assert_response :success
-    assert_template 'info_panel/_cultivar_info'
+    assert_template 'info_panel/info_panel_states/_single_cultivar'
   end
 
-  test "multiple results should render result panel" do
+  test "multiple results should render search results panel state" do
     get query_cultivars_path, params: { query: "White" , format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }  
     assert_response :success
-    assert_template 'info_panel/_search_results'
+    assert_template 'info_panel/info_panel_states/_search_results'
   end 
 end
