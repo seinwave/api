@@ -1,3 +1,11 @@
 one:
+  favoriter_id: 2
+  favorite_cultivar_id: 1
+
+two:
+  favoriter_id: 2
+  favorite_cultivar_id: 2
+
+three:
   favoriter: matt
-  favorite_cultivar: rose
+  favorite_cultivar: lily

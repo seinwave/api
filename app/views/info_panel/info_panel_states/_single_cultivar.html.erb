@@ -7,7 +7,7 @@
             <h2 id="cultivar-name"><%= current_cultivar.name %></h2>
         </div>
         <div class="stats-row">
-            <div class="plants">20 plants</div> <div class="favorites">300 favorites</div>
+            <div class="plants"><%= current_cultivar.global_plant_count %> plants in the garden </div> <div class="favorites"> <%= current_cultivar.global_favorite_count %> visitors love it </div>
         </div>
         <div class="icon-row">
             <%= render partial: 'map/favorite_form', locals: {current_cultivar: current_cultivar} %>
