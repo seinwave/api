@@ -29,7 +29,7 @@ class MapTest < ActionDispatch::IntegrationTest
   test "a map#show_with_query request should reveal an info_panel with relevant information" do
     get map_with_query_path("A")
     assert_response :success
-    assert_template 'info_panel/info_panel_states/_search_results'
+    assert_template 'info_panel/info_panel_states/list/_list_view'
   end
 
   test "a map#show_with_id for a Cultivar that doesn't exist should 404" do

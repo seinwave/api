@@ -34,7 +34,7 @@ class CultivarsControllerTest < ActionDispatch::IntegrationTest
   test "multiple results should render search results panel state" do
     get query_cultivars_path, params: { query: "White" , format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }  
     assert_response :success
-    assert_template 'info_panel/info_panel_states/_search_results'
+    assert_template 'info_panel/info_panel_states/list/_list_view'
   end
   
 end

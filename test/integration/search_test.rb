@@ -4,7 +4,7 @@ class SearchTest < ActionDispatch::IntegrationTest
   test "a search that returns many cultivars should yield a result list" do 
     get query_cultivars_path, params: {query: "a", format: :turbo_stream}, headers: { "HTTP_REFERER" => "http://bbgroses-test.com" }  
     assert_response :success
-    assert_template 'info_panel/info_panel_states/_search_results'
+    assert_template 'info_panel/info_panel_states/list/_list_view'
   end
 
   test "a search that matches 1 cultivar should yield an info panel" do 

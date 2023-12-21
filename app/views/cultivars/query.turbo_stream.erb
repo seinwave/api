@@ -5,7 +5,7 @@
     <% @current_cultivar = @cultivars.first %>
     <%= render partial: "info_panel/info_panel_states/single_cultivar", locals: { current_cultivar: @current_cultivar } %>
   <% else %> 
-    <%= render partial: "info_panel/info_panel_states/search_results", locals: { cultivars: @cultivars } %>    
+    <%= render partial: "info_panel/info_panel_states/list/list_view", locals: { cultivars: @cultivars } %>    
   <% end %> 
 <% end %>
 
