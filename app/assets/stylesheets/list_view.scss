@@ -1,0 +1,8 @@
+.list-view-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  /* make scroll bar invisible */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
