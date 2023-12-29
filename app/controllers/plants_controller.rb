@@ -5,15 +5,13 @@ class PlantsController < ApplicationController
   def show
   end
 
- def mapped_plants
-  plants = Plant.includes(:cultivar).all
-  
-  @plants_to_map = plants.map do |plant|
-    plant.attributes.merge(is_favorite: is_favorite(plant.cultivar), cultivar_name: plant.cultivar.name)
+  def mapped_plants
+    plants = Plant.includes(:cultivar).all
+    @plants_to_map = plants.map do |plant|
+      plant.attributes.merge(is_favorite: is_favorite(plant.cultivar), cultivar_name: plant.cultivar.name)
+    end
+    render json: @plants_to_map
   end
-
-  render json: @plants_to_map
-end
 
 
   private 
