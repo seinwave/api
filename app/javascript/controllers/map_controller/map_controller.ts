@@ -10,7 +10,6 @@ export default class MapController extends Controller<Element> {
 
   connect() {
     const map = this.fetchMap();
-    const hoverFeature = null;
     this.mapValue = map;
     this.generateMarkers();
     this.addClickHandlers();
