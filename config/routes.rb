@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get     'map_data/plants',                to: "plants#mapped_plants"
   get     'map_data/cultivars',             to: "cultivars#query",        as: "query_cultivars",  defaults: {format: :turbo_stream}
+  get     'map_data/coordinates/:id',       to: "cultivars#coordinates",  as: "coordinates"
   get     '/signup',                        to: "users#new"
   get     '/login',                         to: "sessions#new",           as: "login"            
   delete  '/logout',                        to: "sessions#destroy"

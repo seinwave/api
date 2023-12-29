@@ -1,5 +1,9 @@
 import { Controller } from '@hotwired/stimulus';
-import { fetchPlants, routeToInfoPanel } from '../api';
+import {
+  fetchPlants,
+  getFirstPlantCoordinates,
+  routeToInfoPanel,
+} from '../api';
 import mapboxgl from 'mapbox-gl';
 import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
@@ -213,5 +217,26 @@ export default class MapController extends Controller<Element> {
     });
     // @ts-ignore
     map.getSource('plants-source').setData(geoJsonData);
+  }
+
+  async panToPlant(event: any) {
+    const cultivarId = event.params.id;
+    if (!cultivarId) {
+      return [];
+    }
+
+    console.log('fetching coordinates!');
+
+    const data = await getFirstPlantCoordinates(cultivarId);
+    if (!data) {
+      return [];
+    }
+    const coordinates = [data.longitude, data.latitude];
+
+    console.log({ coordinates });
+
+    const map = this.mapValue;
+
+    map.panTo(coordinates, { duration: 1000 });
   }
 }
