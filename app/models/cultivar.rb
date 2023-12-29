@@ -14,4 +14,8 @@ class Cultivar < ApplicationRecord
     Plant.where(cultivar_id: self.id).count
   end
 
+  def get_first_plant
+    Plant.where(cultivar_id: self.id).first
+  end
+
 end

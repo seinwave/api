@@ -1,4 +1,5 @@
 plant_001:
+  id: 1
   latitude: 51.509865
   longitude: -0.118092
   is_deleted: false
