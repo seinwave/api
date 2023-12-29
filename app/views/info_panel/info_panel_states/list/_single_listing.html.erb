@@ -1,3 +1,18 @@
-  <div class="cultivar-result">
-    <h3><%= link_to cultivar.name, info_panel_path(cultivar) , data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' }%></h3>
+<div class="cultivar-result-container">
+  <div class="left-group">
+    <div class="favoriting-column">
+      <%= render partial: 'map/favorite_form', locals: {current_cultivar: cultivar} %>
+    </div>
+    <%= link_to info_panel_path(cultivar), class: "cultivar-result-link", data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' } do %>
+    <div class="info-column">
+      <div class="name-row"><%= cultivar.name %></div>
+      <div class="stats-row">10 plants 20 loves</div>
+    </div>
+    <% end %> 
+  </div>
+  <div class="right-group">
+    <div class="image-column">
+      <%= image_tag "https://placehold.co/70x70", class: "cultivar-preview-image" %>
+    </div>
+  </div>
 </div>

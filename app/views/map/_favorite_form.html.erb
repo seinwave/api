@@ -1,15 +1,15 @@
 <div id="favorite_form">
-      <% if !current_user %>
-         <%= link_to login_path, data: {turbo_frame: "modal"}  do %>
-           <%= show_svg("empty-heart-icon.svg") %>
-         <% end %>
-      <% elsif current_user.favorited?(@current_cultivar)%>
-            <%= link_to delete_favorite_path, data: {"turbo-method": :delete, "action": "map#removeFavorite", "map-id-param": current_cultivar.id}  do %>
-                <%= show_svg("filled-heart-icon.svg") %>
-            <% end %>
-      <% else %>
-            <%= link_to add_favorite_path, data: {"turbo-method": :post, "action": "map#addFavorite", "map-id-param": current_cultivar.id}  do %>
-                 <%= show_svg("empty-heart-icon.svg") %>
-            <% end %>
+<% if !current_user %>
+      <%= link_to login_path, data: {turbo_frame: "modal"}  do %>
+            <%= show_svg("empty-heart-icon.svg") %>
       <% end %>
+<% elsif current_user.favorited?(current_cultivar)%>
+      <%= link_to delete_favorite_path(current_cultivar), data: {"turbo-method": :delete, "action": "map#removeFavorite", "map-id-param": current_cultivar.id}  do %>
+            <%= show_svg("filled-heart-icon.svg") %>
+      <% end %>
+<% else %>
+      <%= link_to add_favorite_path(current_cultivar), data: {"turbo-method": :post, "action": "map#addFavorite", "map-id-param": current_cultivar.id}  do %>
+            <%= show_svg("empty-heart-icon.svg") %>
+      <% end %>
+<% end %>
 </div>
