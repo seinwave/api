@@ -18,4 +18,8 @@ class Cultivar < ApplicationRecord
     Plant.where(cultivar_id: self.id).first
   end
 
+  def get_first_plant_coordinates
+    self.get_first_plant.get_coordinates
+  end
+
 end

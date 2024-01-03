@@ -7,4 +7,11 @@ class CultivarTest < ActiveSupport::TestCase
 
     assert_equal first_plant, cultivar.get_first_plant
   end
+
+  test "should return the first plant's coordinates for a cultivar" do
+    cultivar = cultivars(:lily)
+    first_plant = plants(:plant_001)
+
+    assert_equal first_plant.get_coordinates, cultivar.get_first_plant_coordinates
+  end
 end

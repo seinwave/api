@@ -219,24 +219,14 @@ export default class MapController extends Controller<Element> {
     map.getSource('plants-source').setData(geoJsonData);
   }
 
-  async panToPlant(event: any) {
-    const cultivarId = event.params.id;
-    if (!cultivarId) {
-      return [];
+  panToPlant(event: any) {
+    const firstPlantCoordinates = event.params.coordinates;
+
+    if (!firstPlantCoordinates) {
+      return;
     }
+    console.log(firstPlantCoordinates);
 
-    console.log('fetching coordinates!');
-
-    const data = await getFirstPlantCoordinates(cultivarId);
-    if (!data) {
-      return [];
-    }
-    const coordinates = [data.longitude, data.latitude];
-
-    console.log({ coordinates });
-
-    const map = this.mapValue;
-
-    map.panTo(coordinates, { duration: 1000 });
+    map.panTo(firstPlantCoordinates, { duration: 1000 });
   }
 }
