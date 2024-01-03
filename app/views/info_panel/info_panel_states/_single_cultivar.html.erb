@@ -14,9 +14,6 @@
             <button class="unstyled-button" data-action="map#panToPlant" data-map-plant-param="<%= current_cultivar.get_first_plant.to_json %>">
                 <%= show_svg("map-icon.svg") %>
             </button>
-            <%= link_to add_favorite_path(current_cultivar), data: {"turbo-method": :post} do %>
-                <%= show_svg("camera-icon.svg") %>
-            <% end %>
         </div>
     </div>
     <div class="info-body">
