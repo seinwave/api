@@ -4,17 +4,19 @@ import {
   getFirstPlantCoordinates,
   routeToInfoPanel,
 } from '../api';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { BoxZoomHandler } from 'mapbox-gl';
 import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
   static targets = ['mapContainer', 'favorite-link'];
   static values = { url: String };
+  declare highlightFeature: any;
   declare mapValue: Map;
 
   connect() {
     const map = this.fetchMap();
     this.mapValue = map;
+    this.highlightFeature = null;
     this.generateMarkers();
     this.addClickHandlers();
     this.setMapBounds();
@@ -134,7 +136,7 @@ export default class MapController extends Controller<Element> {
         paint: {
           'text-color': [
             'case',
-            ['boolean', ['feature-state', 'hover'], false],
+            ['boolean', ['feature-state', 'highlight'], false],
             'hsla(203, 97%, 59%, 1)',
             'hsla(132, 20%, 25%, 1)',
           ],
@@ -150,23 +152,27 @@ export default class MapController extends Controller<Element> {
         return;
       }
 
-      this.hoverFeature = e.features[0];
+      this.highlightFeature = e.features[0];
 
       const id = e.features[0].id;
 
       map.getCanvas().style.cursor = 'pointer';
 
-      map.setFeatureState({ source: 'plants-source', id: id }, { hover: true });
+      map.setFeatureState(
+        { source: 'plants-source', id: id },
+        { highlight: true }
+      );
     });
 
     map.on('mouseleave', 'custom-marker-layer', function () {
       map.getCanvas().style.cursor = '';
 
       map.setFeatureState(
-        { source: 'plants-source', id: this.hoverFeature.id },
-        { hover: false }
+        { source: 'plants-source', id: this.highlightFeature.id },
+        { highlight: false }
       );
-      this.hoverFeature = null;
+
+      this.highlightFeature = null;
     });
   }
 
@@ -219,14 +225,57 @@ export default class MapController extends Controller<Element> {
     map.getSource('plants-source').setData(geoJsonData);
   }
 
-  panToPlant(event: any) {
-    const firstPlantCoordinates = event.params.coordinates;
+  clearHighlights() {
+    const map = this.mapValue;
 
-    if (!firstPlantCoordinates) {
+    if (!this.highlightFeature) {
       return;
     }
-    console.log(firstPlantCoordinates);
 
-    map.panTo(firstPlantCoordinates, { duration: 1000 });
+    map.setFeatureState(
+      { source: 'plants-source', id: this.highlightFeature.id },
+      { highlight: false }
+    );
+
+    this.highlightFeature = null;
+  }
+
+  highlightIndividualPlant(plant) {
+    this.clearHighlights();
+
+    const map = this.mapValue;
+
+    const plantId = plant.id;
+
+    const matchingFeature = map.querySourceFeatures('plants-source', {
+      filter: ['==', ['get', 'id'], plantId],
+    })[0];
+
+    this.highlightFeature = matchingFeature;
+
+    const featureId = matchingFeature.id;
+
+    map.setFeatureState(
+      { source: 'plants-source', id: featureId },
+      { highlight: true }
+    );
+  }
+
+  panToPlant(event: any) {
+    event.preventDefault();
+
+    const plant = event.params.plant;
+
+    if (!plant) {
+      return;
+    }
+    const map = this.mapValue;
+
+    const lng = plant.longitude;
+    const lat = plant.latitude;
+
+    this.highlightIndividualPlant(plant);
+
+    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
   }
 }
