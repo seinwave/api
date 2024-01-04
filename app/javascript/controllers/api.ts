@@ -45,19 +45,3 @@ export async function queryCultivars(queryString: string) {
   }
   ('');
 }
-
-export async function getFirstPlantCoordinates(
-  cultivarId: number
-): Promise<{ longitude: number; latitude: number }> {
-  try {
-    const response = await fetch('/map_data/coordinates/' + cultivarId);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching coordinates', error);
-    throw error;
-  }
-}

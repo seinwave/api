@@ -1,10 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
-import {
-  fetchPlants,
-  getFirstPlantCoordinates,
-  routeToInfoPanel,
-} from '../api';
-import mapboxgl, { BoxZoomHandler } from 'mapbox-gl';
+import { fetchPlants, routeToInfoPanel } from '../api';
+import mapboxgl from 'mapbox-gl';
 import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
