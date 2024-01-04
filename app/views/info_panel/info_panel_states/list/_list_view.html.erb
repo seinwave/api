@@ -4,10 +4,6 @@
     </div>
 
     <% if @cultivars.count === 1 %> 
-    <div data-controller="map">
-
-      <div data-action="map#panToPlant" data-map-plant-param="<%= @cultivars.first.get_first_plant.to_json %>"></div>
-    </div>
       <%= render partial: 'info_panel/info_panel_states/single_cultivar', locals: {current_cultivar: @cultivars.first} %>
     <% else %>
         <% @cultivars.each do |cultivar| %>

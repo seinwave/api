@@ -174,13 +174,21 @@ export default class MapController extends Controller<Element> {
 
   addClickHandlers() {
     const map = this.mapValue;
-    map.on('click', 'custom-marker-layer', function (e) {
+    map.on('click', 'custom-marker-layer', (e) => {
       if (!e.features || !e.features[0] || !e.features[0].properties) {
         return;
       }
       const cultivarId = e.features[0].properties.cultivar_id;
       routeToInfoPanel(cultivarId);
+      this.panToFeature(e.features[0]);
     });
+  }
+
+  panToFeature(feature) {
+    const map = this.mapValue;
+    const lng = feature.geometry.coordinates[0];
+    const lat = feature.geometry.coordinates[1];
+    map.flyTo({ center: [lng, lat], zoom: 23, speed: 0.8 });
   }
 
   removeFavorite(event: any) {
