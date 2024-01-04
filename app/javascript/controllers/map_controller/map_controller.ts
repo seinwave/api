@@ -181,6 +181,7 @@ export default class MapController extends Controller<Element> {
       const cultivarId = e.features[0].properties.cultivar_id;
       routeToInfoPanel(cultivarId);
       this.panToFeature(e.features[0]);
+      this.highlightIndividualFeature(e.features[0]);
     });
   }
 
@@ -188,7 +189,16 @@ export default class MapController extends Controller<Element> {
     const map = this.mapValue;
     const lng = feature.geometry.coordinates[0];
     const lat = feature.geometry.coordinates[1];
-    map.flyTo({ center: [lng, lat], zoom: 23, speed: 0.8 });
+    map.panTo([lng, lat]);
+  }
+
+  highlightIndividualFeature(feature) {
+    const map = this.mapValue;
+    this.highlightFeature = feature;
+    map.setFeatureState(
+      { source: 'plants-source', id: feature.id },
+      { highlight: true }
+    );
   }
 
   removeFavorite(event: any) {
