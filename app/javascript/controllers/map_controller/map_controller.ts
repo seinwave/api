@@ -4,9 +4,15 @@ import mapboxgl from 'mapbox-gl';
 import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
-  static targets = ['mapContainer', 'favorite-link', 'singleResult'];
+  static targets = [
+    'mapContainer',
+    'favorite-link',
+    'singleResult',
+    'showById',
+  ];
   static values = { url: String };
   declare highlightedFeature: any;
+  declare geoJsonData: any;
   declare _mapValue: Map;
   declare mapReadyPromise: Promise<void>;
   mapReadyResolve: () => void;
@@ -111,6 +117,8 @@ export default class MapController extends Controller<Element> {
         },
       }));
 
+      this.geoJsonData = geoJsonFeatures;
+
       const featureCollection: GeoJSON.FeatureCollection<
         GeoJSON.Point,
         GeoJSON.GeoJsonProperties
@@ -195,59 +203,62 @@ export default class MapController extends Controller<Element> {
       if (!e.features || !e.features[0] || !e.features[0].properties) {
         return;
       }
+      this.panToFeature(e.features[0]);
       const cultivarId = e.features[0].properties.cultivar_id;
       routeToInfoPanel(cultivarId);
-      this.panToFeature(e.features[0]);
-      this.highlightIndividualFeature(e.features[0]);
     });
   }
 
-  async extractFeatureFromPlant(plant) {
-    const map = this.mapValue;
-
-    return new Promise((resolve) => {
-      map.on('idle', () => {
-        try {
-          const matchingFeature = map.querySourceFeatures('plants-source', {
-            filter: ['==', ['get', 'id'], plant.id],
-          })[0];
-
-          console.log(map.querySourceFeatures('plants-source'));
-
-          resolve(matchingFeature[0]);
-        } catch (e) {
-          console.log(e);
-        }
+  /* CONNECTING TO INDIVIDUAL TARGETS */
+  singleResultTargetConnected(event) {
+    this.mapReadyPromise.then(() => {
+      this.mapValue.on('load', () => {
+        const plant = this.extractPlantFromEvent(event);
+        this.flyToPlant(plant);
       });
     });
   }
 
-  async extractFeatureFromEvent(event) {
+  showByIdTargetConnected(event) {
+    this.mapReadyPromise.then(() => {
+      this.mapValue.on('load', () => {
+        const plant = this.extractPlantFromEvent(event);
+        this.flyToPlant(plant);
+      });
+    });
+  }
+
+  extractPlantFromEvent(event) {
     let plant;
     // came from a click event
     if (event.params && event.params.plant) {
       plant = event.params.plant;
     }
-    // came from a show_with_query or show_with_id event
-    else if (event.dataset.mapInitialCultivarParam) {
-      plant = JSON.parse(event.dataset.mapInitialCultivarParam);
+    // came from a show_with_query req
+    else if (event.dataset.mapShowByQueryPlantParam) {
+      plant = JSON.parse(event.dataset.mapShowByQueryPlantParam);
+    }
+    // came from a show_by_id req
+    else if (event.dataset.mapShowByIdPlantParam) {
+      plant = JSON.parse(event.dataset.mapShowByIdPlantParam);
     }
 
-    return await this.extractFeatureFromPlant(plant);
+    return plant;
   }
 
-  singleResultTargetConnected(event) {
-    this.mapReadyPromise.then(() => {
-      this.mapValue.on('load', () => {
-        this.processEvent(event);
-      });
-    });
+  /* MAP MOVEMENT */
+  panToPlant(plant) {
+    const map = this.mapValue;
+    const lng = plant.longitude;
+    const lat = plant.latitude;
+    map.panTo([lng, lat]);
   }
 
-  async processEvent(event) {
-    const feature = await this.extractFeatureFromEvent(event);
-    this.flyToFeature(feature);
-    this.highlightIndividualFeature(feature);
+  flyToPlant(plant) {
+    const map = this.mapValue;
+    const lng = plant.longitude;
+    const lat = plant.latitude;
+    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
   }
 
   panToFeature(feature) {
@@ -257,40 +268,46 @@ export default class MapController extends Controller<Element> {
     map.panTo([lng, lat]);
   }
 
-  handleClickedFeature(event) {
-    this.mapReadyPromise.then(() => {
-      this.mapValue.on('load', () => {
-        const feature = this.extractFeatureFromEvent(event);
-        this.panToFeature(feature);
-        this.highlightIndividualFeature(feature);
-      });
-    });
-  }
-
-  handleClickedMapButton(event) {
-    const feature = this.extractFeatureFromEvent(event);
-    this.panToFeature(feature);
-    this.highlightIndividualFeature(feature);
-  }
-
   flyToFeature(feature) {
-    console.log('flying to feature:', { feature });
-
     const map = this.mapValue;
     const lng = feature.geometry.coordinates[0];
     const lat = feature.geometry.coordinates[1];
     map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
   }
 
+  handleClickedMapButton(event) {
+    const plant = this.extractPlantFromEvent(event);
+    this.flyToPlant(plant);
+  }
+
+  /* HANDLING HIGHLIGHTS */
   highlightIndividualFeature(feature) {
     const map = this.mapValue;
     this.highlightedFeature = feature;
+
+    const id = feature.properties.id;
     map.setFeatureState(
-      { source: 'plants-source', id: feature.id },
+      { source: 'plants-source', id: feature.id || id },
       { highlight: true }
     );
   }
 
+  clearHighlights() {
+    const map = this.mapValue;
+
+    if (!this.highlightedFeature) {
+      return;
+    }
+
+    map.setFeatureState(
+      { source: 'plants-source', id: this.highlightedFeature.id },
+      { highlight: false }
+    );
+
+    this.highlightedFeature = null;
+  }
+
+  /* HANDLING FAVORITES */
   removeFavorite(event: any) {
     const cultivarId = event.params.id;
     if (!cultivarId) {
@@ -327,20 +344,5 @@ export default class MapController extends Controller<Element> {
     });
     // @ts-ignore
     map.getSource('plants-source').setData(geoJsonData);
-  }
-
-  clearHighlights() {
-    const map = this.mapValue;
-
-    if (!this.highlightedFeature) {
-      return;
-    }
-
-    map.setFeatureState(
-      { source: 'plants-source', id: this.highlightedFeature.id },
-      { highlight: false }
-    );
-
-    this.highlightedFeature = null;
   }
 }
