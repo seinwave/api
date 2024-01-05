@@ -4,15 +4,32 @@ import mapboxgl from 'mapbox-gl';
 import type { Map, LngLatBoundsLike } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
-  static targets = ['mapContainer', 'favorite-link'];
+  static targets = ['mapContainer', 'favorite-link', 'singleResult'];
   static values = { url: String };
-  declare highlightFeature: any;
-  declare mapValue: Map;
+  declare highlightedFeature: any;
+  declare _mapValue: Map;
+  declare mapReadyPromise: Promise<void>;
+  mapReadyResolve: () => void;
+
+  initialize() {
+    this.mapReadyPromise = new Promise((resolve) => {
+      this.mapReadyResolve = resolve;
+    });
+
+    this.fetchMap();
+  }
+
+  set mapValue(value) {
+    this.mapReadyResolve();
+    this._mapValue = value;
+  }
+
+  get mapValue() {
+    return this._mapValue;
+  }
 
   connect() {
-    const map = this.fetchMap();
-    this.mapValue = map;
-    this.highlightFeature = null;
+    this.highlightedFeature = null;
     this.generateMarkers();
     this.addClickHandlers();
     this.setMapBounds();
@@ -32,7 +49,7 @@ export default class MapController extends Controller<Element> {
       bearing: 14,
     });
 
-    return map;
+    this.mapValue = map;
   }
 
   setMapBounds() {
@@ -185,6 +202,54 @@ export default class MapController extends Controller<Element> {
     });
   }
 
+  async extractFeatureFromPlant(plant) {
+    const map = this.mapValue;
+
+    return new Promise((resolve) => {
+      map.on('idle', () => {
+        try {
+          const matchingFeature = map.querySourceFeatures('plants-source', {
+            filter: ['==', ['get', 'id'], plant.id],
+          })[0];
+
+          console.log(map.querySourceFeatures('plants-source'));
+
+          resolve(matchingFeature[0]);
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    });
+  }
+
+  async extractFeatureFromEvent(event) {
+    let plant;
+    // came from a click event
+    if (event.params && event.params.plant) {
+      plant = event.params.plant;
+    }
+    // came from a show_with_query or show_with_id event
+    else if (event.dataset.mapInitialCultivarParam) {
+      plant = JSON.parse(event.dataset.mapInitialCultivarParam);
+    }
+
+    return await this.extractFeatureFromPlant(plant);
+  }
+
+  singleResultTargetConnected(event) {
+    this.mapReadyPromise.then(() => {
+      this.mapValue.on('load', () => {
+        this.processEvent(event);
+      });
+    });
+  }
+
+  async processEvent(event) {
+    const feature = await this.extractFeatureFromEvent(event);
+    this.flyToFeature(feature);
+    this.highlightIndividualFeature(feature);
+  }
+
   panToFeature(feature) {
     const map = this.mapValue;
     const lng = feature.geometry.coordinates[0];
@@ -192,9 +257,34 @@ export default class MapController extends Controller<Element> {
     map.panTo([lng, lat]);
   }
 
+  handleClickedFeature(event) {
+    this.mapReadyPromise.then(() => {
+      this.mapValue.on('load', () => {
+        const feature = this.extractFeatureFromEvent(event);
+        this.panToFeature(feature);
+        this.highlightIndividualFeature(feature);
+      });
+    });
+  }
+
+  handleClickedMapButton(event) {
+    const feature = this.extractFeatureFromEvent(event);
+    this.panToFeature(feature);
+    this.highlightIndividualFeature(feature);
+  }
+
+  flyToFeature(feature) {
+    console.log('flying to feature:', { feature });
+
+    const map = this.mapValue;
+    const lng = feature.geometry.coordinates[0];
+    const lat = feature.geometry.coordinates[1];
+    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
+  }
+
   highlightIndividualFeature(feature) {
     const map = this.mapValue;
-    this.highlightFeature = feature;
+    this.highlightedFeature = feature;
     map.setFeatureState(
       { source: 'plants-source', id: feature.id },
       { highlight: true }
@@ -242,54 +332,15 @@ export default class MapController extends Controller<Element> {
   clearHighlights() {
     const map = this.mapValue;
 
-    if (!this.highlightFeature) {
+    if (!this.highlightedFeature) {
       return;
     }
 
     map.setFeatureState(
-      { source: 'plants-source', id: this.highlightFeature.id },
+      { source: 'plants-source', id: this.highlightedFeature.id },
       { highlight: false }
     );
 
-    this.highlightFeature = null;
-  }
-
-  highlightIndividualPlant(plant) {
-    this.clearHighlights();
-
-    const map = this.mapValue;
-
-    const plantId = plant.id;
-
-    const matchingFeature = map.querySourceFeatures('plants-source', {
-      filter: ['==', ['get', 'id'], plantId],
-    })[0];
-
-    this.highlightFeature = matchingFeature;
-
-    const featureId = matchingFeature.id;
-
-    map.setFeatureState(
-      { source: 'plants-source', id: featureId },
-      { highlight: true }
-    );
-  }
-
-  panToPlant(event: any) {
-    event.preventDefault();
-
-    const plant = event.params.plant;
-
-    if (!plant) {
-      return;
-    }
-    const map = this.mapValue;
-
-    const lng = plant.longitude;
-    const lat = plant.latitude;
-
-    this.highlightIndividualPlant(plant);
-
-    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
+    this.highlightedFeature = null;
   }
 }

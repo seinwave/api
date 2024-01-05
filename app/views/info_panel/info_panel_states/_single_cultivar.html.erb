@@ -11,7 +11,7 @@
         </div>
         <div class="icon-row">
             <%= render partial: 'map/favorite_form', locals: {current_cultivar: current_cultivar} %>
-            <button class="unstyled-button" data-action="map#panToPlant" data-map-plant-param="<%= current_cultivar.get_first_plant.to_json %>">
+            <button class="unstyled-button" data-action="map#handleClickedMapButton" data-map-plant-param="<%= current_cultivar.get_first_plant.to_json %>">
                 <%= show_svg("map-icon.svg") %>
             </button>
         </div>
