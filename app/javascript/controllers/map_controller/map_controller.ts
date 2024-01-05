@@ -212,19 +212,15 @@ export default class MapController extends Controller<Element> {
   /* CONNECTING TO INDIVIDUAL TARGETS */
   singleResultTargetConnected(event) {
     this.mapReadyPromise.then(() => {
-      this.mapValue.on('load', () => {
-        const plant = this.extractPlantFromEvent(event);
-        this.flyToPlant(plant);
-      });
+      const plant = this.extractPlantFromEvent(event);
+      this.flyToPlant(plant);
     });
   }
 
   showByIdTargetConnected(event) {
     this.mapReadyPromise.then(() => {
-      this.mapValue.on('load', () => {
-        const plant = this.extractPlantFromEvent(event);
-        this.flyToPlant(plant);
-      });
+      const plant = this.extractPlantFromEvent(event);
+      this.flyToPlant(plant);
     });
   }
 
@@ -235,8 +231,8 @@ export default class MapController extends Controller<Element> {
       plant = event.params.plant;
     }
     // came from a show_with_query req
-    else if (event.dataset.mapShowByQueryPlantParam) {
-      plant = JSON.parse(event.dataset.mapShowByQueryPlantParam);
+    else if (event.dataset.mapQueriedPlantParam) {
+      plant = JSON.parse(event.dataset.mapQueriedPlantParam);
     }
     // came from a show_by_id req
     else if (event.dataset.mapShowByIdPlantParam) {
@@ -278,9 +274,27 @@ export default class MapController extends Controller<Element> {
   handleClickedMapButton(event) {
     const plant = this.extractPlantFromEvent(event);
     this.flyToPlant(plant);
+    this.highlightCultivar(plant);
   }
 
   /* HANDLING HIGHLIGHTS */
+
+  highlightCultivar(plant) {
+    const map = this.mapValue;
+    const cultivarId = plant.cultivar_id;
+
+    const matchingFeatures = map.querySourceFeatures('plants-source', {
+      filter: ['==', 'cultivar_id', cultivarId],
+    });
+
+    matchingFeatures.map((feature) => {
+      map.setFeatureState(
+        { source: 'plants-source', id: feature.id },
+        { highlight: true }
+      );
+    });
+  }
+
   highlightIndividualFeature(feature) {
     const map = this.mapValue;
     this.highlightedFeature = feature;

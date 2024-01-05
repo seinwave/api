@@ -8,14 +8,6 @@ class CultivarsController < ApplicationController
     render json: @cultivar
   end
 
-  def pan_to_plant
-    @cultivar = Cultivar.find(params[:id])
-    first_plant = @cultivar.get_first_plant
-    @coordinates = first_plant.get_coordinates
-    respond_to do |format|
-      format.turbo_stream
-    end
-  end
 
   def coordinates
     @cultivar = Cultivar.find(params[:id])
