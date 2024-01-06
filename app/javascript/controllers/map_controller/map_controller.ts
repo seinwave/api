@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { fetchPlants, routeToInfoPanel } from '../api';
 import mapboxgl from 'mapbox-gl';
-import type { Map, LngLatBoundsLike } from 'mapbox-gl';
+import type { Map, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 
 export default class MapController extends Controller<Element> {
   static targets = [
@@ -11,7 +11,7 @@ export default class MapController extends Controller<Element> {
     'showById',
   ];
   static values = { url: String };
-  declare highlightedFeature: any;
+  declare highlightedFeatures: MapboxGeoJSONFeature[];
   declare hoveredFeature: any;
   declare hoveredFeatureTextState: any;
   declare geoJsonData: any;
@@ -37,7 +37,7 @@ export default class MapController extends Controller<Element> {
   }
 
   connect() {
-    this.highlightedFeature = null;
+    this.highlightedFeatures = [];
     this.generateMarkers();
     this.addClickHandlers();
     this.setMapBounds();
@@ -309,8 +309,11 @@ export default class MapController extends Controller<Element> {
   /* HANDLING HIGHLIGHTS */
 
   highlightCultivar(plant) {
+    this.clearHighlights();
+
     const map = this.mapValue;
     const cultivarId = plant.cultivar_id;
+
     map.on('sourcedata', (e) => {
       if (e.sourceId !== 'plants-source' || !e.isSourceLoaded) {
         return;
@@ -320,7 +323,9 @@ export default class MapController extends Controller<Element> {
         filter: ['==', 'cultivar_id', cultivarId],
       });
 
-      matchingFeatures.map((feature) => {
+      this.highlightedFeatures = matchingFeatures;
+
+      matchingFeatures.forEach((feature) => {
         map.setFeatureState(
           { source: 'plants-source', id: feature.id },
           { 'text-state': 'highlighted' }
@@ -331,7 +336,7 @@ export default class MapController extends Controller<Element> {
 
   highlightIndividualFeature(feature) {
     const map = this.mapValue;
-    this.highlightedFeature = feature;
+    this.highlightedFeatures = feature;
 
     const id = feature.properties.id;
     map.setFeatureState(
@@ -342,6 +347,14 @@ export default class MapController extends Controller<Element> {
 
   clearHighlights() {
     const map = this.mapValue;
+
+    this.highlightedFeatures.forEach((feature) => {
+      map.setFeatureState(
+        { source: 'plants-source', id: feature.id },
+        { 'text-state': null }
+      );
+    });
+    this.highlightedFeatures = [];
   }
 
   /* HANDLING FAVORITES */
