@@ -164,7 +164,7 @@ export default class MapController extends Controller<Element> {
             'hsla(3, 97%, 59%, 1)',
             'default',
             'hsla(132, 20%, 25%, 1)',
-            'hsla(132, 20%, 25%, 1)'
+            'hsla(132, 20%, 25%, 1)',
           ],
         },
       });
@@ -178,7 +178,7 @@ export default class MapController extends Controller<Element> {
         return;
       }
 
-      this.highlightFeature = e.features[0];
+      this.hoveredFeature = e.features[0];
 
       const id = e.features[0].id;
 
@@ -194,11 +194,11 @@ export default class MapController extends Controller<Element> {
       map.getCanvas().style.cursor = '';
 
       map.setFeatureState(
-        { source: 'plants-source', id: this.highlightFeature.id },
+        { source: 'plants-source', id: this.hoveredFeature.id },
         { 'text-state': 'default' }
       );
 
-      this.highlightFeature = null;
+      this.hoveredFeature = null;
     });
   }
 
@@ -313,7 +313,6 @@ export default class MapController extends Controller<Element> {
 
   clearHighlights() {
     const map = this.mapValue;
-    
   }
 
   /* HANDLING FAVORITES */
