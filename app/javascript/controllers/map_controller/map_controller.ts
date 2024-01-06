@@ -245,9 +245,11 @@ export default class MapController extends Controller<Element> {
   }
 
   showByIdTargetConnected(event) {
+    const map = this.mapValue;
     this.mapReadyPromise.then(() => {
       const plant = this.extractPlantFromEvent(event);
       this.flyToPlant(plant);
+      this.highlightCultivar(plant);
     });
   }
 
@@ -309,16 +311,21 @@ export default class MapController extends Controller<Element> {
   highlightCultivar(plant) {
     const map = this.mapValue;
     const cultivarId = plant.cultivar_id;
+    map.on('sourcedata', (e) => {
+      if (e.sourceId !== 'plants-source' || !e.isSourceLoaded) {
+        return;
+      }
 
-    const matchingFeatures = map.querySourceFeatures('plants-source', {
-      filter: ['==', 'cultivar_id', cultivarId],
-    });
+      const matchingFeatures = map.querySourceFeatures('plants-source', {
+        filter: ['==', 'cultivar_id', cultivarId],
+      });
 
-    matchingFeatures.map((feature) => {
-      map.setFeatureState(
-        { source: 'plants-source', id: feature.id },
-        { 'text-state': 'highlighted' }
-      );
+      matchingFeatures.map((feature) => {
+        map.setFeatureState(
+          { source: 'plants-source', id: feature.id },
+          { 'text-state': 'highlighted' }
+        );
+      });
     });
   }
 
