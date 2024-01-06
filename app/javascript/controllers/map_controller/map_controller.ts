@@ -156,9 +156,13 @@ export default class MapController extends Controller<Element> {
         },
         paint: {
           'text-color': [
-            'case',
-            ['boolean', ['feature-state', 'highlight'], false],
+            'match',
+            ['feature-state', 'state'],
+            'hovered',
             'hsla(203, 97%, 59%, 1)',
+            'highlighted',
+            'hsla(3, 97%, 59%, 1)',
+            'default',
             'hsla(132, 20%, 25%, 1)',
           ],
         },
