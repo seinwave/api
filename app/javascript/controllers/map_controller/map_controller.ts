@@ -157,7 +157,7 @@ export default class MapController extends Controller<Element> {
         paint: {
           'text-color': [
             'match',
-            ['feature-state', 'state'],
+            ['feature-state', 'text-state'],
             'hovered',
             'hsla(203, 97%, 59%, 1)',
             'highlighted',
@@ -186,7 +186,7 @@ export default class MapController extends Controller<Element> {
 
       map.setFeatureState(
         { source: 'plants-source', id: id },
-        { highlight: true }
+        { 'text-state': 'hovered' }
       );
     });
 
@@ -195,7 +195,7 @@ export default class MapController extends Controller<Element> {
 
       map.setFeatureState(
         { source: 'plants-source', id: this.highlightFeature.id },
-        { highlight: false }
+        { 'text-state': 'default' }
       );
 
       this.highlightFeature = null;
@@ -295,7 +295,7 @@ export default class MapController extends Controller<Element> {
     matchingFeatures.map((feature) => {
       map.setFeatureState(
         { source: 'plants-source', id: feature.id },
-        { highlight: true }
+        { 'text-state': 'highlighted' }
       );
     });
   }
@@ -307,23 +307,13 @@ export default class MapController extends Controller<Element> {
     const id = feature.properties.id;
     map.setFeatureState(
       { source: 'plants-source', id: feature.id || id },
-      { highlight: true }
+      { 'text-state': 'highlighted' }
     );
   }
 
   clearHighlights() {
     const map = this.mapValue;
-
-    if (!this.highlightedFeature) {
-      return;
-    }
-
-    map.setFeatureState(
-      { source: 'plants-source', id: this.highlightedFeature.id },
-      { highlight: false }
-    );
-
-    this.highlightedFeature = null;
+    
   }
 
   /* HANDLING FAVORITES */
