@@ -12,6 +12,8 @@ export default class MapController extends Controller<Element> {
   ];
   static values = { url: String };
   declare highlightedFeature: any;
+  declare hoveredFeature: any;
+  declare hoveredFeatureTextState: any;
   declare geoJsonData: any;
   declare _mapValue: Map;
   declare mapReadyPromise: Promise<void>;
@@ -166,6 +168,17 @@ export default class MapController extends Controller<Element> {
             'hsla(132, 20%, 25%, 1)',
             'hsla(132, 20%, 25%, 1)',
           ],
+          'text-halo-blur': [
+            'match',
+            ['feature-state', 'text-state'],
+            'hovered',
+            25,
+            'highlighted',
+            25,
+            'default',
+            0,
+            0,
+          ],
         },
       });
     });
@@ -180,6 +193,13 @@ export default class MapController extends Controller<Element> {
 
       this.hoveredFeature = e.features[0];
 
+      const state = map.getFeatureState({
+        source: 'plants-source',
+        id: e.features[0].id,
+      });
+
+      this.hoveredFeatureTextState = state['text-state'];
+
       const id = e.features[0].id;
 
       map.getCanvas().style.cursor = 'pointer';
@@ -193,9 +213,11 @@ export default class MapController extends Controller<Element> {
     map.on('mouseleave', 'custom-marker-layer', function () {
       map.getCanvas().style.cursor = '';
 
+      const previousState = this.hoveredFeatureTextState;
+
       map.setFeatureState(
         { source: 'plants-source', id: this.hoveredFeature.id },
-        { 'text-state': 'default' }
+        { 'text-state': previousState }
       );
 
       this.hoveredFeature = null;
