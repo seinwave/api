@@ -241,11 +241,11 @@ export default class MapController extends Controller<Element> {
     this.mapReadyPromise.then(() => {
       const plant = this.extractPlantFromEvent(event);
       this.flyToPlant(plant);
+      this.highlightCultivar(plant);
     });
   }
 
   showByIdTargetConnected(event) {
-    const map = this.mapValue;
     this.mapReadyPromise.then(() => {
       const plant = this.extractPlantFromEvent(event);
       this.flyToPlant(plant);
