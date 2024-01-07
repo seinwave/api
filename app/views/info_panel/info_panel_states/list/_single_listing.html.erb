@@ -6,7 +6,8 @@
     <%= link_to info_panel_path(cultivar), class: "cultivar-result-link", data: { turbo: 'true', turbo_action: 'advance', turbo_method: 'get' } do %>
     <div class="info-column">
       <div class="name-row"><%= cultivar.name %></div>
-      <div class="stats-row">10 plants 20 loves</div>
+      <div class="stats-row">       <%= cultivar.global_plant_count %> plants,  <%= cultivar.global_favorite_count %> favorites
+</div>
     </div>
     <% end %> 
   </div>
