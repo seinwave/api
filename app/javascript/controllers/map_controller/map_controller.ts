@@ -241,7 +241,6 @@ export default class MapController extends Controller<Element> {
     this.mapReadyPromise.then(() => {
       const plant = this.extractPlantFromEvent(event);
       this.flyToPlant(plant);
-      this.highlightCultivar(plant);
     });
   }
 
@@ -249,7 +248,6 @@ export default class MapController extends Controller<Element> {
     this.mapReadyPromise.then(() => {
       const plant = this.extractPlantFromEvent(event);
       this.flyToPlant(plant);
-      this.highlightCultivar(plant);
     });
   }
 
@@ -303,7 +301,6 @@ export default class MapController extends Controller<Element> {
   handleClickedMapButton(event) {
     const plant = this.extractPlantFromEvent(event);
     this.flyToPlant(plant);
-    this.highlightCultivar(plant);
   }
 
   /* HANDLING HIGHLIGHTS */
@@ -345,6 +342,7 @@ export default class MapController extends Controller<Element> {
     );
   }
 
+  //todo: this is not working -- something's off with how this interacts with the mapbox api
   clearHighlights() {
     const map = this.mapValue;
 
