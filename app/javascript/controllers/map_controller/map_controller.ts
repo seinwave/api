@@ -2,6 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import { fetchPlants, routeToInfoPanel } from '../api';
 import mapboxgl from 'mapbox-gl';
 import type { Map, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
+import { Feature, Point, GeoJsonProperties } from 'geojson';
 
 export default class MapController extends Controller<Element> {
   static targets = [
@@ -12,9 +13,9 @@ export default class MapController extends Controller<Element> {
   ];
   static values = { url: String };
   declare highlightedFeatures: MapboxGeoJSONFeature[];
-  declare hoveredFeature: any;
-  declare hoveredFeatureTextState: any;
-  declare geoJsonData: any;
+  declare hoveredFeature: MapboxGeoJSONFeature;
+  declare hoveredFeatureTextState: string;
+  declare geoJsonData: Feature<Point, GeoJsonProperties>[];
   declare _mapValue: Map;
   declare mapReadyPromise: Promise<void>;
   mapReadyResolve: () => void;
