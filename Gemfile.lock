@@ -290,7 +290,6 @@ DEPENDENCIES
   jsbundling-rails
   minitest (= 5.15.0)
   minitest-reporters (= 1.5.0)
-  nokogiri
   pg (~> 1.1)
   pry-rails
   puma (~> 5.0)
