@@ -1,7 +1,9 @@
 <div class="wrapper" data-controller="map">
     <%= render 'layouts/header' %>
     <%= render 'search/form' %>
-    <div id="map-container"  data-rose-icon-path="<%= asset_path('rose-icon.svg') %>" data-heart-icon-path="<%= asset_path('heart-icon.svg') %>" >
+    <div id="map-container"  data-rose-icon-path="<%= asset_path('rose-icon.svg') %>" data-heart-icon-path="<%= asset_path('filled-heart-icon.svg') %>" >
     </div>
-    <%= render 'info_panel/search_results' %>
+    <div class="info-panel-container">
+      <%= render partial: 'info_panel/info_panel_states/list/list_view' %>
+    </div>
 </div>

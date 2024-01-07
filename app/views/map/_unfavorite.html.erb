@@ -1,4 +1,3 @@
-<div>
-<p> You love this cultivar!</p>
-<%= link_to "Unlove this cultivar", delete_favorite_path(current_cultivar.id), data: {"turbo-method": :delete, "action": "map#removeFavorite", "map-id-param": current_cultivar.id} %>
-</div>
+<%= link_to delete_favorite_path, data: {"turbo-method": :delete, "action": "map#removeFavorite", "map-id-param": current_cultivar.id}  do %>
+                    <%= show_svg("filled-heart-icon.svg") %>
+                <% end %>

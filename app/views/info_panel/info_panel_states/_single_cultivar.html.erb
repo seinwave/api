@@ -1,0 +1,31 @@
+<div id="info_panel_content" class="cultivar-info-container">
+    <div class="image-container">
+        <%= image_tag "https://placehold.co/480x200", class: "cultivar-image" %>
+    </div>
+    <div class="headline-info">
+        <div class="name-row">
+            <h2 id="cultivar-name"><%= current_cultivar.name %></h2>
+        </div>
+        <div class="stats-row">
+            <div class="plants"><%= current_cultivar.global_plant_count %> plants in the garden </div> <div class="favorites"> <%= current_cultivar.global_favorite_count %> visitors love it </div>
+        </div>
+        <div class="icon-row">
+            <%= render partial: 'map/favorite_form', locals: {current_cultivar: current_cultivar} %>
+            <button class="unstyled-button" data-action="map#handleClickedMapButton" data-map-plant-param="<%= current_cultivar.get_first_plant.to_json %>">
+                <%= show_svg("map-icon.svg") %>
+            </button>
+        </div>
+    </div>
+    <div class="info-body">
+        <div class="intro-year-row">
+            PLACEHOLDER INTRODUCTORY YEAR
+        </div>
+        <div class="seasonality-row">
+            PALCEHOLDER SEASONALITY    
+        </div>
+        <div class="description-row">
+            PLACEHOLDER DESCRIPTION
+        </div> 
+
+    </div>
+</div>    

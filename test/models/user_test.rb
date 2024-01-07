@@ -59,7 +59,7 @@ end
   end
 
   # TESTS FOR FAVORITES # 
-  test "should follow and unfollow a user" do
+  test "should favorite and unfavorite a " do
     matt = users(:matt)
     rose  = cultivars(:rose)
     assert_not matt.favorited?(rose)

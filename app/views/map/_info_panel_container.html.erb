@@ -1,5 +1,0 @@
-<% if !@current_cultivar.nil? %> 
-  <%= render partial: "info_panel/revealed", locals: { current_cultivar: @current_cultivar } %>
-<% else %>
-  <%= render 'info_panel/hidden' %>  
-<% end %>

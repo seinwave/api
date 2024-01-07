@@ -1,11 +1,12 @@
-<%= turbo_stream.replace "info_panel" do %>
+<%= turbo_stream.replace "info_panel_content" do %>
   <% if @cultivars.count == 0 %>
-    <%= render partial: "info_panel/empty" %>
+    <%= render partial: "info_panel/info_panel_states/empty" %>
   <% elsif @cultivars.count == 1 %>
     <% @current_cultivar = @cultivars.first %>
-    <%= render partial: "map/info_panel_container", locals: { current_cultivar: @current_cultivar } %>
+    <div data-map-target="singleResult" data-map-queried-plant-param="<%= @cultivars.first.get_first_plant.to_json %>"></div> 
+    <%= render partial: "info_panel/info_panel_states/single_cultivar", locals: { current_cultivar: @current_cultivar } %>
   <% else %> 
-    <%= render partial: "info_panel/search_results", locals: { cultivars: @cultivars } %>    
+    <%= render partial: "info_panel/info_panel_states/list/list_view", locals: { cultivars: @cultivars } %>    
   <% end %> 
 <% end %>
 

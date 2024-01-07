@@ -1,17 +1,44 @@
 import { Controller } from '@hotwired/stimulus';
 import { fetchPlants, routeToInfoPanel } from '../api';
 import mapboxgl from 'mapbox-gl';
-import type { Map, LngLatBoundsLike } from 'mapbox-gl';
+import type { Map, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
+import { Feature, Point, GeoJsonProperties } from 'geojson';
 
 export default class MapController extends Controller<Element> {
-  static targets = ['mapContainer', 'favorite-link'];
+  static targets = [
+    'mapContainer',
+    'favorite-link',
+    'singleResult',
+    'showById',
+  ];
   static values = { url: String };
-  declare mapValue: Map;
+  declare highlightedFeatures: MapboxGeoJSONFeature[];
+  declare hoveredFeature: MapboxGeoJSONFeature;
+  declare hoveredFeatureTextState: string;
+  declare geoJsonData: Feature<Point, GeoJsonProperties>[];
+  declare _mapValue: Map;
+  declare mapReadyPromise: Promise<void>;
+  mapReadyResolve: () => void;
+
+  initialize() {
+    this.mapReadyPromise = new Promise((resolve) => {
+      this.mapReadyResolve = resolve;
+    });
+
+    this.fetchMap();
+  }
+
+  set mapValue(value) {
+    this.mapReadyResolve();
+    this._mapValue = value;
+  }
+
+  get mapValue() {
+    return this._mapValue;
+  }
 
   connect() {
-    const map = this.fetchMap();
-    const hoverFeature = null;
-    this.mapValue = map;
+    this.highlightedFeatures = [];
     this.generateMarkers();
     this.addClickHandlers();
     this.setMapBounds();
@@ -31,7 +58,7 @@ export default class MapController extends Controller<Element> {
       bearing: 14,
     });
 
-    return map;
+    this.mapValue = map;
   }
 
   setMapBounds() {
@@ -93,6 +120,8 @@ export default class MapController extends Controller<Element> {
         },
       }));
 
+      this.geoJsonData = geoJsonFeatures;
+
       const featureCollection: GeoJSON.FeatureCollection<
         GeoJSON.Point,
         GeoJSON.GeoJsonProperties
@@ -130,9 +159,14 @@ export default class MapController extends Controller<Element> {
         },
         paint: {
           'text-color': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
+            'match',
+            ['feature-state', 'text-state'],
+            'hovered',
             'hsla(203, 97%, 59%, 1)',
+            'highlighted',
+            'hsla(3, 97%, 59%, 1)',
+            'default',
+            'hsla(132, 20%, 25%, 1)',
             'hsla(132, 20%, 25%, 1)',
           ],
         },
@@ -147,37 +181,171 @@ export default class MapController extends Controller<Element> {
         return;
       }
 
-      this.hoverFeature = e.features[0];
+      this.hoveredFeature = e.features[0];
+
+      const state = map.getFeatureState({
+        source: 'plants-source',
+        id: e.features[0].id,
+      });
+
+      this.hoveredFeatureTextState = state['text-state'];
 
       const id = e.features[0].id;
 
       map.getCanvas().style.cursor = 'pointer';
 
-      map.setFeatureState({ source: 'plants-source', id: id }, { hover: true });
+      map.setFeatureState(
+        { source: 'plants-source', id: id },
+        { 'text-state': 'hovered' }
+      );
     });
 
     map.on('mouseleave', 'custom-marker-layer', function () {
       map.getCanvas().style.cursor = '';
 
+      const previousState = this.hoveredFeatureTextState;
+
       map.setFeatureState(
-        { source: 'plants-source', id: this.hoverFeature.id },
-        { hover: false }
+        { source: 'plants-source', id: this.hoveredFeature.id },
+        { 'text-state': previousState }
       );
-      this.hoverFeature = null;
+
+      this.hoveredFeature = null;
     });
   }
 
   addClickHandlers() {
     const map = this.mapValue;
-    map.on('click', 'custom-marker-layer', function (e) {
+    map.on('click', 'custom-marker-layer', (e) => {
       if (!e.features || !e.features[0] || !e.features[0].properties) {
         return;
       }
+      this.panToFeature(e.features[0]);
       const cultivarId = e.features[0].properties.cultivar_id;
       routeToInfoPanel(cultivarId);
     });
   }
 
+  /* CONNECTING TO INDIVIDUAL TARGETS */
+  singleResultTargetConnected(event) {
+    this.mapReadyPromise.then(() => {
+      const plant = this.extractPlantFromEvent(event);
+      this.flyToPlant(plant);
+    });
+  }
+
+  showByIdTargetConnected(event) {
+    this.mapReadyPromise.then(() => {
+      const plant = this.extractPlantFromEvent(event);
+      this.flyToPlant(plant);
+    });
+  }
+
+  extractPlantFromEvent(event) {
+    let plant;
+    // came from a click event
+    if (event.params && event.params.plant) {
+      plant = event.params.plant;
+    }
+    // came from a show_with_query req
+    else if (event.dataset.mapQueriedPlantParam) {
+      plant = JSON.parse(event.dataset.mapQueriedPlantParam);
+    }
+    // came from a show_by_id req
+    else if (event.dataset.mapShowByIdPlantParam) {
+      plant = JSON.parse(event.dataset.mapShowByIdPlantParam);
+    }
+
+    return plant;
+  }
+
+  /* MAP MOVEMENT */
+  panToPlant(plant) {
+    const map = this.mapValue;
+    const lng = plant.longitude;
+    const lat = plant.latitude;
+    map.panTo([lng, lat]);
+  }
+
+  flyToPlant(plant) {
+    const map = this.mapValue;
+    const lng = plant.longitude;
+    const lat = plant.latitude;
+    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
+  }
+
+  panToFeature(feature) {
+    const map = this.mapValue;
+    const lng = feature.geometry.coordinates[0];
+    const lat = feature.geometry.coordinates[1];
+    map.panTo([lng, lat]);
+  }
+
+  flyToFeature(feature) {
+    const map = this.mapValue;
+    const lng = feature.geometry.coordinates[0];
+    const lat = feature.geometry.coordinates[1];
+    map.flyTo({ center: [lng, lat], zoom: 25, speed: 1 });
+  }
+
+  handleClickedMapButton(event) {
+    const plant = this.extractPlantFromEvent(event);
+    this.flyToPlant(plant);
+  }
+
+  /* HANDLING HIGHLIGHTS */
+
+  highlightCultivar(plant) {
+    this.clearHighlights();
+
+    const map = this.mapValue;
+    const cultivarId = plant.cultivar_id;
+
+    map.on('sourcedata', (e) => {
+      if (e.sourceId !== 'plants-source' || !e.isSourceLoaded) {
+        return;
+      }
+
+      const matchingFeatures = map.querySourceFeatures('plants-source', {
+        filter: ['==', 'cultivar_id', cultivarId],
+      });
+
+      this.highlightedFeatures = matchingFeatures;
+
+      matchingFeatures.forEach((feature) => {
+        map.setFeatureState(
+          { source: 'plants-source', id: feature.id },
+          { 'text-state': 'highlighted' }
+        );
+      });
+    });
+  }
+
+  highlightIndividualFeature(feature) {
+    const map = this.mapValue;
+    this.highlightedFeatures = feature;
+
+    const id = feature.properties.id;
+    map.setFeatureState(
+      { source: 'plants-source', id: feature.id || id },
+      { 'text-state': 'highlighted' }
+    );
+  }
+
+  //todo: this is not working -- something's off with how this interacts with the mapbox api
+  clearHighlights() {
+    const map = this.mapValue;
+
+    this.highlightedFeatures.forEach((feature) => {
+      map.setFeatureState(
+        { source: 'plants-source', id: feature.id },
+        { 'text-state': null }
+      );
+    });
+    this.highlightedFeatures = [];
+  }
+
+  /* HANDLING FAVORITES */
   removeFavorite(event: any) {
     const cultivarId = event.params.id;
     if (!cultivarId) {

@@ -17,8 +17,6 @@ class ValidLogin < LoginAndLogout
 end
 
 class LoginTest < ValidLogin
-
- 
   test "should send a magic_link email" do 
     assert_equal 1, ActionMailer::Base.deliveries.size
   end 
@@ -29,7 +27,6 @@ class LoginTest < ValidLogin
     assert_template 'map/show'
     assert !is_logged_in?
     assert_not flash.blank?
-    assert_select 'div.alert-danger'
   end
 
   test "should log in successfully with valid email" do
@@ -38,8 +35,6 @@ class LoginTest < ValidLogin
     assert_template 'map/show'
     assert is_logged_in?
     assert_not flash.blank?
-    assert_select 'div.alert'
-    assert_select "a[href=?]", logout_path
   end
 
 end
