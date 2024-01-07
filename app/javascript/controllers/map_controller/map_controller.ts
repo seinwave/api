@@ -168,17 +168,6 @@ export default class MapController extends Controller<Element> {
             'hsla(132, 20%, 25%, 1)',
             'hsla(132, 20%, 25%, 1)',
           ],
-          'text-halo-blur': [
-            'match',
-            ['feature-state', 'text-state'],
-            'hovered',
-            25,
-            'highlighted',
-            25,
-            'default',
-            0,
-            0,
-          ],
         },
       });
     });
