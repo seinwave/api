@@ -43,5 +43,4 @@ export async function queryCultivars(queryString: string) {
     console.error('Error querying cultivars:', error);
     throw error;
   }
-  ('');
 }
